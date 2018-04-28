@@ -1,0 +1,14 @@
+{
+  "generator-videojs-plugin": {
+    "scope": "",
+    "name": "mobile-ui",
+    "description": "Tap controls for Video.js",
+    "author": "mister-ben <git@misterben.me>",
+    "license": "mit",
+    "sass": true,
+    "ie8": false,
+    "docs": true,
+    "lang": true,
+    "husky": "lint"
+  }
+}
