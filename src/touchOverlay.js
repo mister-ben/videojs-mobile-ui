@@ -109,13 +109,15 @@ class TouchOverlay extends Component {
   handleDoubleTap(event) {
     event.preventDefault();
 
+    const rect = this.el_.getBoundingClientRect();
+    const x = event.changedTouches[0].clientX - rect.left;
+
     // Check if double tap is in left or right area
-    if (event.changedTouches[0].clientX < event.target.offsetWidth * 0.4) {
+    if (x < rect.width * .4) {
       this.player_.currentTime(Math.max(
         0, this.player_.currentTime() - this.seekSeconds));
       this.addClass('reverse');
-    } else if (event.changedTouches[0].clientX >
-               event.target.offsetWidth - (event.target.offsetWidth * 0.4)) {
+    } else if (x > rect.width - (rect.width * .4)) {
       this.player_.currentTime(Math.min(
         this.player_.duration(), this.player_.currentTime() + this.seekSeconds));
       this.removeClass('reverse');
