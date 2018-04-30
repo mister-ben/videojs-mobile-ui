@@ -32,7 +32,11 @@
     (function(window, videojs) {
       var testPlayer = window.testPlayer = videojs('videojs-mobile-ui-player');
       testPlayer.endscreen = function() {};
-      testPlayer.mobileUi({});
+      testPlayer.mobileUi({
+        fullscreen: {
+          iOS: true
+        }
+      });
     }(window, window.videojs));
   </script>
 </body>

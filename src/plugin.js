@@ -7,7 +7,8 @@ import window from 'global/window';
 const defaults = {
   fullscreen: {
     enterOnRotate: true,
-    lockOnRotate: true
+    lockOnRotate: true,
+    iOS: false
   },
   touchControls: {
     seekSeconds: 10,
@@ -17,6 +18,19 @@ const defaults = {
 };
 
 const screen = window.screen;
+
+const angle = () => {
+  // iOS
+  if (typeof window.orientation === 'number') {
+    return window.orientation;
+  }
+  // Android
+  if (screen && screen.orientation && screen.orientation.angle) {
+    return window.orientation;
+  }
+  videojs.log('angle unknown');
+  return 0;
+};
 
 // Cross-compatibility for Video.js 5 and 6.
 const registerPlugin = videojs.registerPlugin || videojs.plugin;
@@ -38,6 +52,15 @@ const onPlayerReady = (player, options) => {
     player.addClass('vjs-mobile-ui-disable-end');
   }
 
+  if (options.fullscreen.iOS &&
+      videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
+      !player.el_.ownerDocument.querySelector('.bc-iframe')) {
+    player.tech_.el_.setAttribute('playsinline', 'playsinline');
+    player.tech_.supportsFullScreen = function() {
+      return false;
+    };
+  }
+
   // Insert before the control bar
   const controlBarIdx = player.children_.indexOf(player.getChild('ControlBar')) - 1;
 
@@ -45,27 +68,34 @@ const onPlayerReady = (player, options) => {
 
   let locked = false;
 
-  // addEventListener('orientationchange') is not a user interaction ¯\_(ツ)_/¯
-  if (options.fullscreen.enterOnRotate && screen.orientation) {
-    screen.orientation.onchange = () => {
-      if (screen.orientation.angle === 90 || screen.orientation.angle === 270) {
-        if (player.paused() === false) {
-          player.requestFullscreen();
-          if (options.fullscreen.lockOnRoate && screen.orientation.lock) {
-            screen.orientation.lock('landscape').then(() => {
-              locked = true;
-            }).catch(() => {
-              videojs.log('orientation lock not allowed');
-            });
-          }
+  const rotationHandler = () => {
+    const currentAngle = angle();
+
+    if (currentAngle === 90 || currentAngle === 270 || currentAngle === -90) {
+      if (player.paused() === false) {
+        player.requestFullscreen();
+        if (options.fullscreen.lockOnRotate &&
+            screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').then(() => {
+            locked = true;
+          }).catch(() => {
+            videojs.log('orientation lock not allowed');
+          });
         }
       }
-      if (screen.orientation.angle === 0 || screen.orientation.angle === 180) {
-        if (player.isFullscreen()) {
-          player.exitFullscreen();
-        }
+    }
+    if (currentAngle === 0 || currentAngle === 180) {
+      if (player.isFullscreen()) {
+        player.exitFullscreen();
       }
-    };
+    }
+  };
+
+  if (videojs.browser.IS_IOS) {
+    window.addEventListener('orientationchange', rotationHandler);
+  } else {
+    // addEventListener('orientationchange') is not a user interaction on Android
+    screen.orientation.onchange = rotationHandler;
   }
 
   player.on('ended', _ => {
@@ -91,6 +121,8 @@ const onPlayerReady = (player, options) => {
  * @param    {boolean} [options.fullscreen.lockOnRotate=true]
  *           Whether to lock orientation when rotating to landscape
  *           Unlocked when exiting fullscreen or on 'ended'
+ * @param    {boolean} [options.fullscreen.iOS=false]
+ *           Whether to disable iOS's native fullscreen so controls can work
  * @param    {Object} [options.touchControls={}]
  *           Touch UI options.
  * @param    {int} [options.touchControls.seekSeconds=10]
