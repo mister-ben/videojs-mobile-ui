@@ -39,6 +39,11 @@ class TouchOverlay extends Component {
       this.removeClass('show-play-toggle');
     });
 
+    // A 0 inactivity timeout won't work here
+    if (this.player_.options_.inactivityTimeout === 0) {
+      this.player_.options_.inactivityTimeout = 5000;
+    }
+
     this.enable();
   }
 
@@ -71,6 +76,8 @@ class TouchOverlay extends Component {
       return;
     }
 
+    event.preventDefault();
+
     if (this.firstTapCaptured) {
       this.firstTapCaptured = false;
       if (this.timeout) {
@@ -94,7 +101,6 @@ class TouchOverlay extends Component {
    *
    */
   handleSingleTap(event) {
-    event.preventDefault();
     this.removeClass('skip');
     this.toggleClass('show-play-toggle');
   }
@@ -107,8 +113,6 @@ class TouchOverlay extends Component {
    *
    */
   handleDoubleTap(event) {
-    event.preventDefault();
-
     const rect = this.el_.getBoundingClientRect();
     const x = event.changedTouches[0].clientX - rect.left;
 
