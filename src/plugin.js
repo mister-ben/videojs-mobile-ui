@@ -7,6 +7,7 @@ import window from 'global/window';
 const defaults = {
   fullscreen: {
     enterOnRotate: true,
+    exitOnRotate: true,
     lockOnRotate: true,
     iOS: false
   },
@@ -71,7 +72,7 @@ const onPlayerReady = (player, options) => {
   const rotationHandler = () => {
     const currentAngle = angle();
 
-    if (currentAngle === 90 || currentAngle === 270 || currentAngle === -90) {
+    if ((currentAngle === 90 || currentAngle === 270 || currentAngle === -90) && options.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
         if (options.fullscreen.lockOnRotate &&
@@ -84,7 +85,8 @@ const onPlayerReady = (player, options) => {
         }
       }
     }
-    if (currentAngle === 0 || currentAngle === 180) {
+
+    if ((currentAngle === 0 || currentAngle === 180) && options.exitOnRotate) {
       if (player.isFullscreen()) {
         player.exitFullscreen();
       }
@@ -118,6 +120,8 @@ const onPlayerReady = (player, options) => {
  *           Fullscreen options.
  * @param    {boolean} [options.fullscreen.enterOnRotate=true]
  *           Whether to go fullscreen when rotating to landscape
+ * @param    {boolean} [options.fullscreen.exitOnRotate=true]
+ *           Whether to leave fullscreen when rotating to portrait (if not locked)
  * @param    {boolean} [options.fullscreen.lockOnRotate=true]
  *           Whether to lock orientation when rotating to landscape
  *           Unlocked when exiting fullscreen or on 'ended'

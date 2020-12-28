@@ -44,6 +44,7 @@ npm install --save videojs-mobile-ui
 {
   fullscreen: {
     enterOnRotate: true,
+    exitOnRotate, true,
     lockOnRotate: true
   },
   touchControls: {
@@ -57,6 +58,7 @@ npm install --save videojs-mobile-ui
 ### Options
 
 - *fullscreen.enterOnRotate* `boolean` Whether to go fullscreen when rotating to landscape
+- *fullscreen.exitOnRotate* `boolean` Whether to leave fullscreen when rotating to portrait (if not locked)
 - *fullscreen.lockOnRotate* `boolean` Whether to lock to fullscreen when rotating to landscape
 - *fullscreen.iOS* `boolean` Whether to use fake fullscreen on iOS (needed for controls to work)
 - *touchControls.seekSeconds* `int` Seconds to seek when double-tapping
