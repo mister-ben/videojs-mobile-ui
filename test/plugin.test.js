@@ -38,11 +38,23 @@ QUnit.module('videojs-mobile-ui', {
 });
 
 QUnit.test('registers itself with video.js', function(assert) {
-  // assert.expect(2);
 
   assert.strictEqual(
     typeof Player.prototype.mobileUi,
     'function',
     'videojs-mobile-ui plugin was registered'
+  );
+});
+
+QUnit.test('inserts element before control bar', function(assert) {
+
+  this.player.mobileUi({forceForTesting: true});
+
+  this.clock.tick(1);
+
+  assert.strictEqual(
+    this.player.getChild('TouchOverlay').el_.nextSibling,
+    this.player.getChild('ControlBar').el_,
+    'TouchOverlay is before ControlBar'
   );
 });
