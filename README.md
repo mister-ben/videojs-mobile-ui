@@ -44,7 +44,7 @@ npm install --save videojs-mobile-ui
 {
   fullscreen: {
     enterOnRotate: true,
-    exitOnRotate, true,
+    exitOnRotate: true,
     lockOnRotate: true
   },
   touchControls: {
