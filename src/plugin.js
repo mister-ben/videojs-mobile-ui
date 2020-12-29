@@ -63,16 +63,30 @@ const onPlayerReady = (player, options) => {
   }
 
   // Insert before the control bar
-  const controlBarIdx = player.children_.indexOf(player.getChild('ControlBar')) - 1;
+  let controlBarIdx;
+  const versionParts = videojs.VERSION.split('.');
+  const major = parseInt(versionParts[0], 10);
+  const minor = parseInt(versionParts[1], 10);
 
-  player.addChild('touchOverlay', options.touchControls, controlBarIdx);
+  // Video.js < 7.7.0 doesn't account for precedding components that don't have elements
+  if (major < 7 || (major === 7 && minor < 7)) {
+    controlBarIdx = Array.prototype.indexOf.call(
+      player.el_.children,
+      player.getChild('ControlBar').el_
+    );
+  } else {
+    controlBarIdx = player.children_.indexOf(player.getChild('ControlBar'));
+  }
+
+  player.addChild('TouchOverlay', options.touchControls, controlBarIdx);
 
   let locked = false;
 
   const rotationHandler = () => {
     const currentAngle = angle();
 
-    if ((currentAngle === 90 || currentAngle === 270 || currentAngle === -90) && options.enterOnRotate) {
+    if ((currentAngle === 90 || currentAngle === 270 || currentAngle === -90) &&
+        options.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
         if (options.fullscreen.lockOnRotate &&
@@ -95,7 +109,7 @@ const onPlayerReady = (player, options) => {
 
   if (videojs.browser.IS_IOS) {
     window.addEventListener('orientationchange', rotationHandler);
-  } else {
+  } else if (screen.orientation) {
     // addEventListener('orientationchange') is not a user interaction on Android
     screen.orientation.onchange = rotationHandler;
   }
@@ -116,6 +130,8 @@ const onPlayerReady = (player, options) => {
  * @function mobileUi
  * @param    {Object} [options={}]
  *           Plugin options.
+ * @param    {boolean} [options.forceForTesting=false]
+ *           Enables the display regardless of user agent, for testing purposes
  * @param    {Object} [options.fullscreen={}]
  *           Fullscreen options.
  * @param    {boolean} [options.fullscreen.enterOnRotate=true]
@@ -138,7 +154,7 @@ const onPlayerReady = (player, options) => {
  *           Never shows if the endscreen plugin is present
  */
 const mobileUi = function(options) {
-  if (videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
+  if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
     this.ready(() => {
       onPlayerReady(this, videojs.mergeOptions(defaults, options));
     });
