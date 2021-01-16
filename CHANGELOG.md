@@ -1,3 +1,6 @@
+<a name="0.5.0"></a>
+# 0.5.0 (2021-01-16)
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v0.4.0...v0.4.1) (2018-04-30)
 
