@@ -153,7 +153,7 @@ const onPlayerReady = (player, options) => {
  *           Whether to disable when the video ends (e.g., if there is an endscreen)
  *           Never shows if the endscreen plugin is present
  */
-const mobileUi = function(options) {
+const mobileUi = function(options = {}) {
   if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
     this.ready(() => {
       onPlayerReady(this, videojs.mergeOptions(defaults, options));
