@@ -3,7 +3,7 @@
     "scope": "",
     "name": "mobile-ui",
     "description": "Mobile tap controls and fullscreen on rotate for Video.js",
-    "author": "Ben <git@misterben.me>",
+    "author": "mister-ben <git@misterben.me>",
     "license": "mit",
     "pluginType": "basic",
     "css": true,
