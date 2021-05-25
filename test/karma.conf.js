@@ -1,5 +1,5 @@
 module.exports = function(config) {
-  var detectBrowsers = {
+  const detectBrowsers = {
     enabled: false,
     usePhantomJS: false
   };
@@ -21,7 +21,7 @@ module.exports = function(config) {
     files: [
       'node_modules/video.js/dist/video-js.css',
       'dist/videojs-mobile-ui.css',
-      
+
       'node_modules/sinon/pkg/sinon.js',
       'node_modules/video.js/dist/video.js',
       'test/dist/bundle.js'
@@ -32,7 +32,7 @@ module.exports = function(config) {
         flags: ['--no-sandbox']
       }
     },
-    detectBrowsers: detectBrowsers,
+    detectBrowsers,
     reporters: ['dots'],
     port: 9876,
     colors: true,
