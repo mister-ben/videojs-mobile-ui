@@ -1,3 +1,10 @@
+<a name="0.5.3"></a>
+## [0.5.3](https://github.com/mister-ben/videojs-mobile-ui/compare/v0.5.2...v0.5.3) (2021-05-25)
+
+### Bug Fixes
+
+* Fix fullscreen on rotate (#14) ([33093e4](https://github.com/mister-ben/videojs-mobile-ui/commit/33093e4)), closes [#14](https://github.com/mister-ben/videojs-mobile-ui/issues/14)
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/mister-ben/videojs-mobile-ui/compare/v0.5.1...v0.5.2) (2021-01-29)
 
