@@ -86,7 +86,7 @@ const onPlayerReady = (player, options) => {
     const currentAngle = angle();
 
     if ((currentAngle === 90 || currentAngle === 270 || currentAngle === -90) &&
-        options.enterOnRotate) {
+        options.fullscreen.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
         if (options.fullscreen.lockOnRotate &&
@@ -100,7 +100,7 @@ const onPlayerReady = (player, options) => {
       }
     }
 
-    if ((currentAngle === 0 || currentAngle === 180) && options.exitOnRotate) {
+    if ((currentAngle === 0 || currentAngle === 180) && options.fullscreen.exitOnRotate) {
       if (player.isFullscreen()) {
         player.exitFullscreen();
       }
