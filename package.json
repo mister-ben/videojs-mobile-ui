@@ -4,6 +4,7 @@
   "description": "Mobile tap controls and fullscreen on rotate for Video.js",
   "main": "dist/videojs-mobile-ui.cjs.js",
   "module": "dist/videojs-mobile-ui.es.js",
+  "repository": "https://github.com/mister-ben/videojs-mobile-ui.git",
   "browser": "dist/videojs-mobile-ui.js",
   "generator-videojs-plugin": {
     "version": "8.0.0"
@@ -41,7 +42,7 @@
     "videojs",
     "videojs-plugin"
   ],
-  "author": "Ben <git@misterben.me>",
+  "author": "mister-ben <git@misterben.me>",
   "license": "MIT",
   "vjsstandard": {
     "ignore": [
