@@ -25,9 +25,25 @@ const angle = () => {
   if (typeof window.orientation === 'number') {
     return window.orientation;
   }
-  // Android also supports screen.orientation. Some tablets may only support screen.orientation?
-  if (screen && screen.orientation && screen.orientation.angle) {
-    return window.orientation.angle;
+  // Android also supports screen.orientation
+  if (screen) {
+    if (screen.orientation && typeof screen.orientation.angle === 'number') {
+      return window.orientation.angle;
+    }
+
+    // Some tablets may only support screen.orientation.type ?
+    const orientationType = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
+
+    if (orientationType === 'string') {
+      const type = orientationType.split('-')[0];
+
+      if (type === 'portrait') {
+        return 0;
+      }
+      if (type === 'landscape') {
+        return 90;
+      }
+    }
   }
   videojs.log('angle unknown');
   return 0;
