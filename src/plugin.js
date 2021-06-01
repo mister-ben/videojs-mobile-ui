@@ -21,13 +21,13 @@ const defaults = {
 const screen = window.screen;
 
 const angle = () => {
-  // iOS
+  // iOS only supports window.orientation
   if (typeof window.orientation === 'number') {
     return window.orientation;
   }
-  // Android
+  // Android also supports screen.orientation. Some tablets may only support screen.orientation?
   if (screen && screen.orientation && screen.orientation.angle) {
-    return window.orientation;
+    return window.orientation.angle;
   }
   videojs.log('angle unknown');
   return 0;
