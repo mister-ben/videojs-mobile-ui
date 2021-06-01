@@ -2,13 +2,15 @@
   "generator-videojs-plugin": {
     "scope": "",
     "name": "mobile-ui",
-    "description": "Tap controls for Video.js",
+    "description": "Mobile tap controls and fullscreen on rotate for Video.js",
     "author": "mister-ben <git@misterben.me>",
     "license": "mit",
-    "sass": true,
-    "ie8": false,
+    "pluginType": "basic",
+    "css": true,
     "docs": true,
     "lang": true,
-    "husky": "lint"
+    "library": false,
+    "precommit": true,
+    "prepush": false
   }
 }

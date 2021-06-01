@@ -1,4 +1,6 @@
-// Sass for videojs-touch-ui
+/**
+ * css for videojs-mobile-ui
+ */
 
 @keyframes fadeAndScale {
   0% {
@@ -14,7 +16,6 @@
 
 .video-js {
 
-  // This class is added to the video.js element by the plugin by default.
   &.vjs-has-started .vjs-touch-overlay {
     position: absolute;
     pointer-events: auto;

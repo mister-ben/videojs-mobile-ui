@@ -74,6 +74,7 @@ To include videojs-mobile-ui on your website or web application, use any of the 
 This is the simplest case. Get the script in whatever way you prefer and include the plugin _after_ you include [video.js][videojs], so that the `videojs` global is available.
 
 ```html
+<link rel="stylesheet" href="//path/to/videojs-mobile-ui.css">  
 <script src="//path/to/video.min.js"></script>
 <script src="//path/to/videojs-mobile-ui.min.js"></script>
 <script>
@@ -82,6 +83,11 @@ This is the simplest case. Get the script in whatever way you prefer and include
   player.mobileUi();
 </script>
 ```
+
+The release versions will be available on jdselivr, unpkg etc.
+
+* https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.min.js
+* https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.css
 
 ### Browserify/CommonJS
 
@@ -100,6 +106,8 @@ var player = videojs('my-video');
 player.mobileUi();
 ```
 
+Also include the CSS.
+
 ### RequireJS/AMD
 
 When using with RequireJS (or another AMD library), get the script in whatever way you prefer and `require` the plugin as you normally would:
@@ -110,6 +118,18 @@ require(['video.js', 'videojs-mobile-ui'], function(videojs) {
 
   player.mobileUi();
 });
+```
+
+Also include the CSS.
+
+### Import
+
+To import into React etc import both the package and the script
+
+```js
+import videojs from 'video.js'
+import 'videojs-mobile-ui/dist/videojs-mobile-ui.css';
+import 'videojs-mobile-ui';
 ```
 
 ## License

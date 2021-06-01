@@ -118,12 +118,10 @@ class TouchOverlay extends Component {
 
     // Check if double tap is in left or right area
     if (x < rect.width * 0.4) {
-      this.player_.currentTime(Math.max(
-        0, this.player_.currentTime() - this.seekSeconds));
+      this.player_.currentTime(Math.max(0, this.player_.currentTime() - this.seekSeconds));
       this.addClass('reverse');
     } else if (x > rect.width - (rect.width * 0.4)) {
-      this.player_.currentTime(Math.min(
-        this.player_.duration(), this.player_.currentTime() + this.seekSeconds));
+      this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + this.seekSeconds));
       this.removeClass('reverse');
     } else {
       return;
