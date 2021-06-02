@@ -20,33 +20,30 @@ const defaults = {
 
 const screen = window.screen;
 
-const angle = () => {
+/**
+ * Gets 'portrait' or 'lanscape' from the two orientation APIs
+ *
+ * @return {string} orientation
+ */
+const getOrientation = () => {
+  if (screen) {
+    // Prefer the string over angle, as 0° can be landscape on some tablets
+    const orientationString = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation || ''.split('-');
+
+    if (orientationString === 'landscape' || orientationString === 'portrait') {
+      return orientationString;
+    }
+  }
+
   // iOS only supports window.orientation
   if (typeof window.orientation === 'number') {
-    return window.orientation;
-  }
-  // Android also supports screen.orientation
-  if (screen) {
-    if (screen.orientation && typeof screen.orientation.angle === 'number') {
-      return window.orientation.angle;
+    if (window.orientation === 0 || window.orientation === 180) {
+      return 'portait';
     }
-
-    // Some tablets may only support screen.orientation.type ?
-    const orientationType = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
-
-    if (orientationType === 'string') {
-      const type = orientationType.split('-')[0];
-
-      if (type === 'portrait') {
-        return 0;
-      }
-      if (type === 'landscape') {
-        return 90;
-      }
-    }
+    return 'landscape';
   }
-  videojs.log('angle unknown');
-  return 0;
+
+  return 'portrait';
 };
 
 // Cross-compatibility for Video.js 5 and 6.
@@ -99,24 +96,21 @@ const onPlayerReady = (player, options) => {
   let locked = false;
 
   const rotationHandler = () => {
-    const currentAngle = angle();
+    const currentOrientation = getOrientation();
 
-    if ((currentAngle === 90 || currentAngle === 270 || currentAngle === -90) &&
-        options.fullscreen.enterOnRotate) {
+    if (currentOrientation === 'landscape' && options.fullscreen.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
         if (options.fullscreen.lockOnRotate &&
             screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
-          }).catch(() => {
-            videojs.log('orientation lock not allowed');
+          }).catch((e) => {
+            videojs.log('Browser refused orientation lock:', e);
           });
         }
       }
-    }
-
-    if ((currentAngle === 0 || currentAngle === 180) && options.fullscreen.exitOnRotate) {
+    } else if (currentOrientation === 'portait' && options.fullscreen.exitOnRotate && !locked) {
       if (player.isFullscreen()) {
         player.exitFullscreen();
       }
@@ -132,6 +126,13 @@ const onPlayerReady = (player, options) => {
 
   player.on('ended', _ => {
     if (locked === true) {
+      screen.orientation.unlock();
+      locked = false;
+    }
+  });
+
+  player.on('fullscreenchange', _ => {
+    if (!player.isFullscreen() && locked) {
       screen.orientation.unlock();
       locked = false;
     }
