@@ -107,11 +107,21 @@ const onPlayerReady = (player, options) => {
     }
   };
 
-  if (videojs.browser.IS_IOS) {
-    window.addEventListener('orientationchange', rotationHandler);
-  } else if (screen.orientation) {
-    // addEventListener('orientationchange') is not a user interaction on Android
-    screen.orientation.onchange = rotationHandler;
+  if (options.fullscreen.enterOnRotate || options.fullscreen.exitOnRotate) {
+    if (videojs.browser.IS_IOS) {
+      window.addEventListener('orientationchange', rotationHandler);
+
+      player.on('dispose', () => {
+        window.removeEventListener('orientationchange', rotationHandler);
+      });
+    } else if (screen.orientation) {
+      // addEventListener('orientationchange') is not a user interaction on Android
+      screen.orientation.onchange = rotationHandler;
+
+      player.on('dispose', () => {
+        screen.orientation.onchange = null;
+      });
+    }
   }
 
   player.on('ended', _ => {

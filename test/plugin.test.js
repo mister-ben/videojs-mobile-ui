@@ -1,4 +1,5 @@
 import document from 'global/document';
+import window from 'global/window';
 
 import QUnit from 'qunit';
 import sinon from 'sinon';
@@ -32,7 +33,9 @@ QUnit.module('videojs-mobile-ui', {
   },
 
   afterEach() {
-    this.player.dispose();
+    if (!this.player.isDisposed()) {
+      this.player.dispose();
+    }
     this.clock.restore();
   }
 });
@@ -57,4 +60,76 @@ QUnit.test('inserts element before control bar', function(assert) {
     this.player.getChild('ControlBar').el_,
     'TouchOverlay is before ControlBar'
   );
+});
+
+QUnit.test('iOS event listeners', function(assert) {
+
+  const oldBrowser = videojs.browser;
+
+  videojs.browser = videojs.mergeOptions(videojs.browser, {
+    IS_IOS: true,
+    IS_ANDROID: false
+  });
+
+  const addSpy = sinon.spy(window, 'addEventListener');
+  const removeSpy = sinon.spy(window, 'removeEventListener');
+
+  this.player.mobileUi({ forceForTesting: true });
+
+  this.clock.tick(1);
+
+  assert.strictEqual(
+    'orientationchange',
+    addSpy.getCall(0).args[0],
+    'orientationchange listener added'
+  );
+
+  this.player.dispose();
+
+  this.clock.tick(1);
+
+  assert.strictEqual(
+    'orientationchange',
+    removeSpy.getCall(0).args[0],
+    'orientationchange listener removed when player disposed'
+  );
+
+  addSpy.restore();
+  removeSpy.restore();
+
+  videojs.browser = oldBrowser;
+});
+
+const testOrSkip = (window.screen && window.screen.orientation) ? 'test' : 'skip';
+
+QUnit[testOrSkip]('Android event listeners', function(assert) {
+
+  const oldBrowser = videojs.browser;
+
+  videojs.browser = videojs.mergeOptions(videojs.browser, {
+    IS_IOS: false,
+    IS_ANDROID: true
+  });
+
+  this.player.mobileUi({forceForTesting: true});
+
+  this.clock.tick(1);
+
+  assert.strictEqual(
+    typeof window.screen.orientation.onchange,
+    'function',
+    'screen.orientation.onchange is used for andorid'
+  );
+
+  this.player.dispose();
+
+  this.clock.tick(1);
+
+  assert.strictEqual(
+    window.screen.orientation.onchange,
+    null,
+    'screen.orientation.onchange is removed after dispose'
+  );
+
+  videojs.browser = oldBrowser;
 });
