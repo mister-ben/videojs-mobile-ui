@@ -38,7 +38,7 @@ const getOrientation = () => {
   // iOS only supports window.orientation
   if (typeof window.orientation === 'number') {
     if (window.orientation === 0 || window.orientation === 180) {
-      return 'portait';
+      return 'portrait';
     }
     return 'landscape';
   }
@@ -110,7 +110,7 @@ const onPlayerReady = (player, options) => {
           });
         }
       }
-    } else if (currentOrientation === 'portait' && options.fullscreen.exitOnRotate && !locked) {
+    } else if (currentOrientation === 'portrait' && options.fullscreen.exitOnRotate && !locked) {
       if (player.isFullscreen()) {
         player.exitFullscreen();
       }
