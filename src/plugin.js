@@ -60,10 +60,10 @@ const registerPlugin = videojs.registerPlugin || videojs.plugin;
  *           A plain object containing options for the plugin.
  */
 const onPlayerReady = (player, options) => {
-  player.addClass('vjs-mobile-ui');
+  player.addClass ('vjs-mobile-ui');
 
   if (options.touchControls.disableOnEnd || typeof player.endscreen === 'function') {
-    player.addClass('vjs-mobile-ui-disable-end');
+    player.addClass ('vjs-mobile-ui-disable-end');
   }
 
   if (options.fullscreen.iOS &&
