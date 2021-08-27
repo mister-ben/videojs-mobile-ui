@@ -32,7 +32,7 @@
     "watch:css": "npm run build:css -- -w",
     "watch:js": "npm run build:js -- -w",
     "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose",
-    "prepare": "husky install"
+    "x-prepare": "husky install"
   },
   "engines": {
     "node": ">=14",
