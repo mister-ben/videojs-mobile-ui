@@ -1,3 +1,10 @@
+<a name="0.6.1"></a>
+## [0.6.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v0.6.0...v0.6.1) (2021-08-27)
+
+### Bug Fixes
+
+* Split orientation string ([0eebd64](https://github.com/mister-ben/videojs-mobile-ui/commit/0eebd64))
+
 <a name="0.6.0"></a>
 # 0.6.0 (2021-08-27)
 
