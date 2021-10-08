@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>videojs-mobile-ui Demo</title>
   <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
   <link href="dist/videojs-mobile-ui.css" rel="stylesheet">
@@ -17,7 +18,7 @@
   </style>
 </head>
 <body>
-  <video-js id="videojs-mobile-ui-player" class="video-js vjs-default-skin" controls playsinline>
+  <video-js id="videojs-mobile-ui-player" class="video-js vjs-default-skin vjs-fluid" controls playsinline>
     <source src="//vjs.zencdn.net/v/oceans.mp4" type='video/mp4'>
     <source src="//vjs.zencdn.net/v/oceans.webm" type='video/webm'>
   </video-js>
@@ -32,13 +33,15 @@
       <li><input type="checkbox"  data-section="fullscreen" id="enterOnRotate">enterOnRotate</li>
       <li><input type="checkbox" data-section="fullscreen" id="exitOnRotate">exitOnRotate</li>
       <li><input type="checkbox" data-section="fullscreen" id="lockOnRotate">lockOnRotate</li>
-      <li><input type="checkbox" data-section="fullscreen" id="iOS">iOS</li>
+      <li><input type="checkbox" data-section="fullscreen" id="iOS">iOS <b>Deprecated</b></li>
+      <li><input type="checkbox" data-section="fullscreen" id="fullscreenDisabled">disabled</li>
     </ul>
     <li>touchControls:</li>
     <ul>
       <li><input type="number" data-section="touchControls" id="seekSeconds">seekSeconds</li>
       <li><input type="number" data-section="touchControls" id="tapTimeout">tapTimeout</li>
       <li><input type="checkbox" data-section="touchControls" id="disableOnEnd">disableOnEnd</li>
+      <li><input type="checkbox" data-section="touchControls" id="touchControlsDisabled">disabled</li>
     </ul>
   </ul>
   <button id="reload">Reload with options</button>
@@ -52,22 +55,31 @@
           enterOnRotate: true,
           exitOnRotate: true,
           lockOnRotate: true,
-          iOS: false
+          iOS: false,
+          disabled: false
         },
         touchControls: {
           seekSeconds: 10,
           tapTimeout: 300,
-          disableOnEnd: false
+          disableOnEnd: false,
+          disabled: false
         }
       };
+
       var url = new URL(window.location);
       if (url.searchParams.has('options')) {
         options = JSON.parse(url.searchParams.get('options'));
       }
 
+      console.log(JSON.stringify(options, null, 2));
+
       Object.keys(options).forEach(function(section) {
         Object.keys(options[section]).forEach(function(prop) {
           const val = options[section][prop];
+
+          if (prop === 'disabled') {
+            prop = `${section}Disabled`;
+          }
 
           if (typeof val === 'boolean') {
             document.getElementById(prop).checked = val; 
@@ -81,7 +93,9 @@
       document.getElementById('options').querySelectorAll('input').forEach(function(opt) {
         opt.addEventListener('change', function() {
           if (this.type === 'checkbox') {
-            options[this.getAttribute('data-section')][this.id] = this.checked;
+            const param = this.id.endsWith('Disabled') ? 'disabled' : this.id;
+
+            options[this.getAttribute('data-section')][param] = this.checked;
           } else {
             options[this.getAttribute('data-section')][this.id] = parseFloat(this.value);
           }

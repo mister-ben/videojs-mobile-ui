@@ -9,12 +9,14 @@ const defaults = {
     enterOnRotate: true,
     exitOnRotate: true,
     lockOnRotate: true,
-    iOS: false
+    iOS: false,
+    disabled: false
   },
   touchControls: {
     seekSeconds: 10,
     tapTimeout: 300,
-    disableOnEnd: false
+    disableOnEnd: false,
+    disabled: false
   }
 };
 
@@ -62,36 +64,45 @@ const registerPlugin = videojs.registerPlugin || videojs.plugin;
 const onPlayerReady = (player, options) => {
   player.addClass('vjs-mobile-ui');
 
-  if (options.touchControls.disableOnEnd || typeof player.endscreen === 'function') {
-    player.addClass('vjs-mobile-ui-disable-end');
+  if (options.fullscreen.iOS) {
+    videojs.log.warn('videojs-mobile-ui: `fullscreen.iOS` is deprecated. Use Video.js option `preferFullWindow` instead.');
+    if (videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
+        !player.el_.ownerDocument.querySelector('.bc-iframe')) {
+      player.tech_.el_.setAttribute('playsinline', 'playsinline');
+      player.tech_.supportsFullScreen = function() {
+        return false;
+      };
+    }
   }
 
-  if (options.fullscreen.iOS &&
-      videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
-      !player.el_.ownerDocument.querySelector('.bc-iframe')) {
-    player.tech_.el_.setAttribute('playsinline', 'playsinline');
-    player.tech_.supportsFullScreen = function() {
-      return false;
-    };
+  if (!options.touchControls.disabled) {
+
+    if (options.touchControls.disableOnEnd || typeof player.endscreen === 'function') {
+      player.addClass('vjs-mobile-ui-disable-end');
+    }
+
+    // Insert before the control bar
+    let controlBarIdx;
+    const versionParts = videojs.VERSION.split('.');
+    const major = parseInt(versionParts[0], 10);
+    const minor = parseInt(versionParts[1], 10);
+
+    // Video.js < 7.7.0 doesn't account for precedding components that don't have elements
+    if (major < 7 || (major === 7 && minor < 7)) {
+      controlBarIdx = Array.prototype.indexOf.call(
+        player.el_.children,
+        player.getChild('ControlBar').el_
+      );
+    } else {
+      controlBarIdx = player.children_.indexOf(player.getChild('ControlBar'));
+    }
+
+    player.touchOverlay = player.addChild('TouchOverlay', options.touchControls, controlBarIdx);
   }
 
-  // Insert before the control bar
-  let controlBarIdx;
-  const versionParts = videojs.VERSION.split('.');
-  const major = parseInt(versionParts[0], 10);
-  const minor = parseInt(versionParts[1], 10);
-
-  // Video.js < 7.7.0 doesn't account for precedding components that don't have elements
-  if (major < 7 || (major === 7 && minor < 7)) {
-    controlBarIdx = Array.prototype.indexOf.call(
-      player.el_.children,
-      player.getChild('ControlBar').el_
-    );
-  } else {
-    controlBarIdx = player.children_.indexOf(player.getChild('ControlBar'));
+  if (options.fullscreen.disabled) {
+    return;
   }
-
-  player.addChild('TouchOverlay', options.touchControls, controlBarIdx);
 
   let locked = false;
 
@@ -132,17 +143,17 @@ const onPlayerReady = (player, options) => {
         screen.orientation.onchange = null;
       });
     }
+
+    player.on('fullscreenchange', _ => {
+      if (!player.isFullscreen() && locked) {
+        screen.orientation.unlock();
+        locked = false;
+      }
+    });
   }
 
   player.on('ended', _ => {
     if (locked === true) {
-      screen.orientation.unlock();
-      locked = false;
-    }
-  });
-
-  player.on('fullscreenchange', _ => {
-    if (!player.isFullscreen() && locked) {
       screen.orientation.unlock();
       locked = false;
     }
@@ -161,6 +172,8 @@ const onPlayerReady = (player, options) => {
  *           Enables the display regardless of user agent, for testing purposes
  * @param    {Object} [options.fullscreen={}]
  *           Fullscreen options.
+ * @param    {boolean} [options.fullscreen.disabled=false]
+ *           If true no fullscreen handling except the *deprecated* iOS fullwindow hack
  * @param    {boolean} [options.fullscreen.enterOnRotate=true]
  *           Whether to go fullscreen when rotating to landscape
  * @param    {boolean} [options.fullscreen.exitOnRotate=true]
@@ -169,9 +182,11 @@ const onPlayerReady = (player, options) => {
  *           Whether to lock orientation when rotating to landscape
  *           Unlocked when exiting fullscreen or on 'ended'
  * @param    {boolean} [options.fullscreen.iOS=false]
- *           Whether to disable iOS's native fullscreen so controls can work
+ *           Deprecated: Whether to disable iOS's native fullscreen so controls can work
  * @param    {Object} [options.touchControls={}]
  *           Touch UI options.
+ * @param    {boolean} [options.touchControls.disabled=false]
+ *           If true no touch controls are added.
  * @param    {int} [options.touchControls.seekSeconds=10]
  *           Number of seconds to seek on double-tap
  * @param    {int} [options.touchControls.tapTimeout=300]

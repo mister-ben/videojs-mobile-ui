@@ -62,6 +62,24 @@ QUnit.test('inserts element before control bar', function(assert) {
   );
 });
 
+QUnit.test('does not insert if disabled', function(assert) {
+
+  this.player.mobileUi({
+    forceForTesting: true,
+    touchControls: {
+      disabled: true
+    }
+  });
+
+  this.clock.tick(1);
+
+  assert.strictEqual(
+    this.player.touchOverlay,
+    undefined,
+    'TouchOverlay should not be present'
+  );
+});
+
 QUnit.test('iOS event listeners', function(assert) {
 
   const oldBrowser = videojs.browser;
@@ -118,7 +136,7 @@ QUnit[testOrSkip]('Android event listeners', function(assert) {
   assert.strictEqual(
     typeof window.screen.orientation.onchange,
     'function',
-    'screen.orientation.onchange is used for andorid'
+    'screen.orientation.onchange is used for android'
   );
 
   this.player.dispose();
@@ -129,6 +147,33 @@ QUnit[testOrSkip]('Android event listeners', function(assert) {
     window.screen.orientation.onchange,
     null,
     'screen.orientation.onchange is removed after dispose'
+  );
+
+  videojs.browser = oldBrowser;
+});
+
+QUnit[testOrSkip]('Android event listeners skipped if disabled', function(assert) {
+
+  const oldBrowser = videojs.browser;
+
+  videojs.browser = videojs.mergeOptions(videojs.browser, {
+    IS_IOS: false,
+    IS_ANDROID: true
+  });
+
+  this.player.mobileUi({
+    forceForTesting: true,
+    fullscreen: {
+      disabled: true
+    }
+  });
+
+  this.clock.tick(1);
+
+  assert.notStrictEqual(
+    typeof window.screen.orientation.onchange,
+    'function',
+    'screen.orientation.onchange skipped for android'
   );
 
   videojs.browser = oldBrowser;
