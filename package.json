@@ -31,8 +31,7 @@
     "watch": "npm-run-all -p watch:*",
     "watch:css": "npm run build:css -- -w",
     "watch:js": "npm run build:js -- -w",
-    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose",
-    "x-prepare": "husky install"
+    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose"
   },
   "engines": {
     "node": ">=14",
@@ -64,11 +63,6 @@
     "src/",
     "test/"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.js": "vjsstandard --fix",
     "README.md": "doctoc --notitle"
