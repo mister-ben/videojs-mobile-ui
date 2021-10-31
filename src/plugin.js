@@ -30,7 +30,7 @@ const screen = window.screen;
 const getOrientation = () => {
   if (screen) {
     // Prefer the string over angle, as 0° can be landscape on some tablets
-    const orientationString = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation || ''.split('-')[0];
+    const orientationString = ((screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation || '').split('-')[0];
 
     if (orientationString === 'landscape' || orientationString === 'portrait') {
       return orientationString;
