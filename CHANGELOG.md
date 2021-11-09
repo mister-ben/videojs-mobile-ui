@@ -1,3 +1,18 @@
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v0.6.1...v0.7.0) (2021-11-09)
+
+### Features
+
+* Add disable options (#33) ([59e5f89](https://github.com/mister-ben/videojs-mobile-ui/commit/59e5f89)), closes [#33](https://github.com/mister-ben/videojs-mobile-ui/issues/33)
+
+### Bug Fixes
+
+* orientation string (#37) ([177f326](https://github.com/mister-ben/videojs-mobile-ui/commit/177f326)), closes [#37](https://github.com/mister-ben/videojs-mobile-ui/issues/37)
+
+### Chores
+
+* update dependencies ([6fb5a7b](https://github.com/mister-ben/videojs-mobile-ui/commit/6fb5a7b))
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v0.6.0...v0.6.1) (2021-08-27)
 
