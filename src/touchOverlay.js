@@ -83,6 +83,15 @@ class TouchOverlay extends Component {
       if (this.timeout) {
         window.clearTimeout(this.timeout);
       }
+
+      clearTimeout(this.timerDoubleTap);
+
+      //reset accumulator within 2 seconds of a double click
+      this.timerDoubleTap = window.setTimeout(() => {
+        this.forwardSpeed = 0;
+        this.rewindSpeed  = 0;
+      }, 2000);
+
       this.handleDoubleTap(event);
     } else {
       this.firstTapCaptured = true;
@@ -118,10 +127,12 @@ class TouchOverlay extends Component {
 
     // Check if double tap is in left or right area
     if (x < rect.width * 0.4) {
-      this.player_.currentTime(Math.max(0, this.player_.currentTime() - this.seekSeconds));
+      this.rewindSpeed  += this.seekSeconds;
+      this.player_.currentTime(Math.max(0, this.player_.currentTime() - this.rewindSpeed));
       this.addClass('reverse');
     } else if (x > rect.width - (rect.width * 0.4)) {
-      this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + this.seekSeconds));
+      this.forwardSpeed += this.seekSeconds;
+      this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + this.forwardSpeed));
       this.removeClass('reverse');
     } else {
       return;
@@ -142,6 +153,8 @@ class TouchOverlay extends Component {
    */
   enable() {
     this.firstTapCaptured = false;
+    this.forwardSpeed = 0;
+    this.rewindSpeed  = 0;
     this.on('touchend', this.handleTap);
   }
 
