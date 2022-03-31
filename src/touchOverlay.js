@@ -78,6 +78,8 @@ class TouchOverlay extends Component {
 
     event.preventDefault();
 
+    this.nbtap++;
+
     if (this.firstTapCaptured) {
       this.firstTapCaptured = false;
       if (this.timeout) {
@@ -86,13 +88,10 @@ class TouchOverlay extends Component {
 
       clearTimeout(this.timerDoubleTap);
 
-      //reset accumulator within 2 seconds of a double click
       this.timerDoubleTap = window.setTimeout(() => {
-        this.forwardSpeed = 0;
-        this.rewindSpeed  = 0;
-      }, 2000);
+        this.handleDoubleTap(event);
+      }, 500);
 
-      this.handleDoubleTap(event);
     } else {
       this.firstTapCaptured = true;
       this.timeout = window.setTimeout(() => {
@@ -112,6 +111,7 @@ class TouchOverlay extends Component {
   handleSingleTap(event) {
     this.removeClass('skip');
     this.toggleClass('show-play-toggle');
+    this.nbtap = 0;
   }
 
   /**
@@ -127,16 +127,19 @@ class TouchOverlay extends Component {
 
     // Check if double tap is in left or right area
     if (x < rect.width * 0.4) {
-      this.rewindSpeed  += this.seekSeconds;
-      this.player_.currentTime(Math.max(0, this.player_.currentTime() - this.rewindSpeed));
+      this.player_.currentTime(Math.max(0, this.player_.currentTime() - this.seekSeconds * (this.nbtap - 1)));
       this.addClass('reverse');
     } else if (x > rect.width - (rect.width * 0.4)) {
-      this.forwardSpeed += this.seekSeconds;
-      this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + this.forwardSpeed));
+      this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + this.seekSeconds * (this.nbtap - 1)));
       this.removeClass('reverse');
     } else {
       return;
     }
+
+    // Clear Taps
+    this.nbtap = 0;
+    window.clearTimeout(this.timerDoubleTap);
+    window.clearTimeout(this.timeout);
 
     // Remove play toggle if showing
     this.removeClass('show-play-toggle');
@@ -153,8 +156,8 @@ class TouchOverlay extends Component {
    */
   enable() {
     this.firstTapCaptured = false;
-    this.forwardSpeed = 0;
-    this.rewindSpeed  = 0;
+    this.nbtap = 0;
+    this.timerDoubleTap = null;
     this.on('touchend', this.handleTap);
   }
 
