@@ -9,6 +9,7 @@ const defaults = {
     enterOnRotate: true,
     exitOnRotate: true,
     lockOnRotate: true,
+    alwaysLockToLandscape: false,
     iOS: false,
     disabled: false
   },
@@ -67,7 +68,7 @@ const onPlayerReady = (player, options) => {
   if (options.fullscreen.iOS) {
     videojs.log.warn('videojs-mobile-ui: `fullscreen.iOS` is deprecated. Use Video.js option `preferFullWindow` instead.');
     if (videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
-        !player.el_.ownerDocument.querySelector('.bc-iframe')) {
+      !player.el_.ownerDocument.querySelector('.bc-iframe')) {
       player.tech_.el_.setAttribute('playsinline', 'playsinline');
       player.tech_.supportsFullScreen = function() {
         return false;
@@ -112,8 +113,8 @@ const onPlayerReady = (player, options) => {
     if (currentOrientation === 'landscape' && options.fullscreen.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
-        if (options.fullscreen.lockOnRotate &&
-            screen.orientation && screen.orientation.lock) {
+        if ((options.fullscreen.lockOnRotate || options.fullscreen.alwaysLockToLandscape) &&
+          screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
           }).catch((e) => {
@@ -143,14 +144,20 @@ const onPlayerReady = (player, options) => {
         screen.orientation.onchange = null;
       });
     }
-
-    player.on('fullscreenchange', _ => {
-      if (!player.isFullscreen() && locked) {
-        screen.orientation.unlock();
-        locked = false;
-      }
-    });
   }
+
+  player.on('fullscreenchange', _ => {
+    if (player.isFullscreen() && options.fullscreen.alwaysLockToLandscape && getOrientation() === 'portrait') {
+      screen.orientation.lock('landscape').then(()=>{
+        locked = true;
+      }).catch((e) => {
+        videojs.log('Browser refused orientation lock:', e);
+      });
+    } else if (!player.isFullscreen() && locked) {
+      screen.orientation.unlock();
+      locked = false;
+    }
+  });
 
   player.on('ended', _ => {
     if (locked === true) {
@@ -180,6 +187,9 @@ const onPlayerReady = (player, options) => {
  *           Whether to leave fullscreen when rotating to portrait (if not locked)
  * @param    {boolean} [options.fullscreen.lockOnRotate=true]
  *           Whether to lock orientation when rotating to landscape
+ *           Unlocked when exiting fullscreen or on 'ended
+ * @param    {boolean} [options.fullscreen.alwaysLockToLandscape=false]
+ *           Whether to always lock orientation to landscape on fullscreen mode
  *           Unlocked when exiting fullscreen or on 'ended'
  * @param    {boolean} [options.fullscreen.iOS=false]
  *           Deprecated: Whether to disable iOS's native fullscreen so controls can work
