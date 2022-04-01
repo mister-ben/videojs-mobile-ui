@@ -1,127 +1,206 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>videojs-mobile-ui Demo</title>
-  <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
-  <link href="dist/videojs-mobile-ui.css" rel="stylesheet">
+  <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet" />
+  <link href="dist/videojs-mobile-ui.css" rel="stylesheet" />
   <style>
-  .testEl {
-    width: 10%;
-    height: 10%;
-    position: absolute;
-    top: 0;
-    pointer-events: none;
-    display: none;
-  }
+    .testEl {
+      width: 10%;
+      height: 10%;
+      position: absolute;
+      top: 0;
+      pointer-events: none;
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <video-js id="videojs-mobile-ui-player" class="video-js vjs-default-skin vjs-fluid" controls playsinline>
-    <source src="//vjs.zencdn.net/v/oceans.mp4" type='video/mp4'>
-    <source src="//vjs.zencdn.net/v/oceans.webm" type='video/webm'>
-  </video-js>
+  <video-js
+  id="videojs-mobile-ui-player"
+  class="video-js vjs-default-skin vjs-fluid"
+  controls
+  playsinline
+  >
+  <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+  <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm" />
+</video-js>
+<ul>
+  <li><a href="test/">Run unit tests in browser.</a></li>
+  <li><a href="docs/api/">Read generated docs.</a></li>
+</ul>
+<h2>Options</h2>
+<ul id="options">
+  <li>fullscreen:</li>
   <ul>
-    <li><a href="test/">Run unit tests in browser.</a></li>
-    <li><a href="docs/api/">Read generated docs.</a></li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="fullscreen"
+      id="enterOnRotate"
+      />enterOnRotate
+    </li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="fullscreen"
+      id="exitOnRotate"
+      />exitOnRotate
+    </li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="fullscreen"
+      id="lockOnRotate"
+      />lockOnRotate
+    </li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="fullscreen"
+      id="alwaysLockToLandscape"
+      />alwaysLockToLandscape
+    </li>
+    <li>
+      <input type="checkbox" data-section="fullscreen" id="iOS" />iOS
+      <b>Deprecated</b>
+    </li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="fullscreen"
+      id="fullscreenDisabled"
+      />disabled
+    </li>
   </ul>
-  <h2>Options</h2>
-  <ul id="options">
-    <li>fullscreen:</li>
-    <ul>
-      <li><input type="checkbox"  data-section="fullscreen" id="enterOnRotate">enterOnRotate</li>
-      <li><input type="checkbox" data-section="fullscreen" id="exitOnRotate">exitOnRotate</li>
-      <li><input type="checkbox" data-section="fullscreen" id="lockOnRotate">lockOnRotate</li>
-      <li><input type="checkbox" data-section="fullscreen" id="iOS">iOS <b>Deprecated</b></li>
-      <li><input type="checkbox" data-section="fullscreen" id="fullscreenDisabled">disabled</li>
-    </ul>
-    <li>touchControls:</li>
-    <ul>
-      <li><input type="number" data-section="touchControls" id="seekSeconds">seekSeconds</li>
-      <li><input type="number" data-section="touchControls" id="tapTimeout">tapTimeout</li>
-      <li><input type="checkbox" data-section="touchControls" id="disableOnEnd">disableOnEnd</li>
-      <li><input type="checkbox" data-section="touchControls" id="touchControlsDisabled">disabled</li>
-    </ul>
+  <li>touchControls:</li>
+  <ul>
+    <li>
+      <input
+      type="number"
+      data-section="touchControls"
+      id="seekSeconds"
+      />seekSeconds
+    </li>
+    <li>
+      <input
+      type="number"
+      data-section="touchControls"
+      id="tapTimeout"
+      />tapTimeout
+    </li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="touchControls"
+      id="disableOnEnd"
+      />disableOnEnd
+    </li>
+    <li>
+      <input
+      type="checkbox"
+      data-section="touchControls"
+      id="touchControlsDisabled"
+      />disabled
+    </li>
   </ul>
-  <button id="reload">Reload with options</button>
-  <ul id="log"></ul>
-  <script src="node_modules/video.js/dist/video.js"></script>
-  <script src="dist/videojs-mobile-ui.js"></script>
-  <script>
-    (function(window, videojs) {
-      var options = {
-        fullscreen: {
-          enterOnRotate: true,
-          exitOnRotate: true,
-          lockOnRotate: true,
-          iOS: false,
-          disabled: false
-        },
-        touchControls: {
-          seekSeconds: 10,
-          tapTimeout: 300,
-          disableOnEnd: false,
-          disabled: false
+</ul>
+<button id="reload">Reload with options</button>
+<ul id="log"></ul>
+<script src="node_modules/video.js/dist/video.js"></script>
+<script src="dist/videojs-mobile-ui.js"></script>
+<script>
+  (function (window, videojs) {
+    var options = {
+      fullscreen: {
+        enterOnRotate: true,
+        exitOnRotate: true,
+        lockOnRotate: true,
+        alwaysLockToLandscape: false,
+        iOS: false,
+        disabled: false,
+      },
+      touchControls: {
+        seekSeconds: 10,
+        tapTimeout: 300,
+        disableOnEnd: false,
+        disabled: false,
+      },
+    };
+
+    var url = new URL(window.location);
+    if (url.searchParams.has('options')) {
+      options = JSON.parse(url.searchParams.get('options'));
+    }
+
+    console.log(JSON.stringify(options, null, 2));
+
+    Object.keys(options).forEach(function (section) {
+      Object.keys(options[section]).forEach(function (prop) {
+        const val = options[section][prop];
+
+        if (prop === 'disabled') {
+          prop = `${section}Disabled`;
         }
-      };
 
-      var url = new URL(window.location);
-      if (url.searchParams.has('options')) {
-        options = JSON.parse(url.searchParams.get('options'));
-      }
-
-      console.log(JSON.stringify(options, null, 2));
-
-      Object.keys(options).forEach(function(section) {
-        Object.keys(options[section]).forEach(function(prop) {
-          const val = options[section][prop];
-
-          if (prop === 'disabled') {
-            prop = `${section}Disabled`;
-          }
-
-          if (typeof val === 'boolean') {
-            document.getElementById(prop).checked = val; 
-          }
-          if (typeof val === 'number') {
-            document.getElementById(prop).value = val; 
-          }
-        });
+        if (typeof val === 'boolean') {
+          document.getElementById(prop).checked = val;
+        }
+        if (typeof val === 'number') {
+          document.getElementById(prop).value = val;
+        }
       });
+    });
 
-      document.getElementById('options').querySelectorAll('input').forEach(function(opt) {
-        opt.addEventListener('change', function() {
-          if (this.type === 'checkbox') {
-            const param = this.id.endsWith('Disabled') ? 'disabled' : this.id;
+    document
+    .getElementById('options')
+    .querySelectorAll('input')
+    .forEach(function (opt) {
+      opt.addEventListener('change', function () {
+        if (this.type === 'checkbox') {
+          const param = this.id.endsWith('Disabled')
+          ? 'disabled'
+          : this.id;
 
-            options[this.getAttribute('data-section')][param] = this.checked;
-          } else {
-            options[this.getAttribute('data-section')][this.id] = parseFloat(this.value);
-          }
-          console.log(options);
-        });
+          options[this.getAttribute('data-section')][param] =
+          this.checked;
+        } else {
+          options[this.getAttribute('data-section')][this.id] =
+          parseFloat(this.value);
+        }
+        console.log(options);
       });
+    });
 
-      document.getElementById('reload').addEventListener('click', function() {
-        url.searchParams.set('options', JSON.stringify(options));
+    document
+    .getElementById('reload')
+    .addEventListener('click', function () {
+      url.searchParams.set('options', JSON.stringify(options));
 
-        window.location = url.href;
-      })
+      window.location = url.href;
+    });
 
-      window.addEventListener('orientationchange', function() {
-        var el = document.createElement('li');
-        var message = (new Date).toTimeString().split(' ')[0] + ' ' + window.orientation;
-        message += (screen && screen.orientation ? ' ' + screen.orientation.type + ' ' + screen.orientation.angle : '');
-        el.textContent = message;
-        console.log(message);
-        document.getElementById('log').appendChild(el);
-      });
+    window.addEventListener('orientationchange', function () {
+      var el = document.createElement('li');
+      var message =
+      new Date().toTimeString().split(' ')[0] + ' ' + window.orientation;
+      message +=
+      screen && screen.orientation
+      ? ' ' + screen.orientation.type + ' ' + screen.orientation.angle
+      : '';
+      el.textContent = message;
+      console.log(message);
+      document.getElementById('log').appendChild(el);
+    });
 
-      var testPlayer = window.testPlayer = videojs('videojs-mobile-ui-player');
-      testPlayer.endscreen = function() {};
-      testPlayer.mobileUi(options);
-    }(window, window.videojs));
-  </script>
+    var testPlayer = (window.testPlayer = videojs(
+      'videojs-mobile-ui-player'
+      ));
+    testPlayer.endscreen = function () {};
+    testPlayer.mobileUi(options);
+  })(window, window.videojs);
+</script>
 </body>
 </html>
