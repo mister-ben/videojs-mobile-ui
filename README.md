@@ -12,7 +12,7 @@ Fullscreen control:
 
 - Rotate to landscape to enter Fullscreen
 - Lock to fullscreen on rotate
-- Always lock fullscreen to landscape (works even when device rotation is disabled/non-functional)
+- Always lock to landscape when entering fullscreen (works even when device rotation is disabled/non-functional)
 
 ## Table of Contents
 
