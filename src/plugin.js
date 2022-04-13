@@ -114,7 +114,7 @@ const onPlayerReady = (player, options) => {
       if (player.paused() === false) {
         player.requestFullscreen();
         if ((options.fullscreen.lockOnRotate || options.fullscreen.alwaysLockToLandscape) &&
-          screen.orientation && screen.orientation.lock) {
+            screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
           }).catch((e) => {
