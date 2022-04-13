@@ -12,6 +12,7 @@ Fullscreen control:
 
 - Rotate to landscape to enter Fullscreen
 - Lock to fullscreen on rotate
+- Always lock to landscape when entering fullscreen (works even when device rotation is disabled/non-functional)
 
 ## Table of Contents
 
@@ -45,12 +46,16 @@ npm install --save videojs-mobile-ui
   fullscreen: {
     enterOnRotate: true,
     exitOnRotate: true,
-    lockOnRotate: true
+    lockOnRotate: true,
+    lockToLandscapeOnEnter: false,
+    iOS: false,
+    disabled: false
   },
   touchControls: {
     seekSeconds: 10,
     tapTimeout: 300,
-    disableOnEnd: false
+    disableOnEnd: false,
+    disabled: false,
   }
 };
 ```
@@ -60,10 +65,13 @@ npm install --save videojs-mobile-ui
 - *fullscreen.enterOnRotate* `boolean` Whether to go fullscreen when rotating to landscape
 - *fullscreen.exitOnRotate* `boolean` Whether to leave fullscreen when rotating to portrait (if not locked)
 - *fullscreen.lockOnRotate* `boolean` Whether to lock to fullscreen when rotating to landscape
+- *fullscreen.lockToLandscapeOnEnter* `boolean` Whether to lock to landscape when entering fullscreen (works even when device rotation is disabled/non-functional)
 - *fullscreen.iOS* `boolean` Whether to use fake fullscreen on iOS (needed for controls to work)
+- *fullscreen.disabled* `boolean` If true no fullscreen handling except the *deprecated* iOS fullwindow hack
 - *touchControls.seekSeconds* `int` Seconds to seek when double-tapping
 - *touchControls.tapTimeout* `int` Milliseconds to consider a double-tap
 - *touchControls.disableOnEnd* `boolean` Whether to disable touch controls when the video has ended, e.g. if an endscreen is used. Automatically disables if the endscreen plugin is present when this plugin initialises
+- *touchControls.disableOnEnd* `boolean` If true no touch controls are added.
 
 ## Usage
 

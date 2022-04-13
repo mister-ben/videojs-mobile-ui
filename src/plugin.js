@@ -9,6 +9,7 @@ const defaults = {
     enterOnRotate: true,
     exitOnRotate: true,
     lockOnRotate: true,
+    lockToLandscapeOnEnter: false,
     iOS: false,
     disabled: false
   },
@@ -112,7 +113,7 @@ const onPlayerReady = (player, options) => {
     if (currentOrientation === 'landscape' && options.fullscreen.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
-        if (options.fullscreen.lockOnRotate &&
+        if ((options.fullscreen.lockOnRotate || options.fullscreen.lockToLandscapeOnEnter) &&
             screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
@@ -143,14 +144,20 @@ const onPlayerReady = (player, options) => {
         screen.orientation.onchange = null;
       });
     }
-
-    player.on('fullscreenchange', _ => {
-      if (!player.isFullscreen() && locked) {
-        screen.orientation.unlock();
-        locked = false;
-      }
-    });
   }
+
+  player.on('fullscreenchange', _ => {
+    if (player.isFullscreen() && options.fullscreen.lockToLandscapeOnEnter && getOrientation() === 'portrait') {
+      screen.orientation.lock('landscape').then(()=>{
+        locked = true;
+      }).catch((e) => {
+        videojs.log('Browser refused orientation lock:', e);
+      });
+    } else if (!player.isFullscreen() && locked) {
+      screen.orientation.unlock();
+      locked = false;
+    }
+  });
 
   player.on('ended', _ => {
     if (locked === true) {
@@ -180,6 +187,9 @@ const onPlayerReady = (player, options) => {
  *           Whether to leave fullscreen when rotating to portrait (if not locked)
  * @param    {boolean} [options.fullscreen.lockOnRotate=true]
  *           Whether to lock orientation when rotating to landscape
+ *           Unlocked when exiting fullscreen or on 'ended
+ * @param    {boolean} [options.fullscreen.lockToLandscapeOnEnter=false]
+ *           Whether to always lock orientation to landscape on fullscreen mode
  *           Unlocked when exiting fullscreen or on 'ended'
  * @param    {boolean} [options.fullscreen.iOS=false]
  *           Deprecated: Whether to disable iOS's native fullscreen so controls can work
