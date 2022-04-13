@@ -9,7 +9,7 @@ const defaults = {
     enterOnRotate: true,
     exitOnRotate: true,
     lockOnRotate: true,
-    alwaysLockToLandscape: false,
+    lockToLandscapeOnEnter: false,
     iOS: false,
     disabled: false
   },
@@ -113,7 +113,7 @@ const onPlayerReady = (player, options) => {
     if (currentOrientation === 'landscape' && options.fullscreen.enterOnRotate) {
       if (player.paused() === false) {
         player.requestFullscreen();
-        if ((options.fullscreen.lockOnRotate || options.fullscreen.alwaysLockToLandscape) &&
+        if ((options.fullscreen.lockOnRotate || options.fullscreen.lockToLandscapeOnEnter) &&
             screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
@@ -147,7 +147,7 @@ const onPlayerReady = (player, options) => {
   }
 
   player.on('fullscreenchange', _ => {
-    if (player.isFullscreen() && options.fullscreen.alwaysLockToLandscape && getOrientation() === 'portrait') {
+    if (player.isFullscreen() && options.fullscreen.lockToLandscapeOnEnter && getOrientation() === 'portrait') {
       screen.orientation.lock('landscape').then(()=>{
         locked = true;
       }).catch((e) => {
@@ -188,7 +188,7 @@ const onPlayerReady = (player, options) => {
  * @param    {boolean} [options.fullscreen.lockOnRotate=true]
  *           Whether to lock orientation when rotating to landscape
  *           Unlocked when exiting fullscreen or on 'ended
- * @param    {boolean} [options.fullscreen.alwaysLockToLandscape=false]
+ * @param    {boolean} [options.fullscreen.lockToLandscapeOnEnter=false]
  *           Whether to always lock orientation to landscape on fullscreen mode
  *           Unlocked when exiting fullscreen or on 'ended'
  * @param    {boolean} [options.fullscreen.iOS=false]
