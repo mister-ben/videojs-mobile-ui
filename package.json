@@ -68,24 +68,27 @@
     "README.md": "doctoc --notitle"
   },
   "dependencies": {
-    "global": "^4.4.0",
-    "video.js": "^7"
+    "global": "^4.4.0"
+  },
+  "peerDependencies": {
+    "video.js": "^6 || ^7"
   },
   "devDependencies": {
     "@babel/runtime": "^7.14.0",
     "@videojs/generator-helpers": "~2.0.2",
+    "husky": "^6.0.0",
     "jsdoc": "^3.6.7",
     "karma": "^6.3.2",
     "postcss": "^8.2.13",
     "postcss-cli": "^8.3.1",
     "rollup": "^2.46.0",
     "sinon": "^9.1.0",
+    "video.js": "^6 || ^7",
     "videojs-generate-karma-config": "~8.0.0",
     "videojs-generate-postcss-config": "~3.0.0",
     "videojs-generate-rollup-config": "~6.2.0",
-    "videojs-generator-verify": "~3.0.3",
+    "videojs-generator-verify": "^4.1.0",
     "videojs-languages": "^2.0.0",
-    "videojs-standard": "^8.0.4",
-    "husky": "^6.0.0"
+    "videojs-standard": "^8.0.4"
   }
 }
