@@ -68,7 +68,7 @@ const onPlayerReady = (player, options) => {
   if (options.fullscreen.iOS) {
     videojs.log.warn('videojs-mobile-ui: `fullscreen.iOS` is deprecated. Use Video.js option `preferFullWindow` instead.');
     if (videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
-      !player.el_.ownerDocument.querySelector('.bc-iframe')) {
+        !player.el_.ownerDocument.querySelector('.bc-iframe')) {
       player.tech_.el_.setAttribute('playsinline', 'playsinline');
       player.tech_.supportsFullScreen = function() {
         return false;
