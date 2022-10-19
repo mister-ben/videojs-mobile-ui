@@ -76,7 +76,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.14.0",
     "@videojs/generator-helpers": "~3.2.0",
-    "husky": "^6.0.0",
+    "husky": "^8.0.1",
     "jsdoc": "^3.6.7",
     "karma": "^6.3.2",
     "postcss": "^8.2.13",
