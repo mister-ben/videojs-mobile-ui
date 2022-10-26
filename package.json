@@ -44,7 +44,7 @@
     "watch": "npm-run-all -p watch:*",
     "watch:css": "npm run build:css -- -w",
     "watch:js": "npm run build:js -- -w",
-    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose"
+    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose --no-es-check"
   },
   "engines": {
     "node": ">=14",
