@@ -10,7 +10,6 @@ const defaults = {
     exitOnRotate: true,
     lockOnRotate: true,
     lockToLandscapeOnEnter: false,
-    iOS: false,
     disabled: false
   },
   touchControls: {
@@ -49,9 +48,6 @@ const getOrientation = () => {
   return 'portrait';
 };
 
-// Cross-compatibility for Video.js 5 and 6.
-const registerPlugin = videojs.registerPlugin || videojs.plugin;
-
 /**
  * Add UI and event listeners
  *
@@ -64,17 +60,6 @@ const registerPlugin = videojs.registerPlugin || videojs.plugin;
  */
 const onPlayerReady = (player, options) => {
   player.addClass('vjs-mobile-ui');
-
-  if (options.fullscreen.iOS) {
-    videojs.log.warn('videojs-mobile-ui: `fullscreen.iOS` is deprecated. Use Video.js option `preferFullWindow` instead.');
-    if (videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
-        !player.el_.ownerDocument.querySelector('.bc-iframe')) {
-      player.tech_.el_.setAttribute('playsinline', 'playsinline');
-      player.tech_.supportsFullScreen = function() {
-        return false;
-      };
-    }
-  }
 
   if (!options.touchControls.disabled) {
 
@@ -208,13 +193,13 @@ const onPlayerReady = (player, options) => {
 const mobileUi = function(options = {}) {
   if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
     this.ready(() => {
-      onPlayerReady(this, videojs.mergeOptions(defaults, options));
+      onPlayerReady(this, videojs.obj.merge(defaults, options));
     });
   }
 };
 
 // Register the plugin with video.js.
-registerPlugin('mobileUi', mobileUi);
+videojs.registerPlugin('mobileUi', mobileUi);
 
 // Include the version number.
 mobileUi.VERSION = VERSION;
