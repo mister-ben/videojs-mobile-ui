@@ -46,7 +46,9 @@ class TouchOverlay extends Component {
     }
 
     /**
-     * Debounced tap handler. Seeks number of (taps - 1) * configured seconds to skip
+     * Debounced tap handler.
+     * Seeks number of (taps - 1) * configured seconds to skip.
+     * One tap is a non-op
      *
      * @param {Event} event
      */
