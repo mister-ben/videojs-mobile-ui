@@ -28,9 +28,9 @@ const screen = window.screen;
  * @return {string} orientation
  */
 const getOrientation = () => {
-  if (screen) {
+  if (window.screen) {
     // Prefer the string over angle, as 0° can be landscape on some tablets
-    const orientationString = ((screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation || '').split('-')[0];
+    const orientationString = ((window.screen.orientation || {}).type || window.screen.mozOrientation || window.screen.msOrientation || '').split('-')[0];
 
     if (orientationString === 'landscape' || orientationString === 'portrait') {
       return orientationString;
@@ -68,20 +68,7 @@ const onPlayerReady = (player, options) => {
     }
 
     // Insert before the control bar
-    let controlBarIdx;
-    const versionParts = videojs.VERSION.split('.');
-    const major = parseInt(versionParts[0], 10);
-    const minor = parseInt(versionParts[1], 10);
-
-    // Video.js < 7.7.0 doesn't account for precedding components that don't have elements
-    if (major < 7 || (major === 7 && minor < 7)) {
-      controlBarIdx = Array.prototype.indexOf.call(
-        player.el_.children,
-        player.getChild('ControlBar').el_
-      );
-    } else {
-      controlBarIdx = player.children_.indexOf(player.getChild('ControlBar'));
-    }
+    const controlBarIdx = player.children_.indexOf(player.getChild('ControlBar'));
 
     player.touchOverlay = player.addChild('TouchOverlay', options.touchControls, controlBarIdx);
   }

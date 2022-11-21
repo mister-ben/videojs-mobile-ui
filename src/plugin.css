@@ -30,16 +30,28 @@
 
     &.skip {
       opacity: 0;
-      animation: fadeAndScale 0.6s linear;
+      animation: fadeAndScale 0.8s linear;
       background-repeat: no-repeat;
       background-position: 80% center;
       background-size: 10%;
       background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+
+      &:after {
+        content: attr(data-skip-text);
+        position: absolute;
+        top: 60%;
+        left: 70%;
+      }
     }
 
     &.skip.reverse {
       background-position: 20% center;
       background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+
+      &:after {
+        right: 70%;
+        left: unset;
+      }
     }
 
     .vjs-play-control {
