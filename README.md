@@ -34,8 +34,11 @@ Fullscreen control:
 ## Installation
 
 ```sh
-npm install --save videojs-mobile-ui
+npm install video.js
+npm install videojs-mobile-ui
 ```
+
+Version 1.x requires video.js 8.x as a peer dependency. Lowever video.js versions are not supported. 0.7.0 supports video.js 7.x.
 
 ## Plugin Options
 
