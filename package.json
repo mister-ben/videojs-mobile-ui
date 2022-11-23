@@ -31,7 +31,7 @@
     "watch": "npm-run-all -p watch:*",
     "watch:css": "npm run build:css -- -w",
     "watch:js": "npm run build:js -- -w",
-    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose"
+    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose --skip-es-check"
   },
   "engines": {
     "node": ">=14",
@@ -71,7 +71,7 @@
     "global": "^4.4.0"
   },
   "peerDependencies": {
-    "video.js": "^6 || ^7"
+    "video.js": "^8"
   },
   "devDependencies": {
     "@babel/runtime": "^7.14.0",
@@ -83,10 +83,10 @@
     "postcss-cli": "^8.3.1",
     "rollup": "^2.46.0",
     "sinon": "^14.0.1",
-    "video.js": "^6 || ^7",
+    "video.js": "^8.0.0",
     "videojs-generate-karma-config": "~8.0.0",
     "videojs-generate-postcss-config": "~3.0.0",
-    "videojs-generate-rollup-config": "~7.0.0",
+    "videojs-generate-rollup-config": "^7.0.0",
     "videojs-generator-verify": "^4.1.0",
     "videojs-languages": "^2.0.0",
     "videojs-standard": "^9.0.1"

@@ -30,6 +30,7 @@ class TouchOverlay extends Component {
 
     this.seekSeconds = options.seekSeconds;
     this.tapTimeout = options.tapTimeout;
+    this.taps = 0;
 
     // Add play toggle overlay
     this.addChild('playToggle', {});
@@ -43,6 +44,46 @@ class TouchOverlay extends Component {
     if (this.player_.options_.inactivityTimeout === 0) {
       this.player_.options_.inactivityTimeout = 5000;
     }
+
+    /**
+     * Debounced tap handler.
+     * Seeks number of (taps - 1) * configured seconds to skip.
+     * One tap is a non-op
+     *
+     * @param {Event} event
+     */
+    this.handleTaps_ = videojs.fn.debounce(event => {
+      const increment = (this.taps - 1) * this.seekSeconds;
+
+      this.taps = 0;
+      if (increment < 1) {
+        return;
+      }
+
+      const rect = this.el_.getBoundingClientRect();
+      const x = event.changedTouches[0].clientX - rect.left;
+
+      // Check if double tap is in left or right area
+      if (x < rect.width * 0.4) {
+        this.player_.currentTime(Math.max(0, this.player_.currentTime() - increment));
+        this.addClass('reverse');
+      } else if (x > rect.width - (rect.width * 0.4)) {
+        this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + increment));
+        this.removeClass('reverse');
+      } else {
+        return;
+      }
+
+      // Remove play toggle if showing
+      this.removeClass('show-play-toggle');
+
+      // Remove and readd class to trigger animation
+      this.setAttribute('data-skip-text', `${increment} ${this.localize('seconds')}`);
+      this.removeClass('skip');
+      window.requestAnimationFrame(() => {
+        this.addClass('skip');
+      });
+    }, this.tapTimeout);
 
     this.enable();
   }
@@ -78,63 +119,12 @@ class TouchOverlay extends Component {
 
     event.preventDefault();
 
-    if (this.firstTapCaptured) {
-      this.firstTapCaptured = false;
-      if (this.timeout) {
-        window.clearTimeout(this.timeout);
-      }
-      this.handleDoubleTap(event);
-    } else {
-      this.firstTapCaptured = true;
-      this.timeout = window.setTimeout(() => {
-        this.firstTapCaptured = false;
-        this.handleSingleTap(event);
-      }, this.tapTimeout);
+    this.taps += 1;
+    if (this.taps === 1) {
+      this.removeClass('skip');
+      this.toggleClass('show-play-toggle');
     }
-  }
-
-  /**
-   * Toggles display of play toggle
-   *
-   * @param {Event} event
-   *        The touch event
-   *
-   */
-  handleSingleTap(event) {
-    this.removeClass('skip');
-    this.toggleClass('show-play-toggle');
-  }
-
-  /**
-   * Seeks by configured number of seconds if left or right part of video double tapped
-   *
-   * @param {Event} event
-   *        The touch event
-   *
-   */
-  handleDoubleTap(event) {
-    const rect = this.el_.getBoundingClientRect();
-    const x = event.changedTouches[0].clientX - rect.left;
-
-    // Check if double tap is in left or right area
-    if (x < rect.width * 0.4) {
-      this.player_.currentTime(Math.max(0, this.player_.currentTime() - this.seekSeconds));
-      this.addClass('reverse');
-    } else if (x > rect.width - (rect.width * 0.4)) {
-      this.player_.currentTime(Math.min(this.player_.duration(), this.player_.currentTime() + this.seekSeconds));
-      this.removeClass('reverse');
-    } else {
-      return;
-    }
-
-    // Remove play toggle if showing
-    this.removeClass('show-play-toggle');
-
-    // Remove and readd class to trigger animation
-    this.removeClass('skip');
-    window.requestAnimationFrame(() => {
-      this.addClass('skip');
-    });
+    this.handleTaps_(event);
   }
 
   /**
