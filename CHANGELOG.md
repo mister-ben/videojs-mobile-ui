@@ -1,3 +1,29 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.0.0...v1.0.1) (2023-01-17)
+
+### Bug Fixes
+
+* **deps:** bump decode-uri-component from 0.2.0 to 0.2.2 (#95) ([10ad7b2](https://github.com/mister-ben/videojs-mobile-ui/commit/10ad7b2)), closes [#95](https://github.com/mister-ben/videojs-mobile-ui/issues/95)
+* **deps:** bump json5 from 2.2.1 to 2.2.3 (#102) ([529d294](https://github.com/mister-ben/videojs-mobile-ui/commit/529d294)), closes [#102](https://github.com/mister-ben/videojs-mobile-ui/issues/102)
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.19.4 to 7.20.1 (#90) ([21738b6](https://github.com/mister-ben/videojs-mobile-ui/commit/21738b6)), closes [#90](https://github.com/mister-ben/videojs-mobile-ui/issues/90)
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.20.1 to 7.20.6 (#93) ([8665941](https://github.com/mister-ben/videojs-mobile-ui/commit/8665941)), closes [#93](https://github.com/mister-ben/videojs-mobile-ui/issues/93)
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.20.6 to 7.20.7 (#98) ([35078a1](https://github.com/mister-ben/videojs-mobile-ui/commit/35078a1)), closes [#98](https://github.com/mister-ben/videojs-mobile-ui/issues/98)
+* **deps-dev:** bump husky from 8.0.1 to 8.0.2 (#89) ([ddfe61f](https://github.com/mister-ben/videojs-mobile-ui/commit/ddfe61f)), closes [#89](https://github.com/mister-ben/videojs-mobile-ui/issues/89)
+* **deps-dev:** bump husky from 8.0.2 to 8.0.3 (#101) ([0588b77](https://github.com/mister-ben/videojs-mobile-ui/commit/0588b77)), closes [#101](https://github.com/mister-ben/videojs-mobile-ui/issues/101)
+* **deps-dev:** bump karma from 6.3.16 to 6.4.1 (#88) ([3f94ac8](https://github.com/mister-ben/videojs-mobile-ui/commit/3f94ac8)), closes [#88](https://github.com/mister-ben/videojs-mobile-ui/issues/88)
+* **deps-dev:** bump postcss from 8.4.18 to 8.4.19 (#91) ([7bce777](https://github.com/mister-ben/videojs-mobile-ui/commit/7bce777)), closes [#91](https://github.com/mister-ben/videojs-mobile-ui/issues/91)
+* **deps-dev:** bump postcss from 8.4.19 to 8.4.20 (#96) ([500a0e5](https://github.com/mister-ben/videojs-mobile-ui/commit/500a0e5)), closes [#96](https://github.com/mister-ben/videojs-mobile-ui/issues/96)
+* **deps-dev:** bump postcss from 8.4.20 to 8.4.21 (#104) ([a9d9263](https://github.com/mister-ben/videojs-mobile-ui/commit/a9d9263)), closes [#104](https://github.com/mister-ben/videojs-mobile-ui/issues/104)
+* **deps-dev:** bump rollup from 2.46.0 to 2.79.1 (#86) ([af0499e](https://github.com/mister-ben/videojs-mobile-ui/commit/af0499e)), closes [#86](https://github.com/mister-ben/videojs-mobile-ui/issues/86)
+* **deps-dev:** bump sinon from 14.0.2 to 15.0.0 (#94) ([19e1c6e](https://github.com/mister-ben/videojs-mobile-ui/commit/19e1c6e)), closes [#94](https://github.com/mister-ben/videojs-mobile-ui/issues/94)
+* **deps-dev:** bump sinon from 15.0.0 to 15.0.1 (#97) ([8933ffb](https://github.com/mister-ben/videojs-mobile-ui/commit/8933ffb)), closes [#97](https://github.com/mister-ben/videojs-mobile-ui/issues/97)
+* **deps-dev:** bump video.js from 8.0.0 to 8.0.1 (#87) ([e4309d4](https://github.com/mister-ben/videojs-mobile-ui/commit/e4309d4)), closes [#87](https://github.com/mister-ben/videojs-mobile-ui/issues/87)
+* **deps-dev:** bump video.js from 8.0.1 to 8.0.2 (#92) ([1b74370](https://github.com/mister-ben/videojs-mobile-ui/commit/1b74370)), closes [#92](https://github.com/mister-ben/videojs-mobile-ui/issues/92)
+* **deps-dev:** bump video.js from 8.0.2 to 8.0.3 (#103) ([3328f40](https://github.com/mister-ben/videojs-mobile-ui/commit/3328f40)), closes [#103](https://github.com/mister-ben/videojs-mobile-ui/issues/103)
+
 <a name="1.0.0"></a>
 # 1.0.0 (2022-11-23)
 
