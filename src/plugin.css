@@ -34,6 +34,7 @@
       background-repeat: no-repeat;
       background-position: 80% center;
       background-size: 10%;
+      background-color: rgba(43, 51, 63, 0.6);
       background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
 
       &:after {
@@ -84,9 +85,12 @@
       }
     }
 
-    &.show-play-toggle .vjs-play-control {
-      opacity: 1;
-      pointer-events: auto;
+    &.show-play-toggle {
+      background-color: rgba(43, 51, 63, 0.6);
+      .vjs-play-control {
+        opacity: 1;
+        pointer-events: auto;
+      }
     }
 
   }
