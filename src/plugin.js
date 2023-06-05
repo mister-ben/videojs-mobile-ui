@@ -163,8 +163,6 @@ const onPlayerReady = (player, options) => {
  * @param    {boolean} [options.fullscreen.lockToLandscapeOnEnter=false]
  *           Whether to always lock orientation to landscape on fullscreen mode
  *           Unlocked when exiting fullscreen or on 'ended'
- * @param    {boolean} [options.fullscreen.iOS=false]
- *           Deprecated: Whether to disable iOS's native fullscreen so controls can work
  * @param    {Object} [options.touchControls={}]
  *           Touch UI options.
  * @param    {boolean} [options.touchControls.disabled=false]

@@ -51,7 +51,6 @@ Version 1.x requires video.js 8.x as a peer dependency. Lowever video.js version
     exitOnRotate: true,
     lockOnRotate: true,
     lockToLandscapeOnEnter: false,
-    iOS: false,
     disabled: false
   },
   touchControls: {
