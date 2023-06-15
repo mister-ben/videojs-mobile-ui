@@ -14,7 +14,7 @@
   }
 }
 
-.video-js {
+.video-js.vjs-mobile-ui {
 
   &.vjs-has-started .vjs-touch-overlay {
     position: absolute;
