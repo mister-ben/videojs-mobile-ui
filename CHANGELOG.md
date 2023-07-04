@@ -1,3 +1,39 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.0.1...v1.1.0) (2023-07-04)
+
+### Features
+
+* Increase CSS specificity (#130) ([9e07684](https://github.com/mister-ben/videojs-mobile-ui/commit/9e07684)), closes [#130](https://github.com/mister-ben/videojs-mobile-ui/issues/130)
+
+### Bug Fixes
+
+* **deps:** bump engine.io and socket.io (#119) ([07d0eef](https://github.com/mister-ben/videojs-mobile-ui/commit/07d0eef)), closes [#119](https://github.com/mister-ben/videojs-mobile-ui/issues/119)
+* **deps:** bump socket.io-parser from 4.2.1 to 4.2.4 (#124) ([e30fb2f](https://github.com/mister-ben/videojs-mobile-ui/commit/e30fb2f)), closes [#124](https://github.com/mister-ben/videojs-mobile-ui/issues/124)
+* **deps:** bump ua-parser-js from 0.7.31 to 0.7.33 (#106) ([a3e2487](https://github.com/mister-ben/videojs-mobile-ui/commit/a3e2487)), closes [#106](https://github.com/mister-ben/videojs-mobile-ui/issues/106)
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.20.13 to 7.22.3 (#123) ([298df4d](https://github.com/mister-ben/videojs-mobile-ui/commit/298df4d)), closes [#123](https://github.com/mister-ben/videojs-mobile-ui/issues/123)
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.20.7 to 7.20.13 (#105) ([c955038](https://github.com/mister-ben/videojs-mobile-ui/commit/c955038)), closes [#105](https://github.com/mister-ben/videojs-mobile-ui/issues/105)
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.22.3 to 7.22.5 (#127) ([db4efbe](https://github.com/mister-ben/videojs-mobile-ui/commit/db4efbe)), closes [#127](https://github.com/mister-ben/videojs-mobile-ui/issues/127)
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.22.5 to 7.22.6 (#132) ([59eb889](https://github.com/mister-ben/videojs-mobile-ui/commit/59eb889)), closes [#132](https://github.com/mister-ben/videojs-mobile-ui/issues/132)
+* **deps-dev:** bump jsdoc from 4.0.0 to 4.0.2 (#109) ([1be4215](https://github.com/mister-ben/videojs-mobile-ui/commit/1be4215)), closes [#109](https://github.com/mister-ben/videojs-mobile-ui/issues/109)
+* **deps-dev:** bump karma from 6.4.1 to 6.4.2 (#116) ([516a58a](https://github.com/mister-ben/videojs-mobile-ui/commit/516a58a)), closes [#116](https://github.com/mister-ben/videojs-mobile-ui/issues/116)
+* **deps-dev:** bump postcss from 8.4.21 to 8.4.23 (#115) ([1f7cdcf](https://github.com/mister-ben/videojs-mobile-ui/commit/1f7cdcf)), closes [#115](https://github.com/mister-ben/videojs-mobile-ui/issues/115)
+* **deps-dev:** bump postcss from 8.4.23 to 8.4.24 (#125) ([1e22f74](https://github.com/mister-ben/videojs-mobile-ui/commit/1e22f74)), closes [#125](https://github.com/mister-ben/videojs-mobile-ui/issues/125)
+* **deps-dev:** bump sinon from 15.0.1 to 15.0.4 (#113) ([1d1ff27](https://github.com/mister-ben/videojs-mobile-ui/commit/1d1ff27)), closes [#113](https://github.com/mister-ben/videojs-mobile-ui/issues/113)
+* **deps-dev:** bump sinon from 15.0.4 to 15.1.0 (#120) ([662907b](https://github.com/mister-ben/videojs-mobile-ui/commit/662907b)), closes [#120](https://github.com/mister-ben/videojs-mobile-ui/issues/120)
+* **deps-dev:** bump sinon from 15.1.0 to 15.1.2 (#129) ([c0ea3b1](https://github.com/mister-ben/videojs-mobile-ui/commit/c0ea3b1)), closes [#129](https://github.com/mister-ben/videojs-mobile-ui/issues/129)
+* **deps-dev:** bump sinon from 15.1.2 to 15.2.0 (#131) ([3a17cc0](https://github.com/mister-ben/videojs-mobile-ui/commit/3a17cc0)), closes [#131](https://github.com/mister-ben/videojs-mobile-ui/issues/131)
+* **deps-dev:** bump video.js from 8.0.3 to 8.0.4 (#107) ([5dbc197](https://github.com/mister-ben/videojs-mobile-ui/commit/5dbc197)), closes [#107](https://github.com/mister-ben/videojs-mobile-ui/issues/107)
+* **deps-dev:** bump video.js from 8.0.4 to 8.3.0 (#117) ([e91aaee](https://github.com/mister-ben/videojs-mobile-ui/commit/e91aaee)), closes [#117](https://github.com/mister-ben/videojs-mobile-ui/issues/117)
+* **deps-dev:** bump videojs-generate-rollup-config from 7.0.0 to 7.0.1 (#114) ([cd7b101](https://github.com/mister-ben/videojs-mobile-ui/commit/cd7b101)), closes [#114](https://github.com/mister-ben/videojs-mobile-ui/issues/114)
+* Miscellaneous cleanups (#126) ([dcc9d89](https://github.com/mister-ben/videojs-mobile-ui/commit/dcc9d89)), closes [#126](https://github.com/mister-ben/videojs-mobile-ui/issues/126)
+
+### Documentation
+
+* add npm tag for v7 compatible version to README ([43bf4e9](https://github.com/mister-ben/videojs-mobile-ui/commit/43bf4e9))
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.0.0...v1.0.1) (2023-01-17)
 
