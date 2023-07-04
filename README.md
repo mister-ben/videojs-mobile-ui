@@ -51,7 +51,6 @@ Version 1.x requires video.js 8.x as a peer dependency. Lowever video.js version
     exitOnRotate: true,
     lockOnRotate: true,
     lockToLandscapeOnEnter: false,
-    iOS: false,
     disabled: false
   },
   touchControls: {
@@ -73,7 +72,7 @@ Version 1.x requires video.js 8.x as a peer dependency. Lowever video.js version
 - *touchControls.seekSeconds* `int` Seconds to seek when double-tapping
 - *touchControls.tapTimeout* `int` Milliseconds to consider a double-tap
 - *touchControls.disableOnEnd* `boolean` Whether to disable touch controls when the video has ended, e.g. if an endscreen is used. Automatically disables if the endscreen plugin is present when this plugin initialises
-- *touchControls.disableOnEnd* `boolean` If true no touch controls are added.
+- *touchControls.disabled* `boolean` If true no touch controls are added.
 
 ## Usage
 
