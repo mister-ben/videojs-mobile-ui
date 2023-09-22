@@ -16,7 +16,7 @@
 
 .video-js.vjs-mobile-ui {
 
-  &.vjs-has-started .vjs-touch-overlay {
+  &.vjs-has-started:not(.vjs-ad-playing) .vjs-touch-overlay {
     position: absolute;
     pointer-events: auto;
     top: 0;
