@@ -1,3 +1,21 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.0...v1.1.1) (2023-09-22)
+
+### Bug Fixes
+
+* Hide overlay during ad playback (#151) ([5b1aa34](https://github.com/mister-ben/videojs-mobile-ui/commit/5b1aa34)), closes [#151](https://github.com/mister-ben/videojs-mobile-ui/issues/151)
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.22.6 to 7.22.15 (#148) ([610f985](https://github.com/mister-ben/videojs-mobile-ui/commit/610f985)), closes [#148](https://github.com/mister-ben/videojs-mobile-ui/issues/148)
+* **deps-dev:** bump postcss from 8.4.24 to 8.4.27 (#138) ([adcaa50](https://github.com/mister-ben/videojs-mobile-ui/commit/adcaa50)), closes [#138](https://github.com/mister-ben/videojs-mobile-ui/issues/138)
+* **deps-dev:** bump postcss from 8.4.27 to 8.4.30 (#149) ([e288c69](https://github.com/mister-ben/videojs-mobile-ui/commit/e288c69)), closes [#149](https://github.com/mister-ben/videojs-mobile-ui/issues/149)
+* **deps-dev:** bump video.js from 8.3.0 to 8.5.2 (#143) ([98fd09d](https://github.com/mister-ben/videojs-mobile-ui/commit/98fd09d)), closes [#143](https://github.com/mister-ben/videojs-mobile-ui/issues/143)
+* **deps-dev:** bump videojs-generate-rollup-config from 7.0.1 to 7.0.2 (#144) ([69cc17b](https://github.com/mister-ben/videojs-mobile-ui/commit/69cc17b)), closes [#144](https://github.com/mister-ben/videojs-mobile-ui/issues/144)
+* **deps-dev:** bump videojs-generator-verify from 4.1.0 to 4.1.1 (#139) ([7986622](https://github.com/mister-ben/videojs-mobile-ui/commit/7986622)), closes [#139](https://github.com/mister-ben/videojs-mobile-ui/issues/139)
+* **deps-dev:** bump videojs-generator-verify from 4.1.1 to 4.1.2 (#146) ([d320237](https://github.com/mister-ben/videojs-mobile-ui/commit/d320237)), closes [#146](https://github.com/mister-ben/videojs-mobile-ui/issues/146)
+* **deps-dev:** bump word-wrap from 1.2.3 to 1.2.5 (#140) ([4230c45](https://github.com/mister-ben/videojs-mobile-ui/commit/4230c45)), closes [#140](https://github.com/mister-ben/videojs-mobile-ui/issues/140)
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.0.1...v1.1.0) (2023-07-04)
 
