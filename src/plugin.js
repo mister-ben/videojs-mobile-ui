@@ -1,6 +1,6 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
-import TouchOverlay from './touchOverlay.js';
+import './touchOverlay.js';
 import window from 'global/window';
 
 /**
@@ -8,9 +8,9 @@ import window from 'global/window';
  */
 
 /**
- * 
+ *
  * @typedef  {Object} TouchOverlayOptions
- * 
+ *
  * @property  {boolean} [disabled=false]
  *           If true no touch controls are added.
  * @property  {int} [seekSeconds=10]
@@ -20,9 +20,9 @@ import window from 'global/window';
  * @property  {boolean} [disableOnEnd=false]
  *           Whether to disable when the video ends (e.g., if there is an endscreen)
  *           Never shows if the endscreen plugin is present
- * 
- * 
- * 
+ *
+ *
+ *
  * @typedef   {Object} MobileUIOptions
  *           Plugin options.
  * @property  {boolean} [forceForTesting=false]
@@ -45,7 +45,7 @@ import window from 'global/window';
  *           Touch UI options.
  */
 
- /* @property  {boolean} [touchControls.disabled=false]
+/* @property  {boolean} [touchControls.disabled=false]
  *           If true no touch controls are added.
  * @property  {int} [touchControls.seekSeconds=10]
  *           Number of seconds to seek on double-tap
@@ -199,7 +199,7 @@ const onPlayerReady = (player, options) => {
  * Adds a mobile UI for player control, and fullscreen orientation control
  *
  * @function mobileUi
- * @param    {MobileUIOptions} [options={}]
+ * @param    {MobileUIOptions} [options={}] Plugin options
  * @this     Player
  */
 const mobileUi = function(options = {}) {

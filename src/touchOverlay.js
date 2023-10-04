@@ -6,6 +6,11 @@
 import videojs from 'video.js';
 import window from 'global/window';
 
+/**
+ * @typedef { import('video.js/dist/types/player').default } Player
+ * @typedef { import('./plugin').TouchOverlayOptions } TouchOverlayOptions
+ */
+
 const Component = videojs.getComponent('Component');
 
 /**
@@ -18,10 +23,10 @@ class TouchOverlay extends Component {
   /**
   * Creates an instance of the this class.
   *
-  * @param  { import('video.js/dist/types/player').default } player
+  * @param  {Player} player
   *         The `Player` that this class should be attached to.
   *
-  * @param  { import('./plugin').TouchOverlayOptions } options
+  * @param  {TouchOverlayOptions} options
   *         The key/value store of player options.
   */
   constructor(player, options) {
@@ -52,7 +57,7 @@ class TouchOverlay extends Component {
      * Seeks number of (taps - 1) * configured seconds to skip.
      * One tap is a non-op
      *
-     * @param {Event} event
+     * @param {TouchEvent} event
      */
     this.handleTaps_ = videojs.fn.debounce(event => {
       const increment = (this.taps - 1) * this.seekSeconds;
@@ -62,7 +67,9 @@ class TouchOverlay extends Component {
         return;
       }
 
+      /** @type {DOMRect} */
       const rect = this.el_.getBoundingClientRect();
+      /** @type {Number} */
       const x = event.changedTouches[0].clientX - rect.left;
 
       // Check if double tap is in left or right area
@@ -97,19 +104,17 @@ class TouchOverlay extends Component {
    *         The DOM element.
    */
   createEl() {
-    const el = dom.createEl('div', {
+    return videojs.dom.createEl('div', {
       className: 'vjs-touch-overlay',
       // Touch overlay is not tabbable.
       tabIndex: -1
     });
-
-    return el;
   }
 
   /**
   * Debounces to either handle a delayed single tap, or a double tap
    *
-   * @param {Event} event
+   * @param {TouchEvent} event
    *        The touch event
    *
    */
