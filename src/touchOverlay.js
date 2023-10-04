@@ -7,7 +7,6 @@ import videojs from 'video.js';
 import window from 'global/window';
 
 const Component = videojs.getComponent('Component');
-const dom = videojs.dom || videojs;
 
 /**
  * The `TouchOverlay` is an overlay to capture tap events.
@@ -19,17 +18,20 @@ class TouchOverlay extends Component {
   /**
   * Creates an instance of the this class.
   *
-  * @param  {Player} player
+  * @param  { import('video.js/dist/types/player').default } player
   *         The `Player` that this class should be attached to.
   *
-  * @param  {Object} [options]
+  * @param  { import('./plugin').TouchOverlayOptions } options
   *         The key/value store of player options.
   */
   constructor(player, options) {
     super(player, options);
 
+    /** @type {number} */
     this.seekSeconds = options.seekSeconds;
+    /** @type {number} */
     this.tapTimeout = options.tapTimeout;
+    /** @type {number} */
     this.taps = 0;
 
     // Add play toggle overlay

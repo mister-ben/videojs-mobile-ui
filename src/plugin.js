@@ -1,7 +1,60 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
-import './touchOverlay.js';
+import TouchOverlay from './touchOverlay.js';
 import window from 'global/window';
+
+/**
+ * @typedef { import('video.js/dist/types/player').default } Player
+ */
+
+/**
+ * 
+ * @typedef  {Object} TouchOverlayOptions
+ * 
+ * @property  {boolean} [disabled=false]
+ *           If true no touch controls are added.
+ * @property  {int} [seekSeconds=10]
+ *           Number of seconds to seek on double-tap
+ * @property  {int} [tapTimeout=300]
+ *           Interval in ms to be considered a doubletap
+ * @property  {boolean} [disableOnEnd=false]
+ *           Whether to disable when the video ends (e.g., if there is an endscreen)
+ *           Never shows if the endscreen plugin is present
+ * 
+ * 
+ * 
+ * @typedef   {Object} MobileUIOptions
+ *           Plugin options.
+ * @property  {boolean} [forceForTesting=false]
+ *           Enables the display regardless of user agent, for testing purposes
+ * @property  {Object} [fullscreen={}]
+ *           Fullscreen options.
+ * @property  {boolean} [fullscreen.disabled=false]
+ *           If true no fullscreen handling except the *deprecated* iOS fullwindow hack
+ * @property  {boolean} [fullscreen.enterOnRotate=true]
+ *           Whether to go fullscreen when rotating to landscape
+ * @property  {boolean} [fullscreen.exitOnRotate=true]
+ *           Whether to leave fullscreen when rotating to portrait (if not locked)
+ * @property  {boolean} [fullscreen.lockOnRotate=true]
+ *           Whether to lock orientation when rotating to landscape
+ *           Unlocked when exiting fullscreen or on 'ended
+ * @property  {boolean} [fullscreen.lockToLandscapeOnEnter=false]
+ *           Whether to always lock orientation to landscape on fullscreen mode
+ *           Unlocked when exiting fullscreen or on 'ended'
+ * @property  {TouchOverlayOptions} [touchControls={}]
+ *           Touch UI options.
+ */
+
+ /* @property  {boolean} [touchControls.disabled=false]
+ *           If true no touch controls are added.
+ * @property  {int} [touchControls.seekSeconds=10]
+ *           Number of seconds to seek on double-tap
+ * @property  {int} [touchControls.tapTimeout=300]
+ *           Interval in ms to be considered a doubletap
+ * @property  {boolean} [touchControls.disableOnEnd=false]
+ *           Whether to disable when the video ends (e.g., if there is an endscreen)
+ *           Never shows if the endscreen plugin is present
+ */
 
 // Default options for the plugin.
 const defaults = {
@@ -20,12 +73,13 @@ const defaults = {
   }
 };
 
+/** @type {Screen} */
 const screen = window.screen;
 
 /**
- * Gets 'portrait' or 'lanscape' from the two orientation APIs
+ * Gets 'portrait' or 'landscape' from the two orientation APIs
  *
- * @return {string} orientation
+ * @return {'portrait'|'landscape'} orientation
  */
 const getOrientation = () => {
   if (screen) {
@@ -55,7 +109,7 @@ const getOrientation = () => {
  * @param    {Player} player
  *           A Video.js player object.
  *
- * @param    {Object} [options={}]
+ * @param    {MobileUIOptions} [options={}]
  *           A plain object containing options for the plugin.
  */
 const onPlayerReady = (player, options) => {
@@ -142,38 +196,11 @@ const onPlayerReady = (player, options) => {
 /**
  * A video.js plugin.
  *
- * Adds a monile UI for player control, and fullscreen orientation control
+ * Adds a mobile UI for player control, and fullscreen orientation control
  *
  * @function mobileUi
- * @param    {Object} [options={}]
- *           Plugin options.
- * @param    {boolean} [options.forceForTesting=false]
- *           Enables the display regardless of user agent, for testing purposes
- * @param    {Object} [options.fullscreen={}]
- *           Fullscreen options.
- * @param    {boolean} [options.fullscreen.disabled=false]
- *           If true no fullscreen handling except the *deprecated* iOS fullwindow hack
- * @param    {boolean} [options.fullscreen.enterOnRotate=true]
- *           Whether to go fullscreen when rotating to landscape
- * @param    {boolean} [options.fullscreen.exitOnRotate=true]
- *           Whether to leave fullscreen when rotating to portrait (if not locked)
- * @param    {boolean} [options.fullscreen.lockOnRotate=true]
- *           Whether to lock orientation when rotating to landscape
- *           Unlocked when exiting fullscreen or on 'ended
- * @param    {boolean} [options.fullscreen.lockToLandscapeOnEnter=false]
- *           Whether to always lock orientation to landscape on fullscreen mode
- *           Unlocked when exiting fullscreen or on 'ended'
- * @param    {Object} [options.touchControls={}]
- *           Touch UI options.
- * @param    {boolean} [options.touchControls.disabled=false]
- *           If true no touch controls are added.
- * @param    {int} [options.touchControls.seekSeconds=10]
- *           Number of seconds to seek on double-tap
- * @param    {int} [options.touchControls.tapTimeout=300]
- *           Interval in ms to be considered a doubletap
- * @param    {boolean} [options.touchControls.disableOnEnd=false]
- *           Whether to disable when the video ends (e.g., if there is an endscreen)
- *           Never shows if the endscreen plugin is present
+ * @param    {MobileUIOptions} [options={}]
+ * @this     Player
  */
 const mobileUi = function(options = {}) {
   if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
