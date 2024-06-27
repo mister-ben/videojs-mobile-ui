@@ -24,6 +24,7 @@
     "server": "karma start scripts/karma.conf.js --singleRun=false --auto-watch",
     "start": "npm-run-all -p server watch",
     "test": "npm-run-all lint build-test && karma start scripts/karma.conf.js",
+    "testwtr": "wtr",
     "posttest": "shx cat test/dist/coverage/text.txt",
     "update-changelog": "conventional-changelog -p videojs -i CHANGELOG.md -s",
     "preversion": "npm test",
@@ -76,11 +77,13 @@
   "devDependencies": {
     "@babel/runtime": "^7.14.0",
     "@videojs/generator-helpers": "~3.2.0",
+    "@web/test-runner": "^0.18.1",
     "husky": "^8.0.1",
     "jsdoc": "^4.0.0",
     "karma": "^6.3.2",
     "postcss": "^8.2.13",
     "postcss-cli": "^8.3.1",
+    "qunit": "^2.20.1",
     "rollup": "^2.46.0",
     "sinon": "^16.0.0",
     "video.js": "^8.0.0",
@@ -89,6 +92,7 @@
     "videojs-generate-rollup-config": "^7.0.0",
     "videojs-generator-verify": "^4.1.0",
     "videojs-languages": "^2.0.0",
-    "videojs-standard": "^9.0.1"
+    "videojs-standard": "^9.0.1",
+    "web-test-runner-qunit": "^2.0.0"
   }
 }

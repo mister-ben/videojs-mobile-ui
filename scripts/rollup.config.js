@@ -7,5 +7,7 @@ const config = generate(options);
 
 // Add additonal builds/customization here!
 
+console.log(JSON.stringify(config, null, 2));
+
 // export the builds to rollup
 export default Object.values(config.builds);
