@@ -8,4 +8,9 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
-
+    versioning-strategy: increase # Update package.json too
+    groups:
+      patterns:
+        update-types:
+          - patch
+          - minor
