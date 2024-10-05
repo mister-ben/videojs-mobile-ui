@@ -1,6 +1,3 @@
-import document from 'global/document';
-import window from 'global/window';
-
 import QUnit from 'qunit';
 import sinon from 'sinon';
 import videojs from 'video.js';
@@ -26,8 +23,8 @@ QUnit.module('videojs-mobile-ui', {
     // with the actual timer methods!
     this.clock = sinon.useFakeTimers();
 
-    this.fixture = document.getElementById('qunit-fixture');
-    this.video = document.createElement('video');
+    this.fixture = globalThis.getElementById('qunit-fixture');
+    this.video = globalThis.createElement('video');
     this.fixture.appendChild(this.video);
     this.player = videojs(this.video);
   },
@@ -89,8 +86,8 @@ QUnit.test('iOS event listeners', function(assert) {
     IS_ANDROID: false
   });
 
-  const addSpy = sinon.spy(window, 'addEventListener');
-  const removeSpy = sinon.spy(window, 'removeEventListener');
+  const addSpy = sinon.spy(globalThis, 'addEventListener');
+  const removeSpy = sinon.spy(globalThis, 'removeEventListener');
 
   this.player.mobileUi({ forceForTesting: true });
 
@@ -118,7 +115,7 @@ QUnit.test('iOS event listeners', function(assert) {
   videojs.browser = oldBrowser;
 });
 
-const testOrSkip = (window.screen && window.screen.orientation) ? 'test' : 'skip';
+const testOrSkip = (globalThis.screen && globalThis.screen.orientation) ? 'test' : 'skip';
 
 QUnit[testOrSkip]('Android event listeners', function(assert) {
 
@@ -134,7 +131,7 @@ QUnit[testOrSkip]('Android event listeners', function(assert) {
   this.clock.tick(1);
 
   assert.strictEqual(
-    typeof window.screen.orientation.onchange,
+    typeof globalThis.screen.orientation.onchange,
     'function',
     'screen.orientation.onchange is used for android'
   );
@@ -144,7 +141,7 @@ QUnit[testOrSkip]('Android event listeners', function(assert) {
   this.clock.tick(1);
 
   assert.strictEqual(
-    window.screen.orientation.onchange,
+    globalThis.screen.orientation.onchange,
     null,
     'screen.orientation.onchange is removed after dispose'
   );
@@ -171,7 +168,7 @@ QUnit[testOrSkip]('Android event listeners skipped if disabled', function(assert
   this.clock.tick(1);
 
   assert.notStrictEqual(
-    typeof window.screen.orientation.onchange,
+    typeof globalThis.screen.orientation.onchange,
     'function',
     'screen.orientation.onchange skipped for android'
   );

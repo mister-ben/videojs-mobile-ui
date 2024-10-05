@@ -1,7 +1,6 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 import './touchOverlay.js';
-import window from 'global/window';
 
 // Default options for the plugin.
 const defaults = {
@@ -20,7 +19,7 @@ const defaults = {
   }
 };
 
-const screen = window.screen;
+const screen = globalThis.screen;
 
 /**
  * Gets 'portrait' or 'lanscape' from the two orientation APIs
@@ -38,8 +37,8 @@ const getOrientation = () => {
   }
 
   // iOS only supports window.orientation
-  if (typeof window.orientation === 'number') {
-    if (window.orientation === 0 || window.orientation === 180) {
+  if (typeof globalThis.orientation === 'number') {
+    if (globalThis.orientation === 0 || globalThis.orientation === 180) {
       return 'portrait';
     }
     return 'landscape';
@@ -103,10 +102,10 @@ const onPlayerReady = (player, options) => {
 
   if (options.fullscreen.enterOnRotate || options.fullscreen.exitOnRotate) {
     if (videojs.browser.IS_IOS) {
-      window.addEventListener('orientationchange', rotationHandler);
+      globalThis.addEventListener('orientationchange', rotationHandler);
 
       player.on('dispose', () => {
-        window.removeEventListener('orientationchange', rotationHandler);
+        globalThis.removeEventListener('orientationchange', rotationHandler);
       });
     } else if (screen.orientation) {
       // addEventListener('orientationchange') is not a user interaction on Android

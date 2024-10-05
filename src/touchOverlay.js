@@ -4,7 +4,6 @@
  */
 
 import videojs from 'video.js';
-import window from 'global/window';
 
 const Component = videojs.getComponent('Component');
 const dom = videojs.dom || videojs;
@@ -80,7 +79,7 @@ class TouchOverlay extends Component {
       // Remove and readd class to trigger animation
       this.setAttribute('data-skip-text', `${increment} ${this.localize('seconds')}`);
       this.removeClass('skip');
-      window.requestAnimationFrame(() => {
+      globalThis.requestAnimationFrame(() => {
         this.addClass('skip');
       });
     }, this.tapTimeout);

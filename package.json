@@ -67,9 +67,6 @@
     "*.js": "vjsstandard --fix",
     "README.md": "doctoc --notitle"
   },
-  "dependencies": {
-    "global": "^4.4.0"
-  },
   "peerDependencies": {
     "video.js": "^8"
   },
