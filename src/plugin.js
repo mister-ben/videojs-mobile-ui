@@ -1,7 +1,7 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 import './touchOverlay.js';
-import window from 'global/window';
+import { window } from './global.js';
 
 // Default options for the plugin.
 const defaults = {
@@ -20,17 +20,15 @@ const defaults = {
   }
 };
 
-const screen = window.screen;
-
 /**
  * Gets 'portrait' or 'lanscape' from the two orientation APIs
  *
  * @return {string} orientation
  */
 const getOrientation = () => {
-  if (screen) {
+  if (window.screen) {
     // Prefer the string over angle, as 0° can be landscape on some tablets
-    const orientationString = ((screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation || '').split('-')[0];
+    const orientationString = ((window.screen.orientation || {}).type || window.screen.mozOrientation || window.screen.msOrientation || '').split('-')[0];
 
     if (orientationString === 'landscape' || orientationString === 'portrait') {
       return orientationString;
@@ -86,8 +84,8 @@ const onPlayerReady = (player, options) => {
       if (player.paused() === false) {
         player.requestFullscreen();
         if ((options.fullscreen.lockOnRotate || options.fullscreen.lockToLandscapeOnEnter) &&
-            screen.orientation && screen.orientation.lock) {
-          screen.orientation.lock('landscape').then(() => {
+            window.screen.orientation && window.screen.orientation.lock) {
+          window.screen.orientation.lock('landscape').then(() => {
             locked = true;
           }).catch((e) => {
             videojs.log('Browser refused orientation lock:', e);
@@ -108,32 +106,32 @@ const onPlayerReady = (player, options) => {
       player.on('dispose', () => {
         window.removeEventListener('orientationchange', rotationHandler);
       });
-    } else if (screen.orientation) {
+    } else if (window.screen.orientation) {
       // addEventListener('orientationchange') is not a user interaction on Android
-      screen.orientation.onchange = rotationHandler;
+      window.screen.orientation.onchange = rotationHandler;
 
       player.on('dispose', () => {
-        screen.orientation.onchange = null;
+        window.screen.orientation.onchange = null;
       });
     }
   }
 
   player.on('fullscreenchange', _ => {
     if (player.isFullscreen() && options.fullscreen.lockToLandscapeOnEnter && getOrientation() === 'portrait') {
-      screen.orientation.lock('landscape').then(()=>{
+      window.screen.orientation.lock('landscape').then(()=>{
         locked = true;
       }).catch((e) => {
         videojs.log('Browser refused orientation lock:', e);
       });
     } else if (!player.isFullscreen() && locked) {
-      screen.orientation.unlock();
+      window.screen.orientation.unlock();
       locked = false;
     }
   });
 
   player.on('ended', _ => {
     if (locked === true) {
-      screen.orientation.unlock();
+      window.screen.orientation.unlock();
       locked = false;
     }
   });
