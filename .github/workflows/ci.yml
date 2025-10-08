@@ -27,6 +27,8 @@ jobs:
       BROWSER_STACK_ACCESS_KEY: ${{secrets.BROWSER_STACK_ACCESS_KEY}}
     runs-on: ${{matrix.os}}
     steps:
+    - name: Unload apparmor profiles
+      run: sudo aa-teardown || true
     - name: Disable apparmor, which breaks chromium headless
       run: sudo systemctl disable --now apparmor.service
     - name: checkout code
