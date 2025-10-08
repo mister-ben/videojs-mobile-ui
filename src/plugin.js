@@ -1,7 +1,7 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 import './touchOverlay.js';
-import window from 'global/window';
+import window from '@ungap/global-this';
 
 // Default options for the plugin.
 const defaults = {

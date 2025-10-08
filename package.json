@@ -67,9 +67,6 @@
     "*.js": "vjsstandard --fix",
     "README.md": "doctoc --notitle"
   },
-  "dependencies": {
-    "global": "^4.4.0"
-  },
   "peerDependencies": {
     "video.js": "^8"
   },
@@ -90,5 +87,8 @@
     "videojs-generator-verify": "^4.1.0",
     "videojs-languages": "^2.0.0",
     "videojs-standard": "^9.0.1"
+  },
+  "dependencies": {
+    "@ungap/global-this": "^0.4.4"
   }
 }
