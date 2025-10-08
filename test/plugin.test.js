@@ -1,5 +1,4 @@
-import document from 'global/document';
-import window from 'global/window';
+import window from '@ungap/global-this';
 
 import QUnit from 'qunit';
 import sinon from 'sinon';
@@ -26,8 +25,8 @@ QUnit.module('videojs-mobile-ui', {
     // with the actual timer methods!
     this.clock = sinon.useFakeTimers();
 
-    this.fixture = document.getElementById('qunit-fixture');
-    this.video = document.createElement('video');
+    this.fixture = window.document.getElementById('qunit-fixture');
+    this.video = window.document.createElement('video');
     this.fixture.appendChild(this.video);
     this.player = videojs(this.video);
   },
@@ -84,7 +83,7 @@ QUnit.test('iOS event listeners', function(assert) {
 
   const oldBrowser = videojs.browser;
 
-  videojs.browser = videojs.mergeOptions(videojs.browser, {
+  videojs.browser = videojs.obj.merge(videojs.browser, {
     IS_IOS: true,
     IS_ANDROID: false
   });
@@ -124,7 +123,7 @@ QUnit[testOrSkip]('Android event listeners', function(assert) {
 
   const oldBrowser = videojs.browser;
 
-  videojs.browser = videojs.mergeOptions(videojs.browser, {
+  videojs.browser = videojs.obj.merge(videojs.browser, {
     IS_IOS: false,
     IS_ANDROID: true
   });
@@ -156,7 +155,7 @@ QUnit[testOrSkip]('Android event listeners skipped if disabled', function(assert
 
   const oldBrowser = videojs.browser;
 
-  videojs.browser = videojs.mergeOptions(videojs.browser, {
+  videojs.browser = videojs.obj.merge(videojs.browser, {
     IS_IOS: false,
     IS_ANDROID: true
   });

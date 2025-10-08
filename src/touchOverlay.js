@@ -4,7 +4,7 @@
  */
 
 import videojs from 'video.js';
-import window from 'global/window';
+import window from '@ungap/global-this';
 
 const Component = videojs.getComponent('Component');
 const dom = videojs.dom || videojs;
