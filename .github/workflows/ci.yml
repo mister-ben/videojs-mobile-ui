@@ -11,7 +11,7 @@ jobs:
       should-skip-job: ${{steps.skip-check.outputs.should_skip}}
     steps:
       - id: skip-check
-        uses: fkirc/skip-duplicate-actions@v2.1.0
+        uses: fkirc/skip-duplicate-actions@v5
         with:
           github_token: ${{github.token}}
 
@@ -27,11 +27,13 @@ jobs:
       BROWSER_STACK_ACCESS_KEY: ${{secrets.BROWSER_STACK_ACCESS_KEY}}
     runs-on: ${{matrix.os}}
     steps:
+    - name: Disable apparmor, which breaks chromium headless
+      run: sudo systemctl disable --now apparmor.service
     - name: checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Cache dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ~/.npm
@@ -59,7 +61,7 @@ jobs:
       if: ${{startsWith(matrix.os, 'ubuntu') && !env.BROWSER_STACK_USERNAME}}
 
     - name: setup node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v5
       with:
         node-version: '${{steps.nvm.outputs.NVMRC}}'
 
