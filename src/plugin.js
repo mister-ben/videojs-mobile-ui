@@ -1,7 +1,8 @@
+/* global window */
+
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 import './touchOverlay.js';
-import window from 'global/window';
 
 // Default options for the plugin.
 const defaults = {

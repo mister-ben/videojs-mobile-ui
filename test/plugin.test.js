@@ -1,5 +1,5 @@
-import document from 'global/document';
-import window from 'global/window';
+/* global window */
+/* global document */
 
 import QUnit from 'qunit';
 import sinon from 'sinon';

@@ -3,8 +3,9 @@
  * Touch UI component
  */
 
+/* global window */
+
 import videojs from 'video.js';
-import window from 'global/window';
 
 const Component = videojs.getComponent('Component');
 const dom = videojs.dom || videojs;
