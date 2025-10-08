@@ -84,7 +84,7 @@ QUnit.test('iOS event listeners', function(assert) {
 
   const oldBrowser = videojs.browser;
 
-  videojs.browser = videojs.obj.mergeOptions(videojs.browser, {
+  videojs.browser = videojs.obj.merge(videojs.browser, {
     IS_IOS: true,
     IS_ANDROID: false
   });
@@ -124,7 +124,7 @@ QUnit[testOrSkip]('Android event listeners', function(assert) {
 
   const oldBrowser = videojs.browser;
 
-  videojs.browser = videojs.obj.mergeOptions(videojs.browser, {
+  videojs.browser = videojs.obj.merge(videojs.browser, {
     IS_IOS: false,
     IS_ANDROID: true
   });
@@ -156,7 +156,7 @@ QUnit[testOrSkip]('Android event listeners skipped if disabled', function(assert
 
   const oldBrowser = videojs.browser;
 
-  videojs.browser = videojs.obj.mergeOptions(videojs.browser, {
+  videojs.browser = videojs.obj.merge(videojs.browser, {
     IS_IOS: false,
     IS_ANDROID: true
   });
