@@ -1,3 +1,15 @@
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.2...v1.1.3) (2025-12-19)
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.24.0 to 7.28.4 (#205) ([52778ad](https://github.com/mister-ben/videojs-mobile-ui/commit/52778ad)), closes [#205](https://github.com/mister-ben/videojs-mobile-ui/issues/205)
+* **deps-dev:** bump husky from 8.0.3 to 9.1.7 (#206) ([f830059](https://github.com/mister-ben/videojs-mobile-ui/commit/f830059)), closes [#206](https://github.com/mister-ben/videojs-mobile-ui/issues/206)
+* **deps-dev:** bump jsdoc from 4.0.2 to 4.0.5 (#202) ([3396709](https://github.com/mister-ben/videojs-mobile-ui/commit/3396709)), closes [#202](https://github.com/mister-ben/videojs-mobile-ui/issues/202)
+* **deps-dev:** bump video.js from 8.6.1 to 8.23.4 (#204) ([ac0dc37](https://github.com/mister-ben/videojs-mobile-ui/commit/ac0dc37)), closes [#204](https://github.com/mister-ben/videojs-mobile-ui/issues/204)
+* **deps-dev:** bump videojs-standard from 9.0.1 to 9.1.0 (#203) ([5dd954d](https://github.com/mister-ben/videojs-mobile-ui/commit/5dd954d)), closes [#203](https://github.com/mister-ben/videojs-mobile-ui/issues/203)
+* Regenerate changelog ([c465a39](https://github.com/mister-ben/videojs-mobile-ui/commit/c465a39))
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.1...v1.1.2) (2025-12-19)
 
