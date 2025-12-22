@@ -80,7 +80,7 @@
     "jsdoc": "^4.0.0",
     "karma": "^6.3.2",
     "postcss": "^8.2.13",
-    "postcss-cli": "^8.3.1",
+    "postcss-cli": "^11.0.1",
     "rollup": "^2.46.0",
     "sinon": "^21.0.0",
     "video.js": "^8.0.0",
