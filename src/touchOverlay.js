@@ -6,6 +6,8 @@
 import videojs from 'video.js';
 import window from 'global/window';
 
+/** @import Player from 'video.js/dist/types/player' */
+
 const Component = videojs.getComponent('Component');
 const dom = videojs.dom || videojs;
 
@@ -22,7 +24,7 @@ class TouchOverlay extends Component {
   * @param  {Player} player
   *         The `Player` that this class should be attached to.
   *
-  * @param  {Object} [options]
+  * @param  {options} [options]
   *         The key/value store of player options.
   */
   constructor(player, options) {

@@ -1,15 +1,61 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 import './touchOverlay.js';
+import initSwipe from './swipeFullscreen.js';
 import window from 'global/window';
 
+/**
+ * @typedef {Object} MobileUiOptions
+ * @property {Object} fullscreen
+ *  Options for fullscreen behaviours.
+ * @property {boolean} [fullscreen.enterOnRotate]
+ *  If the device is rotated, enter fullscreen.
+ *  Default true.
+ * @property {boolean} [fullscreen.exitOnRotate]
+ *  If the device is rotated, exit fullscreen.
+ *  Default true.
+ * @property {boolean} [fullscreen.lockOnRotate]
+ *  If the device is rotated, lock the orientation (not supported by iOS).
+ *  Default true.
+ * @property {boolean} [fullscreen.lockToLandscapeOnEnter]
+ *  When fullscreen is entered, lock the orientation (not supported by iOS).
+ *  Default true.
+ * @property {boolean} [fullscreen.swipeToFullscreen]
+ *  Swipe up to enter fullscreen, and swipe down to exit fullscreen.
+ *  Default true.
+ * @property {number} [fullscreen.swipeThreshold]
+ *  Minium distance to consider a swipe in pixels.
+ *  Default 30.
+ * @property {boolean} [fullscreen.disabled]
+ *  All fullscreen functionality provided by this plugin disabled.
+ *  Default false.
+ * @property {Object} touchControls
+ *  Options for tap overlay.
+ * @property {number} [touchControls.seekSeconds]
+ *  Increment to seek in seconds.
+ *  Default 10.
+ * @property {number} [touchControls.tapTimeout]
+ *  Timeout to tap on the button after display, in ms. ???
+ *  Default 300.
+ * @property {boolean} [touchControls.disableOnEnd]
+ *  Disable the touch overlay when the video ends.
+ *  Useful if an end screen overlay is used.
+ *  Default true.
+ * @property {boolean} [touchControls.disabled]
+ *  All tap overlay functionality provided by this plugin disabled.
+ *  Default false.
+ */
+
 // Default options for the plugin.
+/** @type {MobileUiOptions} */
 const defaults = {
   fullscreen: {
     enterOnRotate: true,
     exitOnRotate: true,
     lockOnRotate: true,
     lockToLandscapeOnEnter: false,
+    swipeToFullscreen: false,
+    swipeThreshold: 30,
     disabled: false
   },
   touchControls: {
@@ -55,7 +101,7 @@ const getOrientation = () => {
  * @param    {Player} player
  *           A Video.js player object.
  *
- * @param    {Object} [options={}]
+ * @param    {MobileUiOptions} [options={}]
  *           A plain object containing options for the plugin.
  */
 const onPlayerReady = (player, options) => {
@@ -75,6 +121,10 @@ const onPlayerReady = (player, options) => {
 
   if (options.fullscreen.disabled) {
     return;
+  }
+
+  if (options.fullscreen.swipeToFullscreen) {
+    initSwipe(player, options);
   }
 
   let locked = false;

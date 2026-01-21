@@ -95,4 +95,9 @@
     display: none;
   }
 
+  &.using-fs-swipe {
+    touch-action: none;
+    overflow: hidden;
+  }
+
 }
