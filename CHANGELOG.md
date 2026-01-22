@@ -1,3 +1,12 @@
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.3...v1.1.4) (2026-01-22)
+
+### Chores
+
+* **deps-dev:** bump postcss-cli from 8.3.1 to 11.0.1 (#211) ([da122d1](https://github.com/mister-ben/videojs-mobile-ui/commit/da122d1)), closes [#211](https://github.com/mister-ben/videojs-mobile-ui/issues/211)
+* Improve test coverage (#215) ([57daa32](https://github.com/mister-ben/videojs-mobile-ui/commit/57daa32)), closes [#215](https://github.com/mister-ben/videojs-mobile-ui/issues/215)
+* Update to node 24 and update dependencies (#216) ([0aa77f5](https://github.com/mister-ben/videojs-mobile-ui/commit/0aa77f5)), closes [#216](https://github.com/mister-ben/videojs-mobile-ui/issues/216)
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.2...v1.1.3) (2025-12-19)
 
