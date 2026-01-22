@@ -19,15 +19,20 @@ const initSwipe = (player, pluginOptions) => {
   const swipeThreshold = pluginOptions.fullscreen.swipeThreshold;
 
   /**
-   * @param {TouchEvent} e 
+   * Monitor the possible start of a swipe
+   *
+   * @param {TouchEvent} e Triggering touch event
    */
   const onStart = (e) => {
-    touchStartY = e.changedTouches[0].screenY;
+    touchStartY = e.changedTouches[0].clientY;
     couldBeSwiping = true;
+    console.log('start', touchStartY);
   };
 
   /**
-   * @param {TouchEvent} e 
+   * Monitor the movement of a swipe
+   *
+   * @param {TouchEvent} e Triggering touch event
    */
   const onMove = (e) => {
     if (!couldBeSwiping) {
@@ -53,7 +58,9 @@ const initSwipe = (player, pluginOptions) => {
   };
 
   /**
-   * @param {TouchEvent} e 
+   * Monitor the touch end to deterine a valid swipe
+   *
+   * @param {TouchEvent} e Triggering touch event
    */
   const onEnd = (e) => {
     if (!couldBeSwiping) {
@@ -67,13 +74,16 @@ const initSwipe = (player, pluginOptions) => {
     player.tech_.el().style.transition = 'transform 0.3s ease-out';
     player.tech_.el().style.transform = 'scale(1)';
 
-    console.log(deltaY, swipeThreshold, player.isFullscreen());
+    console.log(touchStartY, touchEndY, deltaY);
+
     if (deltaY > swipeThreshold && !player.isFullscreen()) {
       player.requestFullscreen();
     } else if (deltaY < -swipeThreshold && player.isFullscreen()) {
       player.exitFullscreen();
     }
-  }
+  };
+
+  player.el().addEventListener('touchcancel', console.log, { passive: true });
 
   player.el().addEventListener('touchstart', onStart, { passive: true });
   player.el().addEventListener('touchmove', onMove, { passive: true });
@@ -83,7 +93,7 @@ const initSwipe = (player, pluginOptions) => {
     player.el().removeEventListener('touchstart', onStart);
     player.el().removeEventListener('touchmove', onMove);
     player.el().removeEventListener('touchend', onEnd);
-  })
+  });
 
 };
 
