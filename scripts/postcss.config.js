@@ -1,9 +1,33 @@
-const generate = require('videojs-generate-postcss-config');
-
 module.exports = function(context) {
-  const result = generate({}, context);
-
-  // do custom stuff here
+  const result = {
+    plugins: [
+      {
+        postcssPlugin: 'postcss-progress-start'
+      },
+      {
+        postcssPlugin: 'postcss-import'
+      },
+      {
+        postcssPlugin: 'postcss-nested'
+      },
+      null,
+      null,
+      null,
+      {
+        browsers: [
+          'defaults'
+        ],
+        options: {},
+        postcssPlugin: 'autoprefixer'
+      },
+      {
+        postcssPlugin: 'postcss-csso'
+      },
+      {
+        postcssPlugin: 'postcss-progress-stop'
+      }
+    ]
+  };
 
   return result;
 };
