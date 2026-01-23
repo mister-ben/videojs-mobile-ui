@@ -18,7 +18,6 @@ Fullscreen control:
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Installation
 
 - [Installation](#installation)
 - [Plugin Options](#plugin-options)
@@ -28,6 +27,7 @@ Fullscreen control:
   - [`<script>` Tag](#script-tag)
   - [Browserify/CommonJS](#browserifycommonjs)
   - [RequireJS/AMD](#requirejsamd)
+  - [Import](#import)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -68,15 +68,45 @@ npm install videojs-mobile-ui@latest7
 
 ### Options
 
-- *fullscreen.enterOnRotate* `boolean` Whether to go fullscreen when rotating to landscape
-- *fullscreen.exitOnRotate* `boolean` Whether to leave fullscreen when rotating to portrait (if not locked)
-- *fullscreen.lockOnRotate* `boolean` Whether to lock to fullscreen when rotating to landscape
-- *fullscreen.lockToLandscapeOnEnter* `boolean` Whether to lock to landscape when entering fullscreen (works even when device rotation is disabled/non-functional)
-- *fullscreen.disabled* `boolean` If true no fullscreen handling except the *deprecated* iOS fullwindow hack
-- *touchControls.seekSeconds* `int` Seconds to seek when double-tapping
-- *touchControls.tapTimeout* `int` Milliseconds to consider a double-tap
-- *touchControls.disableOnEnd* `boolean` Whether to disable touch controls when the video has ended, e.g. if an endscreen is used. Automatically disables if the endscreen plugin is present when this plugin initialises
-- *touchControls.disabled* `boolean` If true no touch controls are added.
+- **`fullscreen`** {Object}  
+  Options for fullscreen behaviours.
+- **`fullscreen.enterOnRotate`** {boolean}  
+  If the device is rotated, enter fullscreen.  
+  Default `true`.
+- **`fullscreen.exitOnRotate`** {boolean}  
+  If the device is rotated, exit fullscreen.  
+  Default `true`.
+- **`fullscreen.lockOnRotate`** {boolean}  
+  If the device is rotated, lock the orientation (not supported by iOS).  
+  Default `true`.
+- **`fullscreen.lockToLandscapeOnEnter`** {boolean}  
+  When fullscreen is entered, lock the orientation (not supported by iOS).  
+  Default `false`.
+- **`fullscreen.swipeToFullscreen`** {boolean}  
+  Swipe up to enter fullscreen.  
+  Default `false`.
+- **`fullscreen.swipeFromFullscreen`** {boolean}  
+  Swipe down to exit fullscreen.  
+  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture.  
+  Default `false`.
+- **`fullscreen.disabled`** {boolean}  
+  All fullscreen functionality provided by this plugin disabled.  
+  Default `false`.
+- **`touchControls`** {Object}  
+  Options for tap overlay.
+- **`touchControls.seekSeconds`** {number}  
+  Increment to seek in seconds.  
+  Default `10`.
+- **`touchControls.tapTimeout`** {number}  
+  Timeout to consider multiple taps as double rather than two single.  
+  Default `300`.
+- **`touchControls.disableOnEnd`** {boolean}  
+  Disable the touch overlay when the video ends.  
+  Useful if an end screen overlay is used.  
+  Default `false`.
+- **`touchControls.disabled`** {boolean}  
+  All tap overlay functionality provided by this plugin disabled.  
+  Default `false`.
 
 ## Usage
 

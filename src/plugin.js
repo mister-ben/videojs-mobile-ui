@@ -10,41 +10,41 @@ import window from 'global/window';
  *  Options for fullscreen behaviours.
  * @property {boolean} [fullscreen.enterOnRotate]
  *  If the device is rotated, enter fullscreen.
- *  Default true.
+ *  Default `true`.
  * @property {boolean} [fullscreen.exitOnRotate]
  *  If the device is rotated, exit fullscreen.
- *  Default true.
+ *  Default `true`.
  * @property {boolean} [fullscreen.lockOnRotate]
  *  If the device is rotated, lock the orientation (not supported by iOS).
- *  Default true.
+ *  Default `true`.
  * @property {boolean} [fullscreen.lockToLandscapeOnEnter]
  *  When fullscreen is entered, lock the orientation (not supported by iOS).
- *  Default false.
+ *  Default `false`.
  * @property {boolean} [fullscreen.swipeToFullscreen]
  *  Swipe up to enter fullscreen.
- *  Default false.
+ *  Default `false`.
  * @property {boolean} [fullscreen.swipeFromFullscreen]
  *  Swipe down to exit fullscreen.
  *  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture.
- *  Default false.
+ *  Default `false`.
  * @property {boolean} [fullscreen.disabled]
  *  All fullscreen functionality provided by this plugin disabled.
- *  Default false.
+ *  Default `false`.
  * @property {Object} [touchControls]
  *  Options for tap overlay.
  * @property {number} [touchControls.seekSeconds]
  *  Increment to seek in seconds.
- *  Default 10.
+ *  Default `10`.
  * @property {number} [touchControls.tapTimeout]
- *  Timeout to tap on the button after display, in ms. ???
- *  Default 300.
+ *  Timeout to consider multiple taps as double rather than two single.
+ *  Default `300`.
  * @property {boolean} [touchControls.disableOnEnd]
  *  Disable the touch overlay when the video ends.
  *  Useful if an end screen overlay is used.
- *  Default false.
+ *  Default `false`.
  * @property {boolean} [touchControls.disabled]
  *  All tap overlay functionality provided by this plugin disabled.
- *  Default false.
+ *  Default `false`.
  * @internal
  * @property {boolean} [forceForTesting]
  *  Used in unit tests
