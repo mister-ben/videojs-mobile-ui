@@ -12,7 +12,14 @@
  *  The options used by the mobile ui plugin.
  */
 const initSwipe = (player, pluginOptions) => {
-  player.addClass('using-fs-swipe');
+  const {swipeToFullscreen, swipeFromFullscreen} = pluginOptions.fullscreen;
+
+  if (swipeToFullscreen) {
+    player.addClass('using-fs-swipe-up');
+  }
+  if (swipeFromFullscreen) {
+    player.addClass('using-fs-swipe-down');
+  }
 
   let touchStartY = 0;
   let couldBeSwiping = false;
@@ -24,9 +31,19 @@ const initSwipe = (player, pluginOptions) => {
    * @param {TouchEvent} e Triggering touch event
    */
   const onStart = (e) => {
+    const isFullscreen = player.isFullscreen();
+
+    if (
+      (!isFullscreen && !swipeToFullscreen) ||
+      (isFullscreen && !swipeFromFullscreen)
+    ) {
+      couldBeSwiping = false;
+      return;
+    }
+
     touchStartY = e.changedTouches[0].clientY;
     couldBeSwiping = true;
-    console.log('start', touchStartY);
+    player.tech_.el().style.transition = '';
   };
 
   /**
@@ -52,13 +69,12 @@ const initSwipe = (player, pluginOptions) => {
     } else if (isFullscreen && deltaY < 0) {
       // Swiping down to exit fullscreen: Zoom out (Min 0.9)
       scale = 1 - Math.min(0.1, Math.abs(deltaY) / 500);
-      // console.log(scale);
       player.tech_.el().style.transform = `scale(${scale})`;
     }
   };
 
   /**
-   * Monitor the touch end to deterine a valid swipe
+   * Monitor the touch end to determine a valid swipe
    *
    * @param {TouchEvent} e Triggering touch event
    */
@@ -68,31 +84,37 @@ const initSwipe = (player, pluginOptions) => {
     }
     couldBeSwiping = false;
 
-    const touchEndY = e.changedTouches[0].clientY;
-    const deltaY = touchStartY - touchEndY;
-
     player.tech_.el().style.transition = 'transform 0.3s ease-out';
     player.tech_.el().style.transform = 'scale(1)';
 
-    console.log(touchStartY, touchEndY, deltaY);
+    if (e.type === 'touchcancel') {
+      return;
+    }
+
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaY = touchStartY - touchEndY;
 
     if (deltaY > swipeThreshold && !player.isFullscreen()) {
-      player.requestFullscreen();
+      player.requestFullscreen().catch((err) => {
+        player.log.warn('Browser refused fullscreen', err);
+      });
     } else if (deltaY < -swipeThreshold && player.isFullscreen()) {
       player.exitFullscreen();
     }
   };
 
-  player.el().addEventListener('touchcancel', console.log, { passive: true });
-
   player.el().addEventListener('touchstart', onStart, { passive: true });
   player.el().addEventListener('touchmove', onMove, { passive: true });
   player.el().addEventListener('touchend', onEnd, { passive: true });
+  player.el().addEventListener('touchcancel', onEnd, { passive: true });
 
   player.on('dispose', () => {
-    player.el().removeEventListener('touchstart', onStart);
-    player.el().removeEventListener('touchmove', onMove);
-    player.el().removeEventListener('touchend', onEnd);
+    player.el().removeEventListener('touchstart', onStart, { passive: true });
+    player.el().removeEventListener('touchmove', onMove, { passive: true });
+    player.el().removeEventListener('touchend', onEnd, { passive: true });
+    player.el().removeEventListener('touchcancel', onEnd, { passive: true });
+    player.tech_.el().style.transform = '';
+    player.tech_.el().style.transition = '';
   });
 
 };

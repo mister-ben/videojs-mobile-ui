@@ -19,10 +19,14 @@ import window from 'global/window';
  *  Default true.
  * @property {boolean} [fullscreen.lockToLandscapeOnEnter]
  *  When fullscreen is entered, lock the orientation (not supported by iOS).
- *  Default true.
+ *  Default false.
  * @property {boolean} [fullscreen.swipeToFullscreen]
- *  Swipe up to enter fullscreen, and swipe down to exit fullscreen.
- *  Default true.
+ *  Swipe up to enter fullscreen.
+ *  Default false.
+ * @property {boolean} [fullscreen.swipeFromFullscreen]
+ *  Swipe down to exit fullscreen.
+ *  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture.
+ *  Default false.
  * @property {number} [fullscreen.swipeThreshold]
  *  Minium distance to consider a swipe in pixels.
  *  Default 30.
@@ -40,13 +44,12 @@ import window from 'global/window';
  * @property {boolean} [touchControls.disableOnEnd]
  *  Disable the touch overlay when the video ends.
  *  Useful if an end screen overlay is used.
- *  Default true.
+ *  Default false.
  * @property {boolean} [touchControls.disabled]
  *  All tap overlay functionality provided by this plugin disabled.
  *  Default false.
  */
 
-// Default options for the plugin.
 /** @type {MobileUiOptions} */
 const defaults = {
   fullscreen: {
@@ -123,7 +126,7 @@ const onPlayerReady = (player, options) => {
     return;
   }
 
-  if (options.fullscreen.swipeToFullscreen) {
+  if (options.fullscreen.swipeToFullscreen || options.fullscreen.swipeFromFullscreen) {
     initSwipe(player, options);
   }
 

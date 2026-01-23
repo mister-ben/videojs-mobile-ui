@@ -95,7 +95,8 @@
     display: none;
   }
 
-  &.using-fs-swipe {
+  &:not(:fullscreen).using-fs-swipe-up,
+  &:fullscreen.using-fs-swipe-down {
     touch-action: none;
     overflow: hidden;
   }
