@@ -32,7 +32,8 @@
     "watch": "npm-run-all -p watch:*",
     "watch:css": "npm run build:css -- -w",
     "watch:js": "npm run build:js -- -w",
-    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose --skip-es-check"
+    "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose --skip-es-check",
+    "netlify": "node ./scripts/netlify.js"
   },
   "engines": {
     "node": ">=14",
@@ -88,6 +89,7 @@
     "postcss-nested": "^7.0.2",
     "postcss-progress": "^2.0.0",
     "rollup": "^2.46.0",
+    "shelljs": "^0.10.0",
     "sinon": "^21.0.0",
     "video.js": "^8.0.0",
     "videojs-generate-karma-config": "^8.1.0",
