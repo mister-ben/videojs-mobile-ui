@@ -23,7 +23,7 @@ const initSwipe = (player, pluginOptions) => {
 
   let touchStartY = 0;
   let couldBeSwiping = false;
-  const swipeThreshold = pluginOptions.fullscreen.swipeThreshold;
+  const swipeThreshold = 30;
 
   /**
    * Monitor the possible start of a swipe

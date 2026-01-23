@@ -27,9 +27,6 @@ import window from 'global/window';
  *  Swipe down to exit fullscreen.
  *  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture.
  *  Default false.
- * @property {number} [fullscreen.swipeThreshold]
- *  Minium distance to consider a swipe in pixels.
- *  Default 30.
  * @property {boolean} [fullscreen.disabled]
  *  All fullscreen functionality provided by this plugin disabled.
  *  Default false.
@@ -62,7 +59,6 @@ const defaults = {
     lockToLandscapeOnEnter: false,
     swipeToFullscreen: false,
     swipeFromFullscreen: false,
-    swipeThreshold: 30,
     disabled: false
   },
   touchControls: {
