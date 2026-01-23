@@ -86,7 +86,7 @@
     "postcss-import": "^16.1.1",
     "postcss-nested": "^7.0.2",
     "postcss-progress": "^2.0.0",
-    "rollup": "^2.46.0",
+    "rollup": "^4.56.0",
     "sinon": "^21.0.0",
     "video.js": "^8.0.0",
     "videojs-generate-karma-config": "^8.1.0",
