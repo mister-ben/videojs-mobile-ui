@@ -12,5 +12,5 @@ sh.cp('-r', 'dist', path.join(deployDir, 'dist'));
 
 let pluginContent = fs.readFileSync('index.html', 'utf8');
 
-pluginContent = pluginContent.replace(/href="node_modules\//g, 'href="https://unpkg.com/');
+pluginContent = pluginContent.replace(/="node_modules\//g, '="https://unpkg.com/');
 fs.writeFileSync(path.join(deployDir, 'index.html'), pluginContent);
