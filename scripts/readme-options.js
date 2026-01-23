@@ -1,12 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+/* eslint-disable no-console */
 
-// Configuration
+const fs = require('fs');
+
 const PATHS = {
   plugin: './src/plugin.js',
   readme: './README.md'
 };
 
+/**
+ * Updates options in the README with the typedef fer MobileUiOptions in plugin.js
+ */
 function main() {
   try {
     const pluginContent = fs.readFileSync(PATHS.plugin, 'utf8');
@@ -22,9 +25,9 @@ function main() {
 
     console.log(`Generated documentation for ${newDocs.split('\n').filter(l => l.startsWith('-')).length} properties.`);
     console.log(`Updating ${PATHS.readme}...`);
-    
+
     const updatedReadme = updateReadmeContent(readmeContent, newDocs);
-    
+
     fs.writeFileSync(PATHS.readme, updatedReadme);
     console.log('README.md updated successfully!');
 
@@ -34,13 +37,18 @@ function main() {
 }
 
 /**
- * Parses the JSDoc block for MobileUiOptions and returns formatted Markdown
+ * Parses the JSDoc block for MobileUiOptions and converts to formatted Markdown
+ *
+ * @param {string} content The file containing the jsdoc
+ * @return {string} Formatted Markdown
  */
 function generateMarkdownFromJSDoc(content) {
   const blockRegex = /\/\*\*[\s\S]*?@typedef \{Object\} MobileUiOptions[\s\S]*?\*\//;
   const match = content.match(blockRegex);
 
-  if (!match) return null;
+  if (!match) {
+    return null;
+  }
 
   const lines = match[0].split('\n');
   const properties = [];
@@ -74,8 +82,8 @@ function generateMarkdownFromJSDoc(content) {
       const name = propMatch[2] || propMatch[3];
 
       currentProp = {
-        name: name,
-        type: type,
+        name,
+        type,
         description: []
       };
     } else if (currentProp && !cleanLine.startsWith('@') && cleanLine !== '/') {
@@ -91,13 +99,19 @@ function generateMarkdownFromJSDoc(content) {
 
   return properties.map(prop => {
     const descString = prop.description.join('  \n  ');
+
     return `- **\`${prop.name}\`** {${prop.type}}  \n  ${descString}`;
   }).join('\n');
 }
 
 /**
- * Replaces the content between "### Options" and "## Usage"
- * ensuring consistent spacing (one blank line after header, one before next section).
+ * Replaces content in README
+ *
+ * @param {string} readmeContent
+ * Current README
+ * @param {string} newDocs
+ * New options content
+ * @return {string} New README
  */
 function updateReadmeContent(readmeContent, newDocs) {
   // Capture "### Options", everything in between, and "## Usage"

@@ -196,7 +196,7 @@ const onPlayerReady = (player, options) => {
  * Adds a mobile UI for player control, and fullscreen orientation control
  *
  * @function mobileUi
- * @param    {MobileUiOptions} [options={}]
+ * @param    {MobileUiOptions} [options={}] Plugin options
  */
 const mobileUi = function(options = {}) {
   if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
