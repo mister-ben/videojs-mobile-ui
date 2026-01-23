@@ -119,7 +119,9 @@ class TouchOverlay extends Component {
       return;
     }
 
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
+    }
 
     this.taps += 1;
     if (this.taps === 1) {
