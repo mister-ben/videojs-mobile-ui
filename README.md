@@ -47,6 +47,8 @@ Newer functionality is opt-in, to not force new features on existing players. Th
 
 The [demo] page lets you try out the configuration options.
 
+![QR code link to demo page](demo-qr)
+
 ### Default options
 
 ```js
@@ -199,3 +201,4 @@ MIT. Copyright (c) mister-ben &lt;git@misterben.me&gt;
 
 [videojs]: http://videojs.org/
 [demo]: https://videojs-mobile-ui.netlify.app
+[demo-qr]: /demo-qr.svg
