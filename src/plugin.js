@@ -40,7 +40,7 @@ import window from 'global/window';
  *  Default `300`.
  * @property {boolean} [touchControls.disableOnEnd]
  *  Disable the touch overlay when the video ends.
- *  Useful if an end screen overlay is used.
+ *  Useful if an end screen overlay is used to avoid conflict.
  *  Default `false`.
  * @property {boolean} [touchControls.disabled]
  *  All tap overlay functionality provided by this plugin disabled.
