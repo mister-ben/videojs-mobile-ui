@@ -16,28 +16,31 @@ QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof plugin, 'function', 'plugin is a function');
 });
 
-QUnit.module('videojs-mobile-ui', {
+const beforeEach = function() {
 
-  beforeEach() {
+  // Mock the environment's timers because certain things - particularly
+  // player readiness - are asynchronous in video.js 5. This MUST come
+  // before any player is created; otherwise, timers could get created
+  // with the actual timer methods!
+  this.clock = sinon.useFakeTimers();
 
-    // Mock the environment's timers because certain things - particularly
-    // player readiness - are asynchronous in video.js 5. This MUST come
-    // before any player is created; otherwise, timers could get created
-    // with the actual timer methods!
-    this.clock = sinon.useFakeTimers();
+  this.fixture = document.getElementById('qunit-fixture');
+  this.video = document.createElement('video');
+  this.fixture.appendChild(this.video);
 
-    this.fixture = document.getElementById('qunit-fixture');
-    this.video = document.createElement('video');
-    this.fixture.appendChild(this.video);
-    this.player = videojs(this.video);
-  },
+  this.player = videojs(this.video);
+};
 
-  afterEach() {
-    if (!this.player.isDisposed()) {
-      this.player.dispose();
-    }
-    this.clock.restore();
+const afterEach = function() {
+  if (!this.player.isDisposed()) {
+    this.player.dispose();
   }
+  this.clock.restore();
+};
+
+QUnit.module('videojs-mobile-ui', {
+  beforeEach,
+  afterEach
 });
 
 QUnit.test('registers itself with video.js', function(assert) {
@@ -47,6 +50,14 @@ QUnit.test('registers itself with video.js', function(assert) {
     'function',
     'videojs-mobile-ui plugin was registered'
   );
+});
+
+QUnit.test('initialises without errors', function(assert) {
+  this.player.mobileUi({ forceForTesting: true });
+
+  this.clock.tick(1);
+
+  assert.expect(0);
 });
 
 QUnit.test('inserts element before control bar', function(assert) {
@@ -179,6 +190,35 @@ QUnit[testOrSkip]('Android event listeners skipped if disabled', function(assert
   videojs.browser = oldBrowser;
 });
 
+QUnit.test('Adds disable-end class if disableOnEnd option is true', function(assert) {
+  this.player.mobileUi({
+    forceForTesting: true,
+    touchControls: { disableOnEnd: true }
+  });
+
+  this.clock.tick(1);
+
+  assert.ok(this.player.hasClass('vjs-mobile-ui-disable-end'), 'Class added via option');
+});
+
+QUnit.test('Adds disable-end class if endscreen plugin is present', function(assert) {
+  this.player.endscreen = () => {};
+
+  this.player.mobileUi({
+    forceForTesting: true,
+    touchControls: { disableOnEnd: false }
+  });
+
+  this.clock.tick(1);
+
+  assert.ok(this.player.hasClass('vjs-mobile-ui-disable-end'), 'Class added via endscreen detection');
+});
+
+QUnit.module('TouchOverlay', {
+  beforeEach,
+  afterEach
+});
+
 QUnit.test('TouchOverlay: double tap right seeks forward', function(assert) {
   // Setup
   this.player.mobileUi({ forceForTesting: true });
@@ -243,28 +283,4 @@ QUnit.test('TouchOverlay: single tap toggles play/pause visibility', function(as
   });
 
   assert.ok(touchOverlay.hasClass('show-play-toggle'), 'Play toggle is visible after single tap');
-});
-
-QUnit.test('Adds disable-end class if disableOnEnd option is true', function(assert) {
-  this.player.mobileUi({
-    forceForTesting: true,
-    touchControls: { disableOnEnd: true }
-  });
-
-  this.clock.tick(1);
-
-  assert.ok(this.player.hasClass('vjs-mobile-ui-disable-end'), 'Class added via option');
-});
-
-QUnit.test('Adds disable-end class if endscreen plugin is present', function(assert) {
-  this.player.endscreen = () => {};
-
-  this.player.mobileUi({
-    forceForTesting: true,
-    touchControls: { disableOnEnd: false }
-  });
-
-  this.clock.tick(1);
-
-  assert.ok(this.player.hasClass('vjs-mobile-ui-disable-end'), 'Class added via endscreen detection');
 });

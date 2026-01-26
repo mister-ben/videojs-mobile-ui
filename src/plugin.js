@@ -83,14 +83,16 @@ const onPlayerReady = (player, options) => {
     const currentOrientation = getOrientation();
 
     if (currentOrientation === 'landscape' && options.fullscreen.enterOnRotate) {
-      if (player.paused() === false) {
-        player.requestFullscreen();
+      if (!player.paused() && !player.isFullscreen()) {
+        player.requestFullscreen().catch((err) => {
+          player.log.warn('Browser refused fullscreen request:', err);
+        });
         if ((options.fullscreen.lockOnRotate || options.fullscreen.lockToLandscapeOnEnter) &&
             screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
-          }).catch((e) => {
-            videojs.log('Browser refused orientation lock:', e);
+          }).catch((err) => {
+            videojs.log.warn('Browser refused orientation lock:', err);
           });
         }
       }
@@ -119,6 +121,7 @@ const onPlayerReady = (player, options) => {
   }
 
   player.on('fullscreenchange', _ => {
+    player.log('fullscreenchange', player.isFullscreen(), options.fullscreen.lockToLandscapeOnEnter, getOrientation());
     if (player.isFullscreen() && options.fullscreen.lockToLandscapeOnEnter && getOrientation() === 'portrait') {
       screen.orientation.lock('landscape').then(()=>{
         locked = true;
