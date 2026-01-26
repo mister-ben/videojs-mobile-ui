@@ -9,7 +9,19 @@ import window from 'global/window';
 /** @import Player from 'video.js/dist/types/player' */
 
 const Component = videojs.getComponent('Component');
+
+// Video.js 7 compatibility
 const dom = videojs.dom || videojs;
+const debounce = videojs.fn ? videojs.fn.debounce : (callback, wait) => {
+  let timeoutId = null;
+
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback.apply(null, args);
+    }, wait);
+  };
+};
 
 /**
  * The `TouchOverlay` is an overlay to capture tap events.
@@ -54,7 +66,7 @@ class TouchOverlay extends Component {
      *
      * @param {Event} event
      */
-    this.handleTaps_ = videojs.fn.debounce(event => {
+    this.handleTaps_ = debounce((event) => {
       const increment = (this.taps - 1) * this.seekSeconds;
 
       this.taps = 0;
