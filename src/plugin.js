@@ -12,13 +12,13 @@ import window from 'global/window';
  *  If the device is rotated, enter fullscreen.
  *  Default `true`.
  * @property {boolean} [fullscreen.exitOnRotate]
- *  If the device is rotated, exit fullscreen.
+ *  If the device is rotated, exit fullscreen, unless `lockOnRotate` is used.
  *  Default `true`.
  * @property {boolean} [fullscreen.lockOnRotate]
- *  If the device is rotated, lock the orientation (not supported by iOS).
+ *  When going fullscreen in response to rotation (`enterOnRotate`), also lock the orientation (not supported by iOS).
  *  Default `true`.
  * @property {boolean} [fullscreen.lockToLandscapeOnEnter]
- *  When fullscreen is entered, lock the orientation (not supported by iOS).
+ *  When fullscreen is entered by any means, lock the orientation (not supported by iOS).
  *  Default `false`.
  * @property {boolean} [fullscreen.swipeToFullscreen]
  *  Swipe up to enter fullscreen.

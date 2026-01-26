@@ -75,13 +75,13 @@ Newer functionality is opt-in, to not force new features on existing players. Th
   If the device is rotated, enter fullscreen.  
   Default `true`.
 - **`fullscreen.exitOnRotate`** {boolean}  
-  If the device is rotated, exit fullscreen.  
+  If the device is rotated, exit fullscreen, unless `lockOnRotate` is used.  
   Default `true`.
 - **`fullscreen.lockOnRotate`** {boolean}  
-  If the device is rotated, lock the orientation (not supported by iOS).  
+  When going fullscreen in response to rotation (`enterOnRotate`), also lock the orientation (not supported by iOS).  
   Default `true`.
 - **`fullscreen.lockToLandscapeOnEnter`** {boolean}  
-  When fullscreen is entered, lock the orientation (not supported by iOS).  
+  When fullscreen is entered by any means, lock the orientation (not supported by iOS).  
   Default `false`.
 - **`fullscreen.swipeToFullscreen`** {boolean}  
   Swipe up to enter fullscreen.  
