@@ -331,9 +331,9 @@ function getNestedValue(obj, path) {
  */
 function generateMarkdown(properties) {
   return properties.map(prop => {
-    const descString = prop.description.join(' \\\n  ');
+    const descString = prop.description.join('  \n  ');
 
-    return `- **\`${prop.name}\`** \`{${prop.type}}\`\n  ${descString}`;
+    return `- **\`${prop.name}\`** {${prop.type}}  \n  ${descString}`;
   }).join('\n');
 }
 

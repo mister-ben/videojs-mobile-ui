@@ -69,44 +69,44 @@ Newer functionality is opt-in, to not force new features on existing players. Th
 
 ### Options
 
-- **`fullscreen`** `{Object}`
+- **`fullscreen`** {Object}  
   Options for fullscreen behaviours.
-- **`fullscreen.enterOnRotate`** `{boolean}`
-  If the device is rotated, enter fullscreen. \
+- **`fullscreen.enterOnRotate`** {boolean}  
+  If the device is rotated, enter fullscreen.  
   Default `true`.
-- **`fullscreen.exitOnRotate`** `{boolean}`
-  If the device is rotated, exit fullscreen. \
+- **`fullscreen.exitOnRotate`** {boolean}  
+  If the device is rotated, exit fullscreen.  
   Default `true`.
-- **`fullscreen.lockOnRotate`** `{boolean}`
-  If the device is rotated, lock the orientation (not supported by iOS). \
+- **`fullscreen.lockOnRotate`** {boolean}  
+  If the device is rotated, lock the orientation (not supported by iOS).  
   Default `true`.
-- **`fullscreen.lockToLandscapeOnEnter`** `{boolean}`
-  When fullscreen is entered, lock the orientation (not supported by iOS). \
+- **`fullscreen.lockToLandscapeOnEnter`** {boolean}  
+  When fullscreen is entered, lock the orientation (not supported by iOS).  
   Default `false`.
-- **`fullscreen.swipeToFullscreen`** `{boolean}`
-  Swipe up to enter fullscreen. \
+- **`fullscreen.swipeToFullscreen`** {boolean}  
+  Swipe up to enter fullscreen.  
   Default `false`.
-- **`fullscreen.swipeFromFullscreen`** `{boolean}`
-  Swipe down to exit fullscreen. \
-  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture. \
+- **`fullscreen.swipeFromFullscreen`** {boolean}  
+  Swipe down to exit fullscreen.  
+  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture.  
   Default `false`.
-- **`fullscreen.disabled`** `{boolean}`
-  All fullscreen functionality provided by this plugin disabled. \
+- **`fullscreen.disabled`** {boolean}  
+  All fullscreen functionality provided by this plugin disabled.  
   Default `false`.
-- **`touchControls`** `{Object}`
+- **`touchControls`** {Object}  
   Options for tap overlay.
-- **`touchControls.seekSeconds`** `{number}`
-  Increment to seek in seconds. \
+- **`touchControls.seekSeconds`** {number}  
+  Increment to seek in seconds.  
   Default `10`.
-- **`touchControls.tapTimeout`** `{number}`
-  Timeout to consider multiple taps as double rather than two single. \
+- **`touchControls.tapTimeout`** {number}  
+  Timeout to consider multiple taps as double rather than two single.  
   Default `300`.
-- **`touchControls.disableOnEnd`** `{boolean}`
-  Disable the touch overlay when the video ends. \
-  Useful if an end screen overlay is used to avoid conflict. \
+- **`touchControls.disableOnEnd`** {boolean}  
+  Disable the touch overlay when the video ends.  
+  Useful if an end screen overlay is used to avoid conflict.  
   Default `false`.
-- **`touchControls.disabled`** `{boolean}`
-  All tap overlay functionality provided by this plugin disabled. \
+- **`touchControls.disabled`** {boolean}  
+  All tap overlay functionality provided by this plugin disabled.  
   Default `false`.
 
 ## Installation
