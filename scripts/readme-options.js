@@ -333,7 +333,7 @@ function generateMarkdown(properties) {
   return properties.map(prop => {
     const descString = prop.description.join(' \\\n  ');
 
-    return `- *${prop.name}* \`{${prop.type}}\`\n  ${descString}`;
+    return `- **\`${prop.name}\`** \`{${prop.type}}\`\n  ${descString}`;
   }).join('\n');
 }
 
@@ -358,10 +358,10 @@ function updateReadmeContent(readmeContent, newDocs, defaultsCodeBlock) {
     }
   }
 
-  const optionsRegex = /(### Options)([\s\S]*?)(## Usage)/;
+  const optionsRegex = /(### Options)([\s\S]*?)(## Installation)/;
 
   if (!optionsRegex.test(content)) {
-    throw new Error('Could not find "### Options" section followed by "## Usage" in README.md');
+    throw new Error('Could not find "### Options" section followed by "## Installation" in README.md');
   }
 
   return content.replace(optionsRegex, `$1\n\n${newDocs}\n\n$3`);
