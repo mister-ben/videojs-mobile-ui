@@ -26,7 +26,7 @@ Swipe Up to enter fullscreen with a smooth zoom-in effect.
 
 Swipe Down to exit fullscreen naturally.
 
-### 🎨 Configuration
+### 🎨 Configuration Options
 
 Visual indicators show exactly how many seconds are being skipped during a seek.
 
@@ -44,6 +44,8 @@ Newer functionality is opt-in, to not force new features on existing players. Th
 - `fullscreen.swipeToFullScreen`, to enter fullscreen by swiping up on the video.
 - `fullscreen.swipeFromFullScreen`, to exit fullscreen by swiping down on the video (except iPhone).
 - `touchControls.disableOnEnd`, to disable the touch controls at the end of the video. Useful if you have any sort of endcard displayed at the end of the video that might otherwise conflict.
+
+The [demo] page lets you try out the configuration options.
 
 ### Default options
 
@@ -196,3 +198,4 @@ import 'videojs-mobile-ui';
 MIT. Copyright (c) mister-ben &lt;git@misterben.me&gt;
 
 [videojs]: http://videojs.org/
+[demo]: https://videojs-mobile-ui.netlify.app
