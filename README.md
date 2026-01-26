@@ -47,7 +47,7 @@ Newer functionality is opt-in, to not force new features on existing players. Th
 
 The [demo] page lets you try out the configuration options.
 
-![QR code link to demo page](demo-qr)
+![QR code link to demo page][demo-qr]
 
 ### Default options
 
