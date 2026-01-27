@@ -1,43 +1,57 @@
 # videojs-mobile-ui
 
-Mobile UI for Video.js.
+> [!WARNING]
+> This branch is a backport for Video.js v7.
+> See the master branch for v8.
 
-Touch controls:
+A more native mobile user experience for Video.js.
 
-- Double-tap the left side of the player to rewind ten seconds
-- Double-tap the right side of the player to fast-forward ten seconds
-- Single-tap the screen to show a play/pause toggle
+**videojs-mobile-ui** augments the standard Video.js experience into a touch-optimized, mobile-first interface. It adds the intuitive gestures and smart behaviors users expect from top-tier video apps to your browser-based player.
 
-Fullscreen control:
+## Key Features
 
-- Rotate to landscape to enter Fullscreen
-- Lock to fullscreen on rotate
-- Always lock to landscape when entering fullscreen (works even when device rotation is disabled/non-functional)
+### 👆 Touch Controls
 
-## Table of Contents
+Double-tap to Seek: Just like popular video apps, users can double-tap the left or right side of the video to rewind or fast-forward.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Installation
+Large play/pause overlay: A large, screen-wide touch zone allows for easy Play/Pause toggling without hunting for tiny buttons.
 
-- [Installation](#installation)
-- [Plugin Options](#plugin-options)
-  - [Default options](#default-options)
-  - [Options](#options)
-- [Usage](#usage)
-  - [`<script>` Tag](#script-tag)
-  - [Browserify/CommonJS](#browserifycommonjs)
-  - [RequireJS/AMD](#requirejsamd)
-- [License](#license)
+### 📱 Fullscreen Orientation:
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-## Installation
+Rotate to Watch: Automatically enter fullscreen when the user rotates their phone to landscape.
 
-```sh
-npm install --save videojs-mobile-ui
-```
+Orientation Lock: Keeps the video fullscreen and locked to landscape mode even if the user tilts their phone back slightly, preventing accidental exits (works on supported devices).
+
+### 🚀 Swipe Gestures (Optional)
+
+Enable modern swipe gestures to control the viewing mode.
+
+Swipe Up to enter fullscreen with a smooth zoom-in effect.
+
+Swipe Down to exit fullscreen naturally.
+
+### 🎨 Configuration Options
+
+Visual indicators show exactly how many seconds are being skipped during a seek.
+
+Adjust seek times and tap sensitivity to match your specific content needs.
+
+## Compatibility Notes
+
+- iOS Safari does not support orientation lock. The fullscreen video on iOS is native and not influenced by this plugin.
+- Android Firefox has native rotate and lock behaviour when an element containing a video is made fullscreen, which will override this plugin.
 
 ## Plugin Options
+
+Newer functionality is opt-in, to not force new features on existing players. Things you might want to add:
+
+- `fullscreen.swipeToFullscreen`, to enter fullscreen by swiping up on the video.
+- `fullscreen.swipeFromFullscreen`, to exit fullscreen by swiping down on the video (except iPhone).
+- `touchControls.disableOnEnd`, to disable the touch controls at the end of the video. Useful if you have any sort of endcard displayed at the end of the video that might otherwise conflict.
+
+The [demo] page lets you try out the configuration options.
+
+![QR code link to demo page][demo-qr]
 
 ### Default options
 
@@ -48,32 +62,70 @@ npm install --save videojs-mobile-ui
     exitOnRotate: true,
     lockOnRotate: true,
     lockToLandscapeOnEnter: false,
-    iOS: false,
+    swipeToFullscreen: false,
+    swipeFromFullscreen: false,
     disabled: false
   },
   touchControls: {
     seekSeconds: 10,
     tapTimeout: 300,
     disableOnEnd: false,
-    disabled: false,
+    disabled: false
   }
 };
 ```
 
 ### Options
 
-- *fullscreen.enterOnRotate* `boolean` Whether to go fullscreen when rotating to landscape
-- *fullscreen.exitOnRotate* `boolean` Whether to leave fullscreen when rotating to portrait (if not locked)
-- *fullscreen.lockOnRotate* `boolean` Whether to lock to fullscreen when rotating to landscape
-- *fullscreen.lockToLandscapeOnEnter* `boolean` Whether to lock to landscape when entering fullscreen (works even when device rotation is disabled/non-functional)
-- *fullscreen.iOS* `boolean` Whether to use fake fullscreen on iOS (needed for controls to work)
-- *fullscreen.disabled* `boolean` If true no fullscreen handling except the *deprecated* iOS fullwindow hack
-- *touchControls.seekSeconds* `int` Seconds to seek when double-tapping
-- *touchControls.tapTimeout* `int` Milliseconds to consider a double-tap
-- *touchControls.disableOnEnd* `boolean` Whether to disable touch controls when the video has ended, e.g. if an endscreen is used. Automatically disables if the endscreen plugin is present when this plugin initialises
-- *touchControls.disableOnEnd* `boolean` If true no touch controls are added.
+- **`fullscreen`** {Object}  
+  Options for fullscreen behaviours.
+- **`fullscreen.enterOnRotate`** {boolean}  
+  If the device is rotated, enter fullscreen.  
+  Default `true`.
+- **`fullscreen.exitOnRotate`** {boolean}  
+  If the device is rotated, exit fullscreen, unless `lockOnRotate` is used.  
+  Default `true`.
+- **`fullscreen.lockOnRotate`** {boolean}  
+  When going fullscreen in response to rotation (`enterOnRotate`), also lock the orientation (not supported by iOS).  
+  Default `true`.
+- **`fullscreen.lockToLandscapeOnEnter`** {boolean}  
+  When fullscreen is entered by any means, lock the orientation (not supported by iOS).  
+  Default `false`.
+- **`fullscreen.swipeToFullscreen`** {boolean}  
+  Swipe up to enter fullscreen.  
+  Default `false`.
+- **`fullscreen.swipeFromFullscreen`** {boolean}  
+  Swipe down to exit fullscreen.  
+  Won't do anything on iOS native fullscreen, which has its own swipe down exit gesture.  
+  Default `false`.
+- **`fullscreen.disabled`** {boolean}  
+  All fullscreen functionality provided by this plugin disabled.  
+  Default `false`.
+- **`touchControls`** {Object}  
+  Options for tap overlay.
+- **`touchControls.seekSeconds`** {number}  
+  Increment to seek in seconds.  
+  Default `10`.
+- **`touchControls.tapTimeout`** {number}  
+  Timeout to consider multiple taps as double rather than two single.  
+  Default `300`.
+- **`touchControls.disableOnEnd`** {boolean}  
+  Disable the touch overlay when the video ends.  
+  Useful if an end screen overlay is used to avoid conflict.  
+  Default `false`.
+- **`touchControls.disabled`** {boolean}  
+  All tap overlay functionality provided by this plugin disabled.  
+  Default `false`.
 
-## Usage
+## Installation
+
+Version 1.x requires video.js 8.x as a peer dependency. Lower video.js versions are not supported.
+
+To install the latest version that works with Video.js 7, 0.9.0, use the `latest7` tag:
+
+```sh
+npm install videojs-mobile-ui@latest7
+```
 
 To include videojs-mobile-ui on your website or web application, use any of the following methods.
 
@@ -86,16 +138,23 @@ This is the simplest case. Get the script in whatever way you prefer and include
 <script src="//path/to/video.min.js"></script>
 <script src="//path/to/videojs-mobile-ui.min.js"></script>
 <script>
-  var player = videojs('my-video');
+  const player = videojs('my-video');
+  const pluginOptions = {
+    {
+      fullscreen: {
+        swipeToFullscreen: true
+      } 
+    }
+  };
 
-  player.mobileUi();
+  player.mobileUi(pluginOptions);
 </script>
 ```
 
 The release versions will be available on jdselivr, unpkg etc.
 
-* https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.min.js
-* https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.css
+- https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.min.js
+- https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.css
 
 ### Browserify/CommonJS
 
@@ -114,7 +173,7 @@ var player = videojs('my-video');
 player.mobileUi();
 ```
 
-Also include the CSS.
+Also include the CSS!
 
 ### RequireJS/AMD
 
@@ -128,7 +187,7 @@ require(['video.js', 'videojs-mobile-ui'], function(videojs) {
 });
 ```
 
-Also include the CSS.
+Also include the CSS!
 
 ### Import
 
@@ -144,5 +203,6 @@ import 'videojs-mobile-ui';
 
 MIT. Copyright (c) mister-ben &lt;git@misterben.me&gt;
 
-
-[videojs]: http://videojs.com/
+[videojs]: http://videojs.org/
+[demo]: https://videojs-mobile-ui.netlify.app
+[demo-qr]: /demo-qr.svg

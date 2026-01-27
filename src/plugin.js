@@ -1,6 +1,7 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 import './touchOverlay.js';
+import initSwipe from './swipeFullscreen.js';
 import window from 'global/window';
 
 // Default options for the plugin.
@@ -10,7 +11,8 @@ const defaults = {
     exitOnRotate: true,
     lockOnRotate: true,
     lockToLandscapeOnEnter: false,
-    iOS: false,
+    swipeToFullscreen: false,
+    swipeFromFullscreen: false,
     disabled: false
   },
   touchControls: {
@@ -22,6 +24,7 @@ const defaults = {
 };
 
 const screen = window.screen;
+const registerPlugin = videojs.registerPlugin || videojs.plugin;
 
 /**
  * Gets 'portrait' or 'lanscape' from the two orientation APIs
@@ -49,9 +52,6 @@ const getOrientation = () => {
   return 'portrait';
 };
 
-// Cross-compatibility for Video.js 5 and 6.
-const registerPlugin = videojs.registerPlugin || videojs.plugin;
-
 /**
  * Add UI and event listeners
  *
@@ -59,22 +59,11 @@ const registerPlugin = videojs.registerPlugin || videojs.plugin;
  * @param    {Player} player
  *           A Video.js player object.
  *
- * @param    {Object} [options={}]
+ * @param    {MobileUiOptions} [options={}]
  *           A plain object containing options for the plugin.
  */
 const onPlayerReady = (player, options) => {
   player.addClass('vjs-mobile-ui');
-
-  if (options.fullscreen.iOS) {
-    videojs.log.warn('videojs-mobile-ui: `fullscreen.iOS` is deprecated. Use Video.js option `preferFullWindow` instead.');
-    if (videojs.browser.IS_IOS && videojs.browser.IOS_VERSION > 9 &&
-        !player.el_.ownerDocument.querySelector('.bc-iframe')) {
-      player.tech_.el_.setAttribute('playsinline', 'playsinline');
-      player.tech_.supportsFullScreen = function() {
-        return false;
-      };
-    }
-  }
 
   if (!options.touchControls.disabled) {
 
@@ -105,20 +94,26 @@ const onPlayerReady = (player, options) => {
     return;
   }
 
+  if (options.fullscreen.swipeToFullscreen || options.fullscreen.swipeFromFullscreen) {
+    initSwipe(player, options);
+  }
+
   let locked = false;
 
   const rotationHandler = () => {
     const currentOrientation = getOrientation();
 
     if (currentOrientation === 'landscape' && options.fullscreen.enterOnRotate) {
-      if (player.paused() === false) {
-        player.requestFullscreen();
+      if (!player.paused() && !player.isFullscreen()) {
+        player.requestFullscreen().catch((err) => {
+          player.log.warn('Browser refused fullscreen request:', err);
+        });
         if ((options.fullscreen.lockOnRotate || options.fullscreen.lockToLandscapeOnEnter) &&
             screen.orientation && screen.orientation.lock) {
           screen.orientation.lock('landscape').then(() => {
             locked = true;
-          }).catch((e) => {
-            videojs.log('Browser refused orientation lock:', e);
+          }).catch((err) => {
+            videojs.log.warn('Browser refused orientation lock:', err);
           });
         }
       }
@@ -168,42 +163,10 @@ const onPlayerReady = (player, options) => {
 };
 
 /**
- * A video.js plugin.
- *
- * Adds a monile UI for player control, and fullscreen orientation control
+ * Adds a mobile UI for player control, and fullscreen orientation control
  *
  * @function mobileUi
- * @param    {Object} [options={}]
- *           Plugin options.
- * @param    {boolean} [options.forceForTesting=false]
- *           Enables the display regardless of user agent, for testing purposes
- * @param    {Object} [options.fullscreen={}]
- *           Fullscreen options.
- * @param    {boolean} [options.fullscreen.disabled=false]
- *           If true no fullscreen handling except the *deprecated* iOS fullwindow hack
- * @param    {boolean} [options.fullscreen.enterOnRotate=true]
- *           Whether to go fullscreen when rotating to landscape
- * @param    {boolean} [options.fullscreen.exitOnRotate=true]
- *           Whether to leave fullscreen when rotating to portrait (if not locked)
- * @param    {boolean} [options.fullscreen.lockOnRotate=true]
- *           Whether to lock orientation when rotating to landscape
- *           Unlocked when exiting fullscreen or on 'ended
- * @param    {boolean} [options.fullscreen.lockToLandscapeOnEnter=false]
- *           Whether to always lock orientation to landscape on fullscreen mode
- *           Unlocked when exiting fullscreen or on 'ended'
- * @param    {boolean} [options.fullscreen.iOS=false]
- *           Deprecated: Whether to disable iOS's native fullscreen so controls can work
- * @param    {Object} [options.touchControls={}]
- *           Touch UI options.
- * @param    {boolean} [options.touchControls.disabled=false]
- *           If true no touch controls are added.
- * @param    {int} [options.touchControls.seekSeconds=10]
- *           Number of seconds to seek on double-tap
- * @param    {int} [options.touchControls.tapTimeout=300]
- *           Interval in ms to be considered a doubletap
- * @param    {boolean} [options.touchControls.disableOnEnd=false]
- *           Whether to disable when the video ends (e.g., if there is an endscreen)
- *           Never shows if the endscreen plugin is present
+ * @param    {Object} [options={}] Plugin options
  */
 const mobileUi = function(options = {}) {
   if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
