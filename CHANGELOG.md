@@ -1,3 +1,22 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.4...v1.2.0) (2026-01-27)
+
+### Features
+
+* Swipe into/from fullscreen (#218) ([42f3264](https://github.com/mister-ben/videojs-mobile-ui/commit/42f3264)), closes [#218](https://github.com/mister-ben/videojs-mobile-ui/issues/218)
+
+### Bug Fixes
+
+* Avoid conflict with Firefox native behaviour (#220) ([19ebfe8](https://github.com/mister-ben/videojs-mobile-ui/commit/19ebfe8)), closes [#220](https://github.com/mister-ben/videojs-mobile-ui/issues/220)
+
+### Chores
+
+* Setup Netlify previews (#219) ([3acbf18](https://github.com/mister-ben/videojs-mobile-ui/commit/3acbf18)), closes [#219](https://github.com/mister-ben/videojs-mobile-ui/issues/219)
+
+### Documentation
+
+* Update readme, clarify options (#221) ([3b5068e](https://github.com/mister-ben/videojs-mobile-ui/commit/3b5068e)), closes [#221](https://github.com/mister-ben/videojs-mobile-ui/issues/221)
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.3...v1.1.4) (2026-01-22)
 
