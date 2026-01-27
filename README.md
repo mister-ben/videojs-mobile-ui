@@ -41,8 +41,8 @@ Adjust seek times and tap sensitivity to match your specific content needs.
 
 Newer functionality is opt-in, to not force new features on existing players. Things you might want to add:
 
-- `fullscreen.swipeToFullScreen`, to enter fullscreen by swiping up on the video.
-- `fullscreen.swipeFromFullScreen`, to exit fullscreen by swiping down on the video (except iPhone).
+- `fullscreen.swipeToFullscreen`, to enter fullscreen by swiping up on the video.
+- `fullscreen.swipeFromFullscreen`, to exit fullscreen by swiping down on the video (except iPhone).
 - `touchControls.disableOnEnd`, to disable the touch controls at the end of the video. Useful if you have any sort of endcard displayed at the end of the video that might otherwise conflict.
 
 The [demo] page lets you try out the configuration options.
