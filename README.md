@@ -121,7 +121,7 @@ The [demo] page lets you try out the configuration options.
 
 Version 1.x requires video.js 8.x as a peer dependency. Lower video.js versions are not supported.
 
-To install the latest version that works with Video.js 7, 0.9.0, use the `latest7` tag:
+Version 0.x works with Video.js 7. To install the latest release of 0.x, use the `latest7` tag:
 
 ```sh
 npm install videojs-mobile-ui@latest7
