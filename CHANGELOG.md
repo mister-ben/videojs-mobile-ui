@@ -1,3 +1,14 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.0...v1.2.1) (2026-02-03)
+
+### Bug Fixes
+
+* **docs:** Typo in README ([068a3a2](https://github.com/mister-ben/videojs-mobile-ui/commit/068a3a2))
+
+### Chores
+
+* **deps-dev:** bump autoprefixer from 10.4.23 to 10.4.24 (#224) ([76daf72](https://github.com/mister-ben/videojs-mobile-ui/commit/76daf72)), closes [#224](https://github.com/mister-ben/videojs-mobile-ui/issues/224)
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.1.4...v1.2.0) (2026-01-27)
 
