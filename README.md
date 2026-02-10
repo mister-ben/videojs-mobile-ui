@@ -12,7 +12,7 @@ Double-tap to Seek: Just like popular video apps, users can double-tap the left 
 
 Large play/pause overlay: A large, screen-wide touch zone allows for easy Play/Pause toggling without hunting for tiny buttons.
 
-### 📱 Fullscreen Orientation:
+### 📱 Fullscreen Orientation
 
 Rotate to Watch: Automatically enter fullscreen when the user rotates their phone to landscape.
 
@@ -149,8 +149,8 @@ This is the simplest case. Get the script in whatever way you prefer and include
 
 The release versions will be available on jdselivr, unpkg etc.
 
-- https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.min.js
-- https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.css
+- <https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.min.js>
+- <https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.css>
 
 ### Browserify/CommonJS
 
@@ -195,9 +195,43 @@ import 'videojs-mobile-ui/dist/videojs-mobile-ui.css';
 import 'videojs-mobile-ui';
 ```
 
+## Typescript
+
+You can add a .d.ts to your project if needed.
+
+```ts
+// videojs-mobile-ui.d.ts
+import type Player from 'video.js/dist/types/player';
+
+declare module 'video.js/dist/types/player' {
+  export default interface Player {
+    mobileUi: {
+      (options?: {
+        fullscreen?: {
+          enterOnRotate?: boolean;
+          exitOnRotate?: boolean;
+          lockOnRotate?: boolean;
+          lockToLandscapeOnEnter?: boolean;
+          swipeToFullscreen?: boolean;
+          swipeFromFullscreen?: boolean;
+          disabled?: boolean;
+        };
+        touchControls?: {
+          seekSeconds?: number;
+          tapTimeout?: number;
+          disableOnEnd?: boolean;
+          disabled?: boolean;
+        };
+      }): void;
+      VERSION: string;
+    }
+  }
+}
+```
+
 ## License
 
-MIT. Copyright (c) mister-ben &lt;git@misterben.me&gt;
+MIT. Copyright (c) mister-ben <git@misterben.me>
 
 [videojs]: http://videojs.org/
 [demo]: https://videojs-mobile-ui.netlify.app
