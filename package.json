@@ -1,6 +1,6 @@
 {
   "name": "videojs-mobile-ui",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Mobile tap controls and fullscreen on rotate for Video.js",
   "main": "dist/videojs-mobile-ui.cjs.js",
   "module": "dist/videojs-mobile-ui.es.js",

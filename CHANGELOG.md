@@ -1,3 +1,23 @@
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.1...v1.2.2) (2026-02-26)
+
+### Bug Fixes
+
+* **deps:** bump qs from 6.14.1 to 6.14.2 (#227) ([33e53b5](https://github.com/mister-ben/videojs-mobile-ui/commit/33e53b5)), closes [#227](https://github.com/mister-ben/videojs-mobile-ui/issues/227)
+
+### Chores
+
+* **deps-dev:** bump autoprefixer from 10.4.24 to 10.4.27 (#230) ([7e02a5c](https://github.com/mister-ben/videojs-mobile-ui/commit/7e02a5c)), closes [#230](https://github.com/mister-ben/videojs-mobile-ui/issues/230)
+* **deps-dev:** bump rollup from 2.79.2 to 2.80.0 (#228) ([fd8471f](https://github.com/mister-ben/videojs-mobile-ui/commit/fd8471f)), closes [#228](https://github.com/mister-ben/videojs-mobile-ui/issues/228)
+* **deps-dev:** bump video.js from 8.23.4 to 8.23.6 (#225) ([7385887](https://github.com/mister-ben/videojs-mobile-ui/commit/7385887)), closes [#225](https://github.com/mister-ben/videojs-mobile-ui/issues/225)
+* **deps-dev:** bump video.js from 8.23.6 to 8.23.7 (#226) ([8d071d3](https://github.com/mister-ben/videojs-mobile-ui/commit/8d071d3)), closes [#226](https://github.com/mister-ben/videojs-mobile-ui/issues/226)
+* remove pulseaudio from ci (#229) ([a8dbb84](https://github.com/mister-ben/videojs-mobile-ui/commit/a8dbb84)), closes [#229](https://github.com/mister-ben/videojs-mobile-ui/issues/229)
+* update devdeps' dependencies ([4695e9d](https://github.com/mister-ben/videojs-mobile-ui/commit/4695e9d))
+
+### Documentation
+
+* typescript .d.ts example ([03db901](https://github.com/mister-ben/videojs-mobile-ui/commit/03db901))
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.0...v1.2.1) (2026-02-03)
 
