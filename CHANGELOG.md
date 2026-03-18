@@ -1,3 +1,14 @@
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.2...v1.2.3) (2026-03-18)
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.28.6 to 7.29.2 (#234) ([ee1b593](https://github.com/mister-ben/videojs-mobile-ui/commit/ee1b593)), closes [#234](https://github.com/mister-ben/videojs-mobile-ui/issues/234)
+* **deps-dev:** bump postcss from 8.5.6 to 8.5.8 (#231) ([670b7eb](https://github.com/mister-ben/videojs-mobile-ui/commit/670b7eb)), closes [#231](https://github.com/mister-ben/videojs-mobile-ui/issues/231)
+* **deps-dev:** bump sinon from 21.0.1 to 21.0.2 (#232) ([4df8f88](https://github.com/mister-ben/videojs-mobile-ui/commit/4df8f88)), closes [#232](https://github.com/mister-ben/videojs-mobile-ui/issues/232)
+* **deps-dev:** bump sinon from 21.0.2 to 21.0.3 (#233) ([14779f4](https://github.com/mister-ben/videojs-mobile-ui/commit/14779f4)), closes [#233](https://github.com/mister-ben/videojs-mobile-ui/issues/233)
+* **dev-deps:** bump flatted and underscore (#235) ([0f9b686](https://github.com/mister-ben/videojs-mobile-ui/commit/0f9b686)), closes [#235](https://github.com/mister-ben/videojs-mobile-ui/issues/235)
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.1...v1.2.2) (2026-02-26)
 
