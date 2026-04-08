@@ -1,3 +1,18 @@
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.3...v1.2.4) (2026-04-08)
+
+### Bug Fixes
+
+* **deps:** bump lodash from 4.17.23 to 4.18.1 ([#240](https://github.com/mister-ben/videojs-mobile-ui/issues/240)) ([836d5b3](https://github.com/mister-ben/videojs-mobile-ui/commit/836d5b3))
+* **deps:** bump picomatch ([#236](https://github.com/mister-ben/videojs-mobile-ui/issues/236)) ([f538626](https://github.com/mister-ben/videojs-mobile-ui/commit/f538626))
+
+### Chores
+
+* **deps-dev:** bump [@xmldom](https://github.com/xmldom)/xmldom from 0.8.11 to 0.8.12 ([#238](https://github.com/mister-ben/videojs-mobile-ui/issues/238)) ([e18365b](https://github.com/mister-ben/videojs-mobile-ui/commit/e18365b))
+* **deps-dev:** bump handlebars from 4.7.8 to 4.7.9 ([#237](https://github.com/mister-ben/videojs-mobile-ui/issues/237)) ([2ab33e7](https://github.com/mister-ben/videojs-mobile-ui/commit/2ab33e7))
+* **deps-dev:** bump postcss from 8.5.8 to 8.5.9 ([#239](https://github.com/mister-ben/videojs-mobile-ui/issues/239)) ([a25a45c](https://github.com/mister-ben/videojs-mobile-ui/commit/a25a45c))
+* use npm preferred repository syntax (npm pkg fix) ([16b6e78](https://github.com/mister-ben/videojs-mobile-ui/commit/16b6e78))
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.2...v1.2.3) (2026-03-18)
 
