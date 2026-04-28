@@ -1,3 +1,19 @@
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.4...v1.2.5) (2026-04-28)
+
+### Bug Fixes
+
+* **deps:** bump follow-redirects from 1.15.11 to 1.16.0 ([#244](https://github.com/mister-ben/videojs-mobile-ui/issues/244)) ([001df09](https://github.com/mister-ben/videojs-mobile-ui/commit/001df09))
+
+### Chores
+
+* **deps-dev:** bump [@xmldom](https://github.com/xmldom)/xmldom from 0.8.12 to 0.8.13 ([#246](https://github.com/mister-ben/videojs-mobile-ui/issues/246)) ([eb00cc4](https://github.com/mister-ben/videojs-mobile-ui/commit/eb00cc4))
+* **deps-dev:** bump autoprefixer from 10.4.27 to 10.5.0 ([#243](https://github.com/mister-ben/videojs-mobile-ui/issues/243)) ([dc44fea](https://github.com/mister-ben/videojs-mobile-ui/commit/dc44fea))
+* **deps-dev:** bump postcss from 8.5.10 to 8.5.12 ([#247](https://github.com/mister-ben/videojs-mobile-ui/issues/247)) ([c94cdb8](https://github.com/mister-ben/videojs-mobile-ui/commit/c94cdb8))
+* **deps-dev:** bump postcss from 8.5.9 to 8.5.10 ([#245](https://github.com/mister-ben/videojs-mobile-ui/issues/245)) ([a548dd0](https://github.com/mister-ben/videojs-mobile-ui/commit/a548dd0))
+* **deps-dev:** bump sinon from 21.0.3 to 21.1.0 ([#241](https://github.com/mister-ben/videojs-mobile-ui/issues/241)) ([9b291de](https://github.com/mister-ben/videojs-mobile-ui/commit/9b291de))
+* **deps-dev:** bump sinon from 21.1.0 to 21.1.2 ([#242](https://github.com/mister-ben/videojs-mobile-ui/issues/242)) ([6080d34](https://github.com/mister-ben/videojs-mobile-ui/commit/6080d34))
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.3...v1.2.4) (2026-04-08)
 
