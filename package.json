@@ -92,7 +92,7 @@
     "postcss-progress": "^2.0.0",
     "rollup": "^2.46.0",
     "shelljs": "^0.10.0",
-    "sinon": "^21.0.0",
+    "sinon": "^22.0.0",
     "video.js": "^8.0.0",
     "videojs-generate-karma-config": "^8.1.0",
     "videojs-generate-rollup-config": "^7.0.0",
