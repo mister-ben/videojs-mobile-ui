@@ -1,3 +1,21 @@
+<a name="1.2.6"></a>
+## [1.2.6](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.5...v1.2.6) (2026-06-11)
+
+### Bug Fixes
+
+* **deps:** bump qs and body-parser ([#254](https://github.com/mister-ben/videojs-mobile-ui/issues/254)) ([0f15328](https://github.com/mister-ben/videojs-mobile-ui/commit/0f15328))
+* **deps:** bump tmp from 0.2.5 to 0.2.7 ([#256](https://github.com/mister-ben/videojs-mobile-ui/issues/256)) ([fae6f58](https://github.com/mister-ben/videojs-mobile-ui/commit/fae6f58))
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/plugin-transform-modules-systemjs ([#252](https://github.com/mister-ben/videojs-mobile-ui/issues/252)) ([68230d8](https://github.com/mister-ben/videojs-mobile-ui/commit/68230d8))
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.29.2 to 7.29.7 ([#255](https://github.com/mister-ben/videojs-mobile-ui/issues/255)) ([e3e3c81](https://github.com/mister-ben/videojs-mobile-ui/commit/e3e3c81))
+* **deps-dev:** bump fast-uri from 3.1.0 to 3.1.2 ([#251](https://github.com/mister-ben/videojs-mobile-ui/issues/251)) ([1ef881d](https://github.com/mister-ben/videojs-mobile-ui/commit/1ef881d))
+* **deps-dev:** bump postcss from 8.5.12 to 8.5.14 ([#249](https://github.com/mister-ben/videojs-mobile-ui/issues/249)) ([983dff8](https://github.com/mister-ben/videojs-mobile-ui/commit/983dff8))
+* **deps-dev:** bump postcss from 8.5.14 to 8.5.15 ([#253](https://github.com/mister-ben/videojs-mobile-ui/issues/253)) ([66ddb67](https://github.com/mister-ben/videojs-mobile-ui/commit/66ddb67))
+* **deps-dev:** bump shell-quote from 1.8.3 to 1.8.4 ([#257](https://github.com/mister-ben/videojs-mobile-ui/issues/257)) ([430dcc1](https://github.com/mister-ben/videojs-mobile-ui/commit/430dcc1))
+* **deps-dev:** bump sinon from 21.1.2 to 22.0.0 ([#250](https://github.com/mister-ben/videojs-mobile-ui/issues/250)) ([abfedee](https://github.com/mister-ben/videojs-mobile-ui/commit/abfedee))
+
 <a name="1.2.5"></a>
 ## [1.2.5](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.4...v1.2.5) (2026-04-28)
 
