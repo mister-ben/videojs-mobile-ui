@@ -88,7 +88,7 @@
     "postcss-cli": "^11.0.1",
     "postcss-csso": "^6.0.1",
     "postcss-import": "^16.1.1",
-    "postcss-nested": "^7.0.2",
+    "postcss-nested": "^8.0.1",
     "postcss-progress": "^2.0.0",
     "rollup": "^2.46.0",
     "shelljs": "^0.10.0",
