@@ -1,3 +1,40 @@
+<a name="1.2.8"></a>
+## [1.2.8](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.7...v1.2.8) (2026-10-23)
+
+### Bug Fixes
+
+* **deps:** bump brace-expansion from 1.1.12 to 1.1.18 ([#289](https://github.com/mister-ben/videojs-mobile-ui/issues/289)) ([864751d](https://github.com/mister-ben/videojs-mobile-ui/commit/864751d))
+* **deps:** bump brace-expansion from 1.1.18 to 1.1.21 ([#307](https://github.com/mister-ben/videojs-mobile-ui/issues/307)) ([1634b14](https://github.com/mister-ben/videojs-mobile-ui/commit/1634b14))
+* **deps:** bump socket.io-parser from 4.2.5 to 4.2.7 ([#280](https://github.com/mister-ben/videojs-mobile-ui/issues/280)) ([6ae14e2](https://github.com/mister-ben/videojs-mobile-ui/commit/6ae14e2))
+* **deps:** bump source-map-js from 1.2.1 to 1.2.2 ([#304](https://github.com/mister-ben/videojs-mobile-ui/issues/304)) ([f5beb2a](https://github.com/mister-ben/videojs-mobile-ui/commit/f5beb2a))
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/core from 7.28.6 to 7.29.7 ([#306](https://github.com/mister-ben/videojs-mobile-ui/issues/306)) ([cee2fae](https://github.com/mister-ben/videojs-mobile-ui/commit/cee2fae))
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 8.0.0 to 8.0.5 ([#295](https://github.com/mister-ben/videojs-mobile-ui/issues/295)) ([cfaa796](https://github.com/mister-ben/videojs-mobile-ui/commit/cfaa796))
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 8.0.5 to 8.0.7 ([#302](https://github.com/mister-ben/videojs-mobile-ui/issues/302)) ([afcbd59](https://github.com/mister-ben/videojs-mobile-ui/commit/afcbd59))
+* **deps-dev:** bump [@xmldom](https://github.com/xmldom)/xmldom from 0.8.13 to 0.8.15 ([#286](https://github.com/mister-ben/videojs-mobile-ui/issues/286)) ([3f053a7](https://github.com/mister-ben/videojs-mobile-ui/commit/3f053a7))
+* **deps-dev:** bump autoprefixer from 10.5.4 to 10.5.5 ([#293](https://github.com/mister-ben/videojs-mobile-ui/issues/293)) ([4e8152e](https://github.com/mister-ben/videojs-mobile-ui/commit/4e8152e))
+* **deps-dev:** bump autoprefixer from 10.5.5 to 10.5.6 ([#296](https://github.com/mister-ben/videojs-mobile-ui/issues/296)) ([e820abc](https://github.com/mister-ben/videojs-mobile-ui/commit/e820abc))
+* **deps-dev:** bump autoprefixer from 10.5.6 to 10.6.1 ([#299](https://github.com/mister-ben/videojs-mobile-ui/issues/299)) ([a23aad0](https://github.com/mister-ben/videojs-mobile-ui/commit/a23aad0))
+* **deps-dev:** bump browserslist from 4.28.6 to 4.28.8 ([#288](https://github.com/mister-ben/videojs-mobile-ui/issues/288)) ([b2d4f7e](https://github.com/mister-ben/videojs-mobile-ui/commit/b2d4f7e))
+* **deps-dev:** bump fast-uri from 3.1.4 to 3.1.7 ([#287](https://github.com/mister-ben/videojs-mobile-ui/issues/287)) ([52349c2](https://github.com/mister-ben/videojs-mobile-ui/commit/52349c2))
+* **deps-dev:** bump handlebars from 4.7.9 to 4.7.10 ([#308](https://github.com/mister-ben/videojs-mobile-ui/issues/308)) ([e40c822](https://github.com/mister-ben/videojs-mobile-ui/commit/e40c822))
+* **deps-dev:** bump js-yaml from 3.14.2 to 3.15.2 ([#294](https://github.com/mister-ben/videojs-mobile-ui/issues/294)) ([88908be](https://github.com/mister-ben/videojs-mobile-ui/commit/88908be))
+* **deps-dev:** bump markdown-it from 14.2.0 to 14.3.3 ([#310](https://github.com/mister-ben/videojs-mobile-ui/issues/310)) ([d6fdf5e](https://github.com/mister-ben/videojs-mobile-ui/commit/d6fdf5e))
+* **deps-dev:** bump postcss from 8.5.23 to 8.5.24 ([#277](https://github.com/mister-ben/videojs-mobile-ui/issues/277)) ([c7ce19a](https://github.com/mister-ben/videojs-mobile-ui/commit/c7ce19a))
+* **deps-dev:** bump postcss from 8.5.24 to 8.5.26 ([#284](https://github.com/mister-ben/videojs-mobile-ui/issues/284)) ([d77dd0f](https://github.com/mister-ben/videojs-mobile-ui/commit/d77dd0f))
+* **deps-dev:** bump postcss from 8.5.26 to 8.5.28 ([#291](https://github.com/mister-ben/videojs-mobile-ui/issues/291)) ([cf9cccf](https://github.com/mister-ben/videojs-mobile-ui/commit/cf9cccf))
+* **deps-dev:** bump postcss from 8.5.28 to 8.5.29 ([#301](https://github.com/mister-ben/videojs-mobile-ui/issues/301)) ([6178b7c](https://github.com/mister-ben/videojs-mobile-ui/commit/6178b7c))
+* **deps-dev:** bump postcss-cli from 11.0.1 to 12.0.0 ([#292](https://github.com/mister-ben/videojs-mobile-ui/issues/292)) ([e2516d4](https://github.com/mister-ben/videojs-mobile-ui/commit/e2516d4))
+* **deps-dev:** bump postcss-import from 16.1.1 to 17.0.0 ([#290](https://github.com/mister-ben/videojs-mobile-ui/issues/290)) ([51e8d92](https://github.com/mister-ben/videojs-mobile-ui/commit/51e8d92))
+* **deps-dev:** bump postcss-nested from 7.0.2 to 8.0.1 ([#282](https://github.com/mister-ben/videojs-mobile-ui/issues/282)) ([937e0da](https://github.com/mister-ben/videojs-mobile-ui/commit/937e0da))
+* **deps-dev:** bump postcss-selector-parser from 7.1.1 to 7.1.5 ([#285](https://github.com/mister-ben/videojs-mobile-ui/issues/285)) ([d98f94a](https://github.com/mister-ben/videojs-mobile-ui/commit/d98f94a))
+* **deps-dev:** bump postcss-selector-parser from 7.1.5 to 7.1.6 ([#305](https://github.com/mister-ben/videojs-mobile-ui/issues/305)) ([5439be7](https://github.com/mister-ben/videojs-mobile-ui/commit/5439be7))
+* **deps-dev:** bump shell-quote from 1.10.0 to 1.12.0 ([#303](https://github.com/mister-ben/videojs-mobile-ui/issues/303)) ([f15b1bd](https://github.com/mister-ben/videojs-mobile-ui/commit/f15b1bd))
+* **deps-dev:** bump video.js from 8.23.9 to 8.24.0 ([#283](https://github.com/mister-ben/videojs-mobile-ui/issues/283)) ([bc1ddab](https://github.com/mister-ben/videojs-mobile-ui/commit/bc1ddab))
+* **deps-dev:** bump video.js from 8.24.0 to 8.24.1 ([#298](https://github.com/mister-ben/videojs-mobile-ui/issues/298)) ([73a7694](https://github.com/mister-ben/videojs-mobile-ui/commit/73a7694))
+
 <a name="1.2.7"></a>
 ## [1.2.7](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.6...v1.2.7) (2026-07-28)
 
