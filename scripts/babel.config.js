@@ -1,9 +1,7 @@
 // Based on @videojs/babel-config 1.0.2/es.js (Apache-2.0).
 // Copyright Brightcove, Inc. See LICENSE.tooling for the license.
-// Preserve the existing transpilation targets and transforms.
+// Preserve the existing transpilation targets and preset options.
 const path = require('path');
-const transformObjectAssign = require.resolve('@babel/plugin-transform-object-assign');
-const transformRuntime = require.resolve('@babel/plugin-transform-runtime');
 const presetEnv = require.resolve('@babel/preset-env');
 
 const defaultBrowsersList = [
@@ -25,9 +23,5 @@ module.exports = {
   babelrc: false,
   presets: [
     [presetEnv, {bugfixes: true, loose: true, modules: false, targets: defaultBrowsersList}]
-  ],
-  plugins: [
-    [transformRuntime, {regenerator: false}],
-    transformObjectAssign
   ]
 };

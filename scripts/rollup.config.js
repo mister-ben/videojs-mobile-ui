@@ -14,13 +14,12 @@ const babelConfig = require('./babel.config');
 
 const watch = process.argv.some(arg => /^-w|--watch$/.test(arg));
 const banner = `/*! @name ${pkg.name} @version ${pkg.version} @license ${pkg.license} */`;
-const moduleExternals = ['global', '@babel/runtime', 'video.js'];
+const moduleExternals = ['global', 'video.js'];
 const testGlobals = {'qunit': 'QUnit', 'qunitjs': 'QUnit', 'sinon': 'sinon', 'video.js': 'videojs'};
 
-// Keep the same plugin instances and order as the generated configuration.
+// Share plugin instances across the builds. Bundle any Babel helpers locally.
 const babelPlugin = babel(Object.assign({}, babelConfig, {
-  babelHelpers: 'runtime',
-  skipPreflightCheck: true
+  babelHelpers: 'bundled'
 }));
 const jsonPlugin = json();
 const resolvePlugin = resolve({
