@@ -1,0 +1,62 @@
+const fs = require('fs');
+const path = require('path');
+const {remove} = require('./files');
+const runner = require('./process')();
+
+const args = process.argv.slice(3);
+const clean = () => {
+  ['dist', 'test/dist', 'cjs', 'es'].forEach(directory => {
+    const target = path.resolve(__dirname, '..', directory);
+
+    remove(target);
+    fs.mkdirSync(target, {recursive: true});
+  });
+};
+const build = async (env = {}) => {
+  clean();
+  await runner.script('readme-options.js');
+  await runner.parallel([
+    runner.script('css.js'),
+    runner.tool('rollup', 'rollup', ['-c', 'scripts/rollup.config.js'], env),
+    runner.script('lang.js')
+  ]);
+};
+const watch = () => runner.parallel([
+  runner.script('css.js', ['--watch', ...args]),
+  runner.tool('rollup', 'rollup', ['-c', 'scripts/rollup.config.js', '-w', ...args])
+]);
+const server = () => runner.tool('karma', 'karma', [
+  'start', 'scripts/karma.conf.js', '--singleRun=false', '--auto-watch', ...args
+]);
+const tasks = {
+  clean,
+  'build': () => build(),
+  'build-prod': () => build({NO_TEST_BUNDLE: '1'}),
+  'build-test': () => build({TEST_BUNDLE_ONLY: '1'}),
+  'docs': async () => {
+    await runner.tool('jsdoc', 'jsdoc', ['src', '-r', '-d', 'docs/api', ...args]);
+    await runner.script('readme-options.js');
+  },
+  'test': async () => {
+    await runner.tool('videojs-standard', 'vjsstandard');
+    await runner.script('../test/tasks.js');
+    await build({TEST_BUNDLE_ONLY: '1'});
+    await runner.tool('karma', 'karma', ['start', 'scripts/karma.conf.js', ...args]);
+  },
+  'posttest': () => process.stdout.write(fs.readFileSync(path.resolve(__dirname, '../test/dist/coverage/text.txt'))),
+  watch,
+  'start': () => runner.parallel([server(), watch()]),
+  'publish': async () => {
+    await build({NO_TEST_BUNDLE: '1'});
+    await runner.tool('videojs-generator-verify', 'vjsverify', ['--verbose', '--skip-es-check', ...args]);
+  }
+};
+
+runner.main(() => {
+  const task = tasks[process.argv[2]];
+
+  if (!task) {
+    throw new Error(`Unknown task: ${process.argv[2]}`);
+  }
+  return task();
+});

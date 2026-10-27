@@ -1,16 +1,19 @@
 const path = require('path');
-const sh = require('shelljs');
 const fs = require('fs');
+const {remove, copy} = require('./files');
+const runner = require('./process')();
 
-const deployDir = 'deploy';
+runner.main(async () => {
+  const deployDir = path.resolve(__dirname, '../deploy');
 
-sh.rm('-rf', deployDir);
-sh.mkdir('-p', deployDir);
+  remove(deployDir);
+  fs.mkdirSync(deployDir, {recursive: true});
 
-sh.exec('npm run build');
-sh.cp('-r', 'dist', path.join(deployDir, 'dist'));
+  await runner.script('tasks.js', ['build']);
+  copy(path.resolve(__dirname, '../dist'), path.join(deployDir, 'dist'));
 
-let pluginContent = fs.readFileSync('index.html', 'utf8');
+  let pluginContent = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
 
-pluginContent = pluginContent.replace(/="node_modules\/video.js/g, '="https://unpkg.com/video.js@8.24.2');
-fs.writeFileSync(path.join(deployDir, 'index.html'), pluginContent);
+  pluginContent = pluginContent.replace(/="node_modules\/video.js/g, '="https://unpkg.com/video.js@8.24.2');
+  fs.writeFileSync(path.join(deployDir, 'index.html'), pluginContent);
+});
