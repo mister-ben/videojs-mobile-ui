@@ -12,5 +12,5 @@ sh.cp('-r', 'dist', path.join(deployDir, 'dist'));
 
 let pluginContent = fs.readFileSync('index.html', 'utf8');
 
-pluginContent = pluginContent.replace(/="node_modules\//g, '="https://unpkg.com/');
+pluginContent = pluginContent.replace(/="node_modules\/video.js/g, '="https://unpkg.com/video.js@8.24.2');
 fs.writeFileSync(path.join(deployDir, 'index.html'), pluginContent);
