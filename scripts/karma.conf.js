@@ -77,15 +77,10 @@ module.exports = function(config) {
       captureTimeout: 600,
       timeout: 600
     },
-    reporters: [isCI ? 'dots' : 'progress', ...serverMode ? [] : ['coverage']],
+    reporters: [isCI ? 'dots' : 'progress', ...serverMode ? [] : ['coverage', 'coverage-results']],
     ...serverMode ? {} : {
       coverageReporter: {
-        reporters: [
-          {type: 'html', dir: '.', subdir: 'test/dist/coverage'},
-          {type: 'lcovonly', dir: '.', subdir: 'test/dist/coverage'},
-          {type: 'json', dir: '.', subdir: 'test/dist/coverage'},
-          {type: 'text', dir: '.', subdir: 'test/dist/coverage', file: 'text.txt'}
-        ]
+        reporters: [{type: 'in-memory'}]
       }
     },
     files: [
@@ -103,6 +98,7 @@ module.exports = function(config) {
       require('karma-browserstack-launcher'),
       require('karma-chrome-launcher'),
       require('karma-coverage'),
+      {'reporter:coverage-results': ['type', require('./coverage').CoverageResults]},
       require('karma-detect-browsers'),
       require('karma-firefox-launcher'),
       require('karma-ie-launcher'),

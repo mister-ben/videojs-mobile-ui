@@ -41,8 +41,10 @@ const tasks = {
     await runner.tool('videojs-standard', 'vjsstandard');
     await runner.script('../test/tasks.js');
     await runner.script('../test/changelog.js');
+    await runner.script('../test/coverage.js');
     await build({TEST_BUNDLE_ONLY: '1'});
     await runner.tool('karma', 'karma', ['start', 'scripts/karma.conf.js', ...args]);
+    await runner.script('coverage.js');
   },
   'posttest': () => process.stdout.write(fs.readFileSync(path.resolve(__dirname, '../test/dist/coverage/text.txt'))),
   watch,

@@ -52,3 +52,19 @@ retains its existing compatibility requirements and Babel browser targets.
 `npm run test:changelog` checks formatting against output captured from the
 previous Video.js preset and verifies that existing entries are preserved.
 These checks also run as part of `npm test`.
+
+### Coverage reports
+
+`npm test` collects source-mapped coverage from each browser and merges it after
+Karma finishes. HTML, LCOV, JSON and text reports are generated once under
+`test/dist/coverage/`; the console summary describes that combined coverage.
+A statement or branch is covered if any participating browser exercises it.
+Individual browser results are retained as JSON under `test/dist/coverage/browsers/`,
+with browser names and unique IDs recorded for diagnosis.
+
+Missing or empty browser coverage fails report generation. Failed tests retain
+their failure status and cannot leave a stale successful report from an earlier
+run. `npm run test:coverage` checks merging and reporting without a browser; these
+checks also run in `npm test`. Running Karma directly only collects the individual
+results; run `node scripts/coverage.js` afterwards to generate the merged reports.
+Development server mode (`npm start` or `npm run server`) does not collect coverage.
