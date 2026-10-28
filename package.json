@@ -101,7 +101,7 @@
     "karma-ie-launcher": "^1.0.0",
     "karma-qunit": "^4.2.0",
     "karma-safari-applescript-launcher": "^0.1.1",
-    "karma-static-server": "^1.0.0",
+    "karma-static-server": "^2.0.0",
     "karma-teamcity-reporter": "^1.1.0",
     "not-prerelease": "^1.0.1",
     "qunit": "~2.16.0",
