@@ -2,7 +2,7 @@ name: mobile compatibility
 
 on:
   push:
-    branches: [master, codex/browserstack-mobile]
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
