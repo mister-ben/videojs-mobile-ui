@@ -102,7 +102,7 @@
     "not-prerelease": "^1.0.1",
     "qunit": "~2.16.0",
     "rollup": "^2.46.0",
-    "rollup-plugin-external-globals": "^0.6.1",
+    "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-istanbul": "^3.0.0",
     "sinon": "^22.0.0",
     "video.js": "^8.0.0",
