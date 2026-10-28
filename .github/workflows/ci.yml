@@ -65,3 +65,11 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: npm test -- --browsers ChromeHeadless,FirefoxHeadless
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v7
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./test/dist/coverage/lcov.info
+        disable_search: true
+        fail_ci_if_error: false
