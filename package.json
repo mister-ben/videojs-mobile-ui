@@ -82,7 +82,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-multi-entry": "^4.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "conventional-changelog-cli": "^2.1.1",
+    "conventional-changelog-cli": "^5.0.0",
     "conventional-changelog-videojs": "^3.0.2",
     "husky": "^9.1.7",
     "is-ci": "^4.1.0",
