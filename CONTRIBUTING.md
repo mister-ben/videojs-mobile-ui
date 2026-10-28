@@ -4,7 +4,7 @@ We welcome contributions from everyone!
 
 ## Getting Started
 
-Make sure you have Node.js 14 or higher and npm installed.
+Make sure you have Node.js 24 (as specified in `.nvmrc`) and npm installed.
 
 1. Fork this repository and clone your fork
 1. Install dependencies: `npm install`
@@ -40,3 +40,15 @@ The Node scripts under `scripts/` handle cleaning, build modes, parallel tools
 and development-process cleanup. `npm run build-prod` omits the test bundle;
 `npm run build-test` builds only the test JavaScript bundle, alongside CSS and
 language files. The Babel configuration and browser targets are unchanged.
+
+### Changelog tooling
+
+`npm run update-changelog` uses the CLI supplied by `conventional-changelog`
+and the local Video.js configuration and templates in `scripts/changelog*`.
+It prepends the next release to `CHANGELOG.md`, preserving existing entries.
+This development tool requires Node.js 22 or newer; the published plugin
+retains its existing compatibility requirements and Babel browser targets.
+
+`npm run test:changelog` checks formatting against output captured from the
+previous Video.js preset and verifies that existing entries are preserved.
+These checks also run as part of `npm test`.

@@ -40,6 +40,7 @@ const tasks = {
   'test': async () => {
     await runner.tool('videojs-standard', 'vjsstandard');
     await runner.script('../test/tasks.js');
+    await runner.script('../test/changelog.js');
     await build({TEST_BUNDLE_ONLY: '1'});
     await runner.tool('karma', 'karma', ['start', 'scripts/karma.conf.js', ...args]);
   },
