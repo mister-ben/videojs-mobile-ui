@@ -74,3 +74,27 @@ depend on automatic browser discovery. Local `npm test` retains browser discover
 use `npm test -- --browsers ChromeHeadless,FirefoxHeadless` for the same browser
 list as CI. Existing BrowserStack launchers remain available through an explicit
 browser list. Mobile Safari compatibility is a separate follow-up.
+
+### Real-device mobile compatibility
+
+`npm run test:mobile` runs the browser suite on BrowserStack using Safari on a
+real iPhone 16 / iOS 18 and Chrome on a real Samsung Galaxy S24 / Android 14.
+Set `BROWSER_STACK_USERNAME` and `BROWSER_STACK_ACCESS_KEY` in your environment.
+The launcher manages BrowserStack Local so devices can reach the local Karma
+server through `bs-local.com`. Sessions run sequentially for accounts with one
+parallel session. Device and OS versions are explicit in `scripts/karma.mobile.conf.js`.
+
+The separate `mobile compatibility` workflow runs on master, trusted repository
+pull requests and manual dispatch. Repository Actions secrets with the same
+names are required. Fork and Dependabot PRs skip this workflow; a maintainer can
+run it from a trusted branch. Mobile results are not uploaded to Codecov and do
+not contribute to the desktop coverage baseline.
+
+These runs exercise the existing touch, orientation-listener, swipe and CSS
+checks in real mobile browsers, plus initialization without forced platform
+detection. Fullscreen assertions use stubs and touch events are synthetic;
+they do not establish that native gestures, playback permissions or native
+fullscreen transitions work. Before a release, use a playable video on each
+platform to check actual single/double taps, swipes, portrait/landscape rotation,
+and entering/exiting fullscreen. These manual checks complement the automated
+suite and require no additional browser automation dependencies.

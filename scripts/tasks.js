@@ -42,9 +42,17 @@ const tasks = {
     await runner.script('../test/tasks.js');
     await runner.script('../test/changelog.js');
     await runner.script('../test/coverage.js');
+    await runner.script('../test/mobile-config.js');
     await build({TEST_BUNDLE_ONLY: '1'});
     await runner.tool('karma', 'karma', ['start', 'scripts/karma.conf.js', ...args]);
     await runner.script('coverage.js');
+  },
+  'test-mobile': async () => {
+    if (!process.env.BROWSER_STACK_USERNAME || !process.env.BROWSER_STACK_ACCESS_KEY) {
+      throw new Error('Mobile tests require BROWSER_STACK_USERNAME and BROWSER_STACK_ACCESS_KEY');
+    }
+    await build({TEST_BUNDLE_ONLY: '1'});
+    await runner.tool('karma', 'karma', ['start', 'scripts/karma.mobile.conf.js', ...args]);
   },
   'posttest': () => process.stdout.write(fs.readFileSync(path.resolve(__dirname, '../test/dist/coverage/text.txt'))),
   watch,
