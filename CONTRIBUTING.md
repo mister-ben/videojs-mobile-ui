@@ -68,3 +68,9 @@ run. `npm run test:coverage` checks merging and reporting without a browser; the
 checks also run in `npm test`. Running Karma directly only collects the individual
 results; run `node scripts/coverage.js` afterwards to generate the merged reports.
 Development server mode (`npm start` or `npm run server`) does not collect coverage.
+
+CI explicitly runs `ChromeHeadless` and `FirefoxHeadless` so coverage does not
+depend on automatic browser discovery. Local `npm test` retains browser discovery;
+use `npm test -- --browsers ChromeHeadless,FirefoxHeadless` for the same browser
+list as CI. Existing BrowserStack launchers remain available through an explicit
+browser list. Mobile Safari compatibility is a separate follow-up.
