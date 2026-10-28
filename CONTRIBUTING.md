@@ -74,3 +74,28 @@ depend on automatic browser discovery. Local `npm test` retains browser discover
 use `npm test -- --browsers ChromeHeadless,FirefoxHeadless` for the same browser
 list as CI. Existing BrowserStack launchers remain available through an explicit
 browser list. Mobile Safari compatibility is a separate follow-up.
+
+### Publishing checks
+
+`npm run prepublishOnly` builds the production assets and verifies the actual
+npm tarball without publishing anything. `npm run verify-package` runs just the
+verification against an existing production build.
+
+The checks require nonempty CommonJS, ES-module, browser and minified entry
+points, the stylesheet, every generated translation, README and license. They
+reject generated test bundles and API documentation in the tarball. The tarball
+is installed into a temporary consumer with Video.js 8 and production dependencies
+only. Smoke checks verify the plugin export, registration and release version
+for CommonJS, ES-module consumption through Rollup, and both browser-global UMD
+bundles. The temporary installation is removed afterwards.
+
+Packing and installation disable lifecycle scripts to avoid recursively invoking
+the publishing hook. Dependency installation may require registry access. No new
+verification dependency is added. `npm run test:package` exercises missing,
+empty and excluded packed assets; it also runs in `npm test`.
+
+CI runs the complete publishing check before the browser tests, so release
+artifacts are checked without deleting the coverage report before its upload.
+The unused JSDoc API build and Husky hook have been removed. `docs:options`, README
+option validation/generation, changelog generation and the version hooks remain
+available and unchanged.

@@ -61,6 +61,9 @@ jobs:
     - name: npm ci
       run: npm ci --prefer-offline --no-audit
 
+    - name: Verify release package
+      run: npm run prepublishOnly
+
     - name: run npm test
       uses: GabrielBB/xvfb-action@v1
       with:

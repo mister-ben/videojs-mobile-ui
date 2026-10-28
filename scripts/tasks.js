@@ -33,14 +33,11 @@ const tasks = {
   'build': () => build(),
   'build-prod': () => build({NO_TEST_BUNDLE: '1'}),
   'build-test': () => build({TEST_BUNDLE_ONLY: '1'}),
-  'docs': async () => {
-    await runner.tool('jsdoc', 'jsdoc', ['src', '-r', '-d', 'docs/api', ...args]);
-    await runner.script('readme-options.js');
-  },
   'test': async () => {
     await runner.tool('videojs-standard', 'vjsstandard');
     await runner.script('../test/tasks.js');
     await runner.script('../test/changelog.js');
+    await runner.script('../test/package.js');
     await runner.script('../test/coverage.js');
     await build({TEST_BUNDLE_ONLY: '1'});
     await runner.tool('karma', 'karma', ['start', 'scripts/karma.conf.js', ...args]);
@@ -51,7 +48,7 @@ const tasks = {
   'start': () => runner.parallel([server(), watch()]),
   'publish': async () => {
     await build({NO_TEST_BUNDLE: '1'});
-    await runner.tool('videojs-generator-verify', 'vjsverify', ['--verbose', '--skip-es-check', ...args]);
+    await runner.script('verify-package.js');
   }
 };
 
