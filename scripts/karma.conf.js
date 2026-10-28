@@ -101,6 +101,7 @@ module.exports = function(config) {
       {'reporter:coverage-results': ['type', require('./coverage').CoverageResults]},
       require('karma-detect-browsers'),
       require('karma-firefox-launcher'),
+      require('karma-ie-launcher'),
       require('karma-qunit'),
       require('karma-safari-applescript-launcher'),
       require('karma-static-server'),
