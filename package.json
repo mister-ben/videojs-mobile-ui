@@ -36,7 +36,9 @@
     "test:tasks": "node test/tasks.js",
     "test:changelog": "node test/changelog.js",
     "test:coverage": "node test/coverage.js",
-    "test:types": "tsc -p test/types/tsconfig.json && tsc -p test/types/tsconfig.bundler.json && tsc -p test/types/tsconfig.no-augmentation.json && tsc -p test/types/tsconfig.local-augmentation.json"
+    "test:types": "tsc -p test/types/tsconfig.json && tsc -p test/types/tsconfig.bundler.json && tsc -p test/types/tsconfig.no-augmentation.json && tsc -p test/types/tsconfig.local-augmentation.json",
+    "check:options": "node scripts/readme-options.js --check",
+    "test:options": "node test/options.js"
   },
   "engines": {
     "node": ">=14",

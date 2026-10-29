@@ -13,8 +13,8 @@ const clean = () => {
   });
 };
 const build = async (env = {}) => {
+  await runner.script('readme-options.js', ['--check']);
   clean();
-  await runner.script('readme-options.js');
   await runner.parallel([
     runner.script('css.js'),
     runner.tool('rollup', 'rollup', ['-c', 'scripts/rollup.config.js'], env),
@@ -34,6 +34,8 @@ const tasks = {
   'build-prod': () => build({NO_TEST_BUNDLE: '1'}),
   'build-test': () => build({TEST_BUNDLE_ONLY: '1'}),
   'test': async () => {
+    await runner.script('readme-options.js', ['--check']);
+    await runner.script('../test/options.js');
     await runner.tool('videojs-standard', 'vjsstandard');
     await runner.script('../test/tasks.js');
     await runner.script('../test/changelog.js');
