@@ -1,3 +1,29 @@
+<a name="1.2.10"></a>
+## [1.2.10](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.9...v1.2.10) (2026-10-29)
+
+### Chores
+
+* batch dependabot ([#334](https://github.com/mister-ben/videojs-mobile-ui/issues/334)) ([559ccbf](https://github.com/mister-ben/videojs-mobile-ui/commit/559ccbf))
+* **deps-dev:** bump [@rollup](https://github.com/rollup)/plugin-json from 4.1.0 to 6.1.0 ([#339](https://github.com/mister-ben/videojs-mobile-ui/issues/339)) ([7efbbe4](https://github.com/mister-ben/videojs-mobile-ui/commit/7efbbe4))
+* **deps-dev:** bump [@rollup](https://github.com/rollup)/plugin-multi-entry from 4.1.0 to 7.1.0 ([#337](https://github.com/mister-ben/videojs-mobile-ui/issues/337)) ([5dbae2b](https://github.com/mister-ben/videojs-mobile-ui/commit/5dbae2b))
+* **deps-dev:** bump karma-browserstack-launcher ([#335](https://github.com/mister-ben/videojs-mobile-ui/issues/335)) ([4fbd557](https://github.com/mister-ben/videojs-mobile-ui/commit/4fbd557))
+* **deps-dev:** bump karma-static-server from 1.0.0 to 2.0.0 ([#338](https://github.com/mister-ben/videojs-mobile-ui/issues/338)) ([71a18e9](https://github.com/mister-ben/videojs-mobile-ui/commit/71a18e9))
+* patch Engine.IO and make CI installs reproducible ([#332](https://github.com/mister-ben/videojs-mobile-ui/issues/332)) ([cc30d04](https://github.com/mister-ben/videojs-mobile-ui/commit/cc30d04))
+* remove manual changelog entires ([f104041](https://github.com/mister-ben/videojs-mobile-ui/commit/f104041))
+* replace generic publishing verification and remove unused tooling ([#340](https://github.com/mister-ben/videojs-mobile-ui/issues/340)) ([e18fb94](https://github.com/mister-ben/videojs-mobile-ui/commit/e18fb94))
+
+### Code Refactoring
+
+* improve condition order for ready ([#184](https://github.com/mister-ben/videojs-mobile-ui/issues/184)) ([3ad9c55](https://github.com/mister-ben/videojs-mobile-ui/commit/3ad9c55))
+
+### Documentation
+
+* Document that this is v8 only ([#342](https://github.com/mister-ben/videojs-mobile-ui/issues/342)) ([fd7645b](https://github.com/mister-ben/videojs-mobile-ui/commit/fd7645b))
+
+### Tests
+
+* cover mobile detection and fullscreen orientation behavior ([#341](https://github.com/mister-ben/videojs-mobile-ui/issues/341)) ([c49826a](https://github.com/mister-ben/videojs-mobile-ui/commit/c49826a))
+
 <a name="1.2.9"></a>
 ## [1.2.9](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.8...v1.2.9) (2026-10-28)
 
