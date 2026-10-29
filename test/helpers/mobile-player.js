@@ -4,16 +4,17 @@ import sinon from 'sinon';
 import videojs from 'video.js';
 
 export const setPlatform = function(platform) {
-  this.ios.value(platform === 'ios');
-  this.android.value(platform === 'android');
+  this.browser.IS_IOS = platform === 'ios';
+  this.browser.IS_ANDROID = platform === 'android';
 };
 
 export const beforeEach = function() {
+  this.restoreProperties = [];
   this.sandbox = sinon.createSandbox();
   this.clock = this.sandbox.useFakeTimers();
-  this.ios = this.sandbox.stub(videojs.browser, 'IS_IOS').value(false);
-  this.android = this.sandbox.stub(videojs.browser, 'IS_ANDROID').value(true);
-  this.restoreProperties = [];
+  // Video.js freezes its browser flags; replace the container, not its fields.
+  this.browser = {...videojs.browser, IS_IOS: false, IS_ANDROID: true};
+  this.sandbox.stub(videojs, 'browser').value(this.browser);
   // Shadow browser-owned read-only properties, then restore their descriptors.
   this.setProperty = (object, key, value) => {
     const descriptor = Object.getOwnPropertyDescriptor(object, key);
@@ -45,11 +46,14 @@ export const beforeEach = function() {
 
 export const afterEach = function() {
   try {
-    if (!this.player.isDisposed()) {
+    if (this.player && !this.player.isDisposed()) {
       this.player.dispose();
     }
   } finally {
-    this.restoreProperties.reverse().forEach(restore => restore());
-    this.sandbox.restore();
+    try {
+      this.restoreProperties.reverse().forEach(restore => restore());
+    } finally {
+      this.sandbox.restore();
+    }
   }
 };

@@ -174,10 +174,10 @@ QUnit.test('partial options retain defaults without leaking between players', fu
     this.clock.tick(1);
     const secondOverlay = second.getChild('TouchOverlay');
 
-    assert.strictEqual(firstOverlay.options_.seekSeconds, 25, 'custom seek increment');
-    assert.strictEqual(firstOverlay.options_.tapTimeout, 300, 'partial options retain tap timeout');
-    assert.strictEqual(secondOverlay.options_.seekSeconds, 10, 'next player retains default seek increment');
-    assert.strictEqual(secondOverlay.options_.tapTimeout, 300, 'next player retains default timeout');
+    assert.strictEqual(firstOverlay.options().seekSeconds, 25, 'custom seek increment');
+    assert.strictEqual(firstOverlay.options().tapTimeout, 300, 'partial options retain tap timeout');
+    assert.strictEqual(secondOverlay.options().seekSeconds, 10, 'next player retains default seek increment');
+    assert.strictEqual(secondOverlay.options().tapTimeout, 300, 'next player retains default timeout');
   } finally {
     second.dispose();
   }
