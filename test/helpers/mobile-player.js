@@ -28,12 +28,12 @@ export const beforeEach = function() {
       }
     });
   };
-  this.orientation = {
+  this.orientation = Object.assign(new window.EventTarget(), {
     type: 'portrait-primary',
     onchange: null,
     lock: this.sandbox.stub().resolves(),
     unlock: this.sandbox.spy()
-  };
+  });
   this.setProperty(window.screen, 'orientation', this.orientation);
   this.setProperty(window.screen, 'mozOrientation', undefined);
   this.setProperty(window.screen, 'msOrientation', undefined);

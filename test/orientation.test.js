@@ -259,8 +259,8 @@ QUnit.test('rejected fullscreen-entry lock leaves portrait exit available', asyn
 [undefined, {type: ''}].forEach(orientation => {
   QUnit.test(`missing ${orientation ? 'lock method' : 'orientation API'} is tolerated`, function(assert) {
     setPlatform.call(this, 'ios');
-    this.setProperty(window.screen, 'orientation', orientation);
     init.call(this, {fullscreen: {lockToLandscapeOnEnter: true}});
+    this.setProperty(window.screen, 'orientation', orientation);
     window.orientation = 90;
     rotate.call(this, '');
     assert.true(this.request.calledOnce, 'rotation still requests fullscreen without locking support');
