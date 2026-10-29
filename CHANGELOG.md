@@ -1,13 +1,3 @@
-## Unreleased
-
-### Maintenance
-
-* Tests now simulate platform detection instead of relying on the internal `forceForTesting` option. The option is deprecated but retains its existing behavior for compatibility; it may be removed in a future major release.
-
-### Bug Fixes
-
-* Skip orientation locking when the browser does not support it while entering fullscreen with `lockToLandscapeOnEnter`.
-
 <a name="1.2.9"></a>
 ## [1.2.9](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.8...v1.2.9) (2026-10-28)
 
