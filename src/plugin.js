@@ -47,7 +47,9 @@ import window from 'global/window';
  *  Default `false`.
  * @internal
  * @property {boolean} [forceForTesting]
- *  Used in unit tests
+ *  Internal testing escape hatch, retained for compatibility.
+ * @deprecated Tests should stub videojs.browser.IS_IOS / IS_ANDROID instead.
+ *  May be removed in a future major release.
  */
 
 /** @type {MobileUiOptions} */
@@ -175,7 +177,8 @@ const onPlayerReady = (player, options) => {
 
   player.on('fullscreenchange', _ => {
     player.log('fullscreenchange', player.isFullscreen(), options.fullscreen.lockToLandscapeOnEnter, getOrientation());
-    if (player.isFullscreen() && options.fullscreen.lockToLandscapeOnEnter && getOrientation() === 'portrait') {
+    if (player.isFullscreen() && options.fullscreen.lockToLandscapeOnEnter && getOrientation() === 'portrait' &&
+        screen.orientation && screen.orientation.lock) {
       screen.orientation.lock('landscape').then(()=>{
         locked = true;
       }).catch((e) => {
