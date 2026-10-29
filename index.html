@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>videojs-mobile-ui Demo</title>
+  <link href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M419-80q-28%200-52.5-12T325-126L124-381q-8-9-7-21.5t9-20.5q20-21%2048-25t52%2011l74%2045v-328q0-17%2011.5-28.5T340-760q17%200%2029%2011.5t12%2028.5v200h299q50%200%2085%2035t35%2085v160q0%2066-47%20113T640-80H419Zm60-520q-17%200-28.5-11.5T439-640q0-2%205-20%208-14%2012-28.5t4-31.5q0-50-35-85t-85-35q-50%200-85%2035t-35%2085q0%2017%204%2031.5t12%2028.5q3%205%204%2010t1%2010q0%2017-11%2028.5T202-600q-11%200-20.5-6T167-621q-13-22-20-47t-7-52q0-83%2058.5-141.5T340-920q83%200%20141.5%2058.5T540-720q0%2027-7%2052t-20%2047q-5%209-14%2015t-20%206Z%22%2F%3E%3C%2Fsvg%3E" rel="icon" type="image/x-icon" />
   <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet" />
   <link href="dist/videojs-mobile-ui.css" rel="stylesheet" />
   <style>
@@ -15,186 +17,252 @@
       pointer-events: none;
       display: none;
     }
-  </style>
-</head>
-<body>
-  <video-js
-  id="videojs-mobile-ui-player"
-  class="video-js vjs-default-skin vjs-fluid"
-  controls
-  playsinline
-  >
-  <source src="https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8" type="application/x-mpegurl" />
-</video-js>
-<ul>
-  <li><a href="test/">Run unit tests in browser.</a></li>
-  <li><a href="docs/api/">Read generated docs.</a></li>
-</ul>
-<h2>Options</h2>
-<ul id="options">
-  <li>fullscreen:</li>
-  <ul>
-    <li>
-      <input
-      type="checkbox"
-      data-section="fullscreen"
-      id="enterOnRotate"
-      />enterOnRotate
-    </li>
-    <li>
-      <input
-      type="checkbox"
-      data-section="fullscreen"
-      id="exitOnRotate"
-      />exitOnRotate
-    </li>
-    <li>
-      <input
-      type="checkbox"
-      data-section="fullscreen"
-      id="lockOnRotate"
-      />lockOnRotate
-    </li>
-    <li>
-      <input
-      type="checkbox"
-      data-section="fullscreen"
-      id="alwaysLockToLandscape"
-      />alwaysLockToLandscape
-    </li>
-    <li>
-      <input
-      type="checkbox"
-      data-section="fullscreen"
-      id="fullscreenDisabled"
-      />disabled
-    </li>
-  </ul>
-  <li>touchControls:</li>
-  <ul>
-    <li>
-      <input
-      type="number"
-      data-section="touchControls"
-      id="seekSeconds"
-      />seekSeconds
-    </li>
-    <li>
-      <input
-      type="number"
-      data-section="touchControls"
-      id="tapTimeout"
-      />tapTimeout
-    </li>
-    <li>
-      <input
-      type="checkbox"
-      data-section="touchControls"
-      id="disableOnEnd"
-      />disableOnEnd
-    </li>
-    <li>
-      <input
-      type="checkbox"
-      data-section="touchControls"
-      id="touchControlsDisabled"
-      />disabled
-    </li>
-  </ul>
-</ul>
-<button id="reload">Reload with options</button>
-<ul id="log"></ul>
-<script src="node_modules/video.js/dist/video.js"></script>
-<script src="dist/videojs-mobile-ui.js"></script>
-<script>
-  (function (window, videojs) {
-    var options = {
-      fullscreen: {
-        enterOnRotate: true,
-        exitOnRotate: true,
-        lockOnRotate: true,
-        alwaysLockToLandscape: false,
-        disabled: false,
-      },
-      touchControls: {
-        seekSeconds: 10,
-        tapTimeout: 300,
-        disableOnEnd: false,
-        disabled: false,
-      },
-    };
 
-    var url = new URL(window.location);
-    if (url.searchParams.has('options')) {
-      options = JSON.parse(url.searchParams.get('options'));
+    body {
+      font-size: 16px;
+      line-height: 1.4;
+      margin-bottom: 60px;
     }
 
-    console.log(JSON.stringify(options, null, 2));
+    .video-container {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+    }
 
-    Object.keys(options).forEach(function (section) {
-      Object.keys(options[section]).forEach(function (prop) {
-        const val = options[section][prop];
+    video-js:fullscreen .vjs-control-bar {
+      font-size: 1.1em;
+      padding-bottom: 20px;
+      height: calc(3em + 20px);
+    }
 
-        if (prop === 'disabled') {
-          prop = `${section}Disabled`;
-        }
+    #demoOptions {
 
-        if (typeof val === 'boolean') {
-          document.getElementById(prop).checked = val;
-        }
-        if (typeof val === 'number') {
-          document.getElementById(prop).value = val;
-        }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      label {
+        min-height: 44px;
+        /* Apple/Google tap target guidance */
+        cursor: pointer;
+        font-family: ui-monospace, 'Courier New', Courier, monospace;
+      }
+
+      /* Text inputs */
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      input[type="password"],
+      textarea {
+        width: 90%;
+        padding: 10px 12px;
+        font-size: 16px;
+        /* Prevents iOS zoom */
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      /* Checkboxes (simple but usable) */
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      /* Optional: subtle focus style */
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #007aff;
+        /* iOS blue */
+      }
+
+      /* Optional: slightly separate groups */
+      li+li {
+        border-top: 1px solid #eee;
+        padding-top: 8px;
+      }
+
+      button {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>videojs-mobile-ui test page.</h1>
+  <div class="video-container">
+    <video-js id="videojs-mobile-ui-player" class="video-js vjs-default-skin vjs-fluid" controls playsinline>
+      <source src="https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8"
+        type="application/x-mpegurl" />
+    </video-js>
+  </div>
+  <ul>
+    <li><a href="test/">Run unit tests in browser.</a></li>
+  </ul>
+  <h2>Options</h2>
+  <div id="demoOptions">
+    <p>Reload to apply changed options.</p>
+    <button id="reload">Reload with options</button>
+    <ul id="options">
+      <li>
+        <h3>fullscreen:</h3>
+      </li>
+      <ul>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="enterOnRotate" /> <label for="enterOnRotate">enterOnRotate</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="exitOnRotate" />
+          <label for="exitOnRotate">exitOnRotate</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="lockOnRotate" />
+          <label for="lockOnRotate">lockOnRotate</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="alwaysLockToLandscape" />
+          <label for="alwaysLockToLandscape">alwaysLockToLandscape</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="swipeToFullscreen" />
+          <label for="swipeToFullscreen">swipeToFullscreen</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="swipeFromFullscreen" />
+          <label for="swipeFromFullscreen">swipeFromFullscreen</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="fullscreen" id="fullscreenDisabled" />
+          <label for="disabled">disabled</label>
+        </li>
+      </ul>
+      <li>
+        <h3>touchControls:</h3>
+      </li>
+      <ul>
+        <li>
+          <input type="number" data-section="touchControls" id="seekSeconds" />
+          <label for="seekSeconds">seekSeconds</label>
+        </li>
+        <li>
+          <input type="number" data-section="touchControls" id="tapTimeout" />
+          <label for="tapTimeout">tapTimeout</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="touchControls" id="disableOnEnd" />
+          <label for="disableOnEnd">disableOnEnd</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="touchControls" id="touchControlsDisabled" />
+          <label for="disabled">disabled</label>
+        </li>
+      </ul>
+    </ul>
+  </div>
+  <ul id="log"></ul>
+  <script src="node_modules/video.js/dist/video.js"></script>
+  <script src="dist/videojs-mobile-ui.js"></script>
+  <script>
+    (function (window, videojs) {
+      var options = {
+        fullscreen: {
+          enterOnRotate: true,
+          exitOnRotate: true,
+          lockOnRotate: true,
+          alwaysLockToLandscape: false,
+          swipeToFullscreen: false,
+          swipeFromFullscreen: false,
+          disabled: false,
+        },
+        touchControls: {
+          seekSeconds: 10,
+          tapTimeout: 300,
+          disableOnEnd: false,
+          disabled: false,
+        },
+      };
+
+      var url = new URL(window.location);
+      if (url.searchParams.has('options')) {
+        options = JSON.parse(url.searchParams.get('options'));
+      }
+
+      console.log(JSON.stringify(options, null, 2));
+
+      Object.keys(options).forEach(function (section) {
+        Object.keys(options[section]).forEach(function (prop) {
+          const val = options[section][prop];
+
+          if (prop === 'disabled') {
+            prop = `${section}Disabled`;
+          }
+
+          if (typeof val === 'boolean') {
+            document.getElementById(prop).checked = val;
+          }
+          if (typeof val === 'number') {
+            document.getElementById(prop).value = val;
+          }
+        });
       });
-    });
 
-    document
-    .getElementById('options')
-    .querySelectorAll('input')
-    .forEach(function (opt) {
-      opt.addEventListener('change', function () {
-        if (this.type === 'checkbox') {
-          const param = this.id.endsWith('Disabled')
-          ? 'disabled'
-          : this.id;
+      document
+        .getElementById('options')
+        .querySelectorAll('input')
+        .forEach(function (opt) {
+          opt.addEventListener('change', function () {
+            if (this.type === 'checkbox') {
+              const param = this.id.endsWith('Disabled')
+                ? 'disabled'
+                : this.id;
 
-          options[this.getAttribute('data-section')][param] =
-          this.checked;
-        } else {
-          options[this.getAttribute('data-section')][this.id] =
-          parseFloat(this.value);
-        }
-        console.log(options);
+              options[this.getAttribute('data-section')][param] =
+                this.checked;
+            } else {
+              options[this.getAttribute('data-section')][this.id] =
+                parseFloat(this.value);
+            }
+            console.log(options);
+          });
+        });
+
+      document
+        .getElementById('reload')
+        .addEventListener('click', function () {
+          url.searchParams.set('options', JSON.stringify(options));
+
+          window.location = url.href;
+        });
+
+      window.addEventListener('orientationchange', function () {
+        var el = document.createElement('li');
+        var message =
+          new Date().toTimeString().split(' ')[0] + ' ' + window.orientation;
+        message +=
+          screen && screen.orientation
+            ? ' ' + screen.orientation.type + ' ' + screen.orientation.angle
+            : '';
+        el.textContent = message;
+        console.log(message);
+        document.getElementById('log').appendChild(el);
       });
-    });
 
-    document
-    .getElementById('reload')
-    .addEventListener('click', function () {
-      url.searchParams.set('options', JSON.stringify(options));
-
-      window.location = url.href;
-    });
-
-    window.addEventListener('orientationchange', function () {
-      var el = document.createElement('li');
-      var message =
-      new Date().toTimeString().split(' ')[0] + ' ' + window.orientation;
-      message +=
-      screen && screen.orientation
-      ? ' ' + screen.orientation.type + ' ' + screen.orientation.angle
-      : '';
-      el.textContent = message;
-      console.log(message);
-      document.getElementById('log').appendChild(el);
-    });
-
-    var testPlayer = (window.testPlayer = videojs(
-      'videojs-mobile-ui-player'
+      var testPlayer = (window.testPlayer = videojs(
+        'videojs-mobile-ui-player'
       ));
-    testPlayer.endscreen = function () {};
-    testPlayer.mobileUi(options);
-  })(window, window.videojs);
-</script>
+      testPlayer.endscreen = function () { };
+      testPlayer.mobileUi(options);
+    })(window, window.videojs);
+  </script>
 </body>
+
 </html>

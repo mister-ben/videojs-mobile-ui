@@ -3,9 +3,19 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
     commit-message:
       prefix: fix
       prefix-development: chore
       include: scope
-
+    groups:
+      prod-safe-updates:
+        dependency-type: "production"
+        update-types: ["minor", "patch"]
+        patterns:
+          - "*"
+      dev-safe-updates:
+        dependency-type: "development"
+        update-types: ["minor", "patch"]
+        patterns:
+          - "*"
