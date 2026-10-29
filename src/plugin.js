@@ -202,7 +202,7 @@ const onPlayerReady = (player, options) => {
  * @param    {MobileUiOptions} [options={}] Plugin options
  */
 const mobileUi = function(options = {}) {
-  if (options.forceForTesting || videojs.browser.IS_ANDROID || videojs.browser.IS_IOS) {
+  if (videojs.browser.IS_ANDROID || videojs.browser.IS_IOS || options.forceForTesting) {
     this.ready(() => {
       onPlayerReady(this, videojs.obj.merge(defaults, options));
     });
