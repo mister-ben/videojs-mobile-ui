@@ -1,6 +1,9 @@
 # videojs-mobile-ui
 
-A more native mobile user experience for Video.js.
+A more native mobile user experience for Video.js 8.
+
+This plugin supports Video.js 8 only. Video.js 10 has a different architecture
+and will not be supported.
 
 **videojs-mobile-ui** augments the standard Video.js experience into a touch-optimized, mobile-first interface. It adds the intuitive gestures and smart behaviors users expect from top-tier video apps to your browser-based player.
 
@@ -115,31 +118,34 @@ The [demo] page lets you try out the configuration options.
 
 ## Installation
 
-Version 1.x requires video.js 8.x as a peer dependency. Lower video.js versions are not supported.
+Version 1.x requires Video.js 8.x as a peer dependency. Install both with:
+
+```sh
+npm install video.js@8 videojs-mobile-ui@1
+```
 
 The last version to support video.js 7.x was 0.7.0. To install the latest version that works with Video.js 7, use the `latest7` tag:
 
 ```sh
-npm install videojs-mobile-ui@latest7
+npm install video.js@7 videojs-mobile-ui@latest7
 ```
 
 To include videojs-mobile-ui on your website or web application, use any of the following methods.
 
 ### `<script>` Tag
 
-This is the simplest case. Get the script in whatever way you prefer and include the plugin _after_ you include [video.js][videojs], so that the `videojs` global is available.
+Include the plugin _after_ [Video.js 8][videojs], so that the `videojs` global is available.
 
 ```html
-<link rel="stylesheet" href="//path/to/videojs-mobile-ui.css">  
-<script src="//path/to/video.min.js"></script>
-<script src="//path/to/videojs-mobile-ui.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/video.js@8/dist/video-js.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/videojs-mobile-ui@1/dist/videojs-mobile-ui.css">
+<script src="https://cdn.jsdelivr.net/npm/video.js@8/dist/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-mobile-ui@1/dist/videojs-mobile-ui.min.js"></script>
 <script>
   const player = videojs('my-video');
   const pluginOptions = {
-    {
-      fullscreen: {
-        swipeToFullscreen: true
-      } 
+    fullscreen: {
+      swipeToFullscreen: true
     }
   };
 
@@ -147,10 +153,10 @@ This is the simplest case. Get the script in whatever way you prefer and include
 </script>
 ```
 
-The release versions will be available on jdselivr, unpkg etc.
+Release versions are available on jsDelivr, unpkg, etc. Specify the major version:
 
-- <https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.min.js>
-- <https://cdn.jsdelivr.net/npm/videojs-mobile-ui/dist/videojs-mobile-ui.css>
+- <https://cdn.jsdelivr.net/npm/videojs-mobile-ui@1/dist/videojs-mobile-ui.min.js>
+- <https://cdn.jsdelivr.net/npm/videojs-mobile-ui@1/dist/videojs-mobile-ui.css>
 
 ### Browserify/CommonJS
 

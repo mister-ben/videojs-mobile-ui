@@ -2,6 +2,10 @@
 
 We welcome contributions from everyone!
 
+This project targets Video.js 8 only. Preserve its existing browser compatibility
+and transpilation. Video.js 7 users should use plugin version 0.7.0 (`latest7`).
+Video.js 10 has a different architecture; support for it is outside this project's scope.
+
 ## Getting Started
 
 Make sure you have Node.js 24 (as specified in `.nvmrc`) and npm installed.
