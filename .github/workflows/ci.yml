@@ -17,7 +17,7 @@ jobs:
 
   ci:
     needs: should-skip
-    if: ${{needs.should-skip.outputs.should-skip-job != 'true' || github.ref == 'refs/heads/main'}}
+    if: ${{needs.should-skip.outputs.should-skip-job != 'true' || github.ref == 'refs/heads/master'}}
     strategy:
       fail-fast: false
       matrix:
@@ -48,18 +48,6 @@ jobs:
       shell: bash
       id: nvm
 
-    - name: update apt cache on linux w/o browserstack
-      run: sudo apt-get update
-      if: ${{startsWith(matrix.os, 'ubuntu') && !env.BROWSER_STACK_USERNAME}}
-
-    - name: install ffmpeg/pulseaudio for firefox on linux w/o browserstack
-      run: sudo apt-get install ffmpeg pulseaudio
-      if: ${{startsWith(matrix.os, 'ubuntu') && !env.BROWSER_STACK_USERNAME}}
-
-    - name: start pulseaudio for firefox on linux w/o browserstack
-      run: pulseaudio -D
-      if: ${{startsWith(matrix.os, 'ubuntu') && !env.BROWSER_STACK_USERNAME}}
-
     - name: setup node
       uses: actions/setup-node@v5
       with:
@@ -70,10 +58,21 @@ jobs:
     - run: echo "::remove-matcher owner=eslint-stylish::"
     - run: echo "::remove-matcher owner=tsc::"
 
-    - name: npm install
-      run: npm i --prefer-offline --no-audit
+    - name: npm ci
+      run: npm ci --prefer-offline --no-audit
+
+    - name: Verify release package
+      run: npm run prepublishOnly
 
     - name: run npm test
       uses: GabrielBB/xvfb-action@v1
       with:
-        run: npm run test
+        run: npm test -- --browsers ChromeHeadless,FirefoxHeadless
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v7
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./test/dist/coverage/lcov.info
+        disable_search: true
+        fail_ci_if_error: false

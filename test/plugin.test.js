@@ -1,11 +1,10 @@
 import document from 'global/document';
-import window from 'global/window';
-
 import QUnit from 'qunit';
 import sinon from 'sinon';
 import videojs from 'video.js';
 
 import plugin from '../src/plugin';
+import {beforeEach, afterEach} from './helpers/mobile-player';
 
 const Player = videojs.getComponent('Player');
 
@@ -15,28 +14,6 @@ QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof videojs, 'function', 'videojs exists');
   assert.strictEqual(typeof plugin, 'function', 'plugin is a function');
 });
-
-const beforeEach = function() {
-
-  // Mock the environment's timers because certain things - particularly
-  // player readiness - are asynchronous in video.js 5. This MUST come
-  // before any player is created; otherwise, timers could get created
-  // with the actual timer methods!
-  this.clock = sinon.useFakeTimers();
-
-  this.fixture = document.getElementById('qunit-fixture');
-  this.video = document.createElement('video');
-  this.fixture.appendChild(this.video);
-
-  this.player = videojs(this.video);
-};
-
-const afterEach = function() {
-  if (!this.player.isDisposed()) {
-    this.player.dispose();
-  }
-  this.clock.restore();
-};
 
 QUnit.module('videojs-mobile-ui', {
   beforeEach,
@@ -53,16 +30,16 @@ QUnit.test('registers itself with video.js', function(assert) {
 });
 
 QUnit.test('initialises without errors', function(assert) {
-  this.player.mobileUi({ forceForTesting: true });
+  this.player.mobileUi();
 
   this.clock.tick(1);
 
-  assert.expect(0);
+  assert.true(this.player.hasClass('vjs-mobile-ui'), 'mobile UI initialized');
 });
 
 QUnit.test('inserts element before control bar', function(assert) {
 
-  this.player.mobileUi({forceForTesting: true});
+  this.player.mobileUi();
 
   this.clock.tick(1);
 
@@ -76,7 +53,6 @@ QUnit.test('inserts element before control bar', function(assert) {
 QUnit.test('does not insert if disabled', function(assert) {
 
   this.player.mobileUi({
-    forceForTesting: true,
     touchControls: {
       disabled: true
     }
@@ -91,108 +67,8 @@ QUnit.test('does not insert if disabled', function(assert) {
   );
 });
 
-QUnit.test('iOS event listeners', function(assert) {
-
-  const oldBrowser = videojs.browser;
-
-  videojs.browser = videojs.obj.merge(videojs.browser, {
-    IS_IOS: true,
-    IS_ANDROID: false
-  });
-
-  const addSpy = sinon.spy(window, 'addEventListener');
-  const removeSpy = sinon.spy(window, 'removeEventListener');
-
-  this.player.mobileUi({ forceForTesting: true });
-
-  this.clock.tick(1);
-
-  assert.strictEqual(
-    'orientationchange',
-    addSpy.getCall(0).args[0],
-    'orientationchange listener added'
-  );
-
-  this.player.dispose();
-
-  this.clock.tick(1);
-
-  assert.strictEqual(
-    'orientationchange',
-    removeSpy.getCall(0).args[0],
-    'orientationchange listener removed when player disposed'
-  );
-
-  addSpy.restore();
-  removeSpy.restore();
-
-  videojs.browser = oldBrowser;
-});
-
-const testOrSkip = (window.screen && window.screen.orientation) ? 'test' : 'skip';
-
-QUnit[testOrSkip]('Android event listeners', function(assert) {
-
-  const oldBrowser = videojs.browser;
-
-  videojs.browser = videojs.obj.merge(videojs.browser, {
-    IS_IOS: false,
-    IS_ANDROID: true
-  });
-
-  this.player.mobileUi({forceForTesting: true});
-
-  this.clock.tick(1);
-
-  assert.strictEqual(
-    typeof window.screen.orientation.onchange,
-    'function',
-    'screen.orientation.onchange is used for android'
-  );
-
-  this.player.dispose();
-
-  this.clock.tick(1);
-
-  assert.strictEqual(
-    window.screen.orientation.onchange,
-    null,
-    'screen.orientation.onchange is removed after dispose'
-  );
-
-  videojs.browser = oldBrowser;
-});
-
-QUnit[testOrSkip]('Android event listeners skipped if disabled', function(assert) {
-
-  const oldBrowser = videojs.browser;
-
-  videojs.browser = videojs.obj.merge(videojs.browser, {
-    IS_IOS: false,
-    IS_ANDROID: true
-  });
-
-  this.player.mobileUi({
-    forceForTesting: true,
-    fullscreen: {
-      disabled: true
-    }
-  });
-
-  this.clock.tick(1);
-
-  assert.notStrictEqual(
-    typeof window.screen.orientation.onchange,
-    'function',
-    'screen.orientation.onchange skipped for android'
-  );
-
-  videojs.browser = oldBrowser;
-});
-
 QUnit.test('Adds disable-end class if disableOnEnd option is true', function(assert) {
   this.player.mobileUi({
-    forceForTesting: true,
     touchControls: { disableOnEnd: true }
   });
 
@@ -205,7 +81,6 @@ QUnit.test('Adds disable-end class if endscreen plugin is present', function(ass
   this.player.endscreen = () => {};
 
   this.player.mobileUi({
-    forceForTesting: true,
     touchControls: { disableOnEnd: false }
   });
 
@@ -221,7 +96,7 @@ QUnit.module('TouchOverlay', {
 
 QUnit.test('TouchOverlay: double tap right seeks forward', function(assert) {
   // Setup
-  this.player.mobileUi({ forceForTesting: true });
+  this.player.mobileUi();
   this.clock.tick(1);
 
   const touchOverlay = this.player.getChild('TouchOverlay');
@@ -230,7 +105,7 @@ QUnit.test('TouchOverlay: double tap right seeks forward', function(assert) {
 
   // Mock bounding rect so clicks have a defined "right" side
   // Width is 100, so > 60 is right side
-  sinon.stub(touchEl, 'getBoundingClientRect').returns({
+  this.sandbox.stub(touchEl, 'getBoundingClientRect').returns({
     left: 0,
     width: 100
   });
@@ -270,7 +145,7 @@ QUnit.test('TouchOverlay: double tap right seeks forward', function(assert) {
 });
 
 QUnit.test('TouchOverlay: single tap toggles play/pause visibility', function(assert) {
-  this.player.mobileUi({ forceForTesting: true });
+  this.player.mobileUi();
   this.clock.tick(1);
 
   const touchOverlay = this.player.getChild('TouchOverlay');
@@ -283,4 +158,27 @@ QUnit.test('TouchOverlay: single tap toggles play/pause visibility', function(as
   });
 
   assert.ok(touchOverlay.hasClass('show-play-toggle'), 'Play toggle is visible after single tap');
+});
+
+QUnit.test('partial options retain defaults without leaking between players', function(assert) {
+  this.player.mobileUi({fullscreen: {disabled: true}, touchControls: {seekSeconds: 25}});
+  this.clock.tick(1);
+  const firstOverlay = this.player.getChild('TouchOverlay');
+  const video = document.createElement('video');
+
+  this.fixture.appendChild(video);
+  const second = videojs(video);
+
+  try {
+    second.mobileUi({fullscreen: {disabled: true}});
+    this.clock.tick(1);
+    const secondOverlay = second.getChild('TouchOverlay');
+
+    assert.strictEqual(firstOverlay.options().seekSeconds, 25, 'custom seek increment');
+    assert.strictEqual(firstOverlay.options().tapTimeout, 300, 'partial options retain tap timeout');
+    assert.strictEqual(secondOverlay.options().seekSeconds, 10, 'next player retains default seek increment');
+    assert.strictEqual(secondOverlay.options().tapTimeout, 300, 'next player retains default timeout');
+  } finally {
+    second.dispose();
+  }
 });
