@@ -201,39 +201,43 @@ import 'videojs-mobile-ui/dist/videojs-mobile-ui.css';
 import 'videojs-mobile-ui';
 ```
 
-## Typescript
+## TypeScript
 
-You can add a .d.ts to your project if needed.
+Type definitions for Video.js 8 are included. Player augmentation is opt-in,
+so importing the plugin alone does not add or change `Player.mobileUi` types.
+To use the bundled player declaration, import it explicitly:
 
 ```ts
-// videojs-mobile-ui.d.ts
-import type Player from 'video.js/dist/types/player';
+import videojs from 'video.js';
+import 'videojs-mobile-ui';
+import type {} from 'videojs-mobile-ui/player';
+import 'videojs-mobile-ui/dist/videojs-mobile-ui.css';
 
-declare module 'video.js/dist/types/player' {
-  export default interface Player {
-    mobileUi: {
-      (options?: {
-        fullscreen?: {
-          enterOnRotate?: boolean;
-          exitOnRotate?: boolean;
-          lockOnRotate?: boolean;
-          lockToLandscapeOnEnter?: boolean;
-          swipeToFullscreen?: boolean;
-          swipeFromFullscreen?: boolean;
-          disabled?: boolean;
-        };
-        touchControls?: {
-          seekSeconds?: number;
-          tapTimeout?: number;
-          disableOnEnd?: boolean;
-          disabled?: boolean;
-        };
-      }): void;
-      VERSION: string;
-    }
-  }
-}
+const player = videojs('my-video');
+
+player.mobileUi({
+  fullscreen: {swipeToFullscreen: true},
+  touchControls: {seekSeconds: 15}
+});
 ```
+
+The type-only import is erased from the emitted JavaScript; `player` is a
+declaration-only entry point, not a runtime module. This syntax requires
+TypeScript 4.5 or newer. Enabling it augments the Video.js player type throughout
+the TypeScript program, not only in the importing file.
+
+Before opting in, remove any local `Player.mobileUi` declaration, including the
+workaround previously documented here. Also remove `@types/videojs-mobile-ui`:
+those definitions target Video.js 7. If you retain a local player declaration,
+omit the `videojs-mobile-ui/player` import. The root module still supplies the
+exported plugin function and options types without augmenting the player.
+You can import the options type with
+`import type {MobileUiOptions} from 'videojs-mobile-ui'`.
+
+The declarations augment `video.js/dist/types/player`, as Video.js 8 does not
+export an augmentable `Player` from its top-level module. Older Video.js 8
+releases have unrelated declaration errors; update Video.js or use
+`skipLibCheck` if those errors affect your project.
 
 ## License
 
