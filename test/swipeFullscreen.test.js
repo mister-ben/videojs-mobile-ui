@@ -1,4 +1,3 @@
-import document from 'global/document';
 import window from 'global/window';
 
 import QUnit from 'qunit';
@@ -6,6 +5,7 @@ import sinon from 'sinon';
 import videojs from 'video.js';
 
 import plugin from '../src/plugin';
+import {beforeEach, afterEach} from './helpers/mobile-player';
 
 const createTouch = (el, opts) => {
   if ('Touch' in window) {
@@ -47,23 +47,7 @@ QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof plugin, 'function', 'plugin is a function');
 });
 
-QUnit.module('swipeFullscreen', {
-
-  beforeEach() {
-    this.clock = sinon.useFakeTimers();
-    this.fixture = document.getElementById('qunit-fixture');
-    this.video = document.createElement('video');
-    this.fixture.appendChild(this.video);
-    this.player = videojs(this.video);
-  },
-
-  afterEach() {
-    if (!this.player.isDisposed()) {
-      this.player.dispose();
-    }
-    this.clock.restore();
-  }
-});
+QUnit.module('swipeFullscreen', {beforeEach, afterEach});
 
 QUnit.test('swipeToFullscreen: adds CSS class when enabled', function(assert) {
   this.player.mobileUi({
@@ -71,8 +55,7 @@ QUnit.test('swipeToFullscreen: adds CSS class when enabled', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: false,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
@@ -87,8 +70,7 @@ QUnit.test('swipeFromFullscreen: adds CSS class when enabled', function(assert) 
       swipeToFullscreen: false,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
@@ -103,8 +85,7 @@ QUnit[skipWithoutTouch]('touch start outside fullscreen', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
@@ -128,13 +109,12 @@ QUnit[skipWithoutTouch]('prevents swiping when feature disabled', function(asser
       swipeToFullscreen: false,
       swipeFromFullscreen: false,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
 
-  sinon.stub(this.player, 'requestFullscreen');
+  this.sandbox.stub(this.player, 'requestFullscreen');
 
   const touchStart = createTouchEvent(this.player.el(), 'touchstart', {
     bubbles: true,
@@ -170,8 +150,7 @@ QUnit[skipWithoutTouch]('scales element on touch move', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
@@ -204,14 +183,13 @@ QUnit[skipWithoutTouch]('enters fullscreen on swipe up', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
 
-  sinon.stub(this.player, 'isFullscreen').returns(false);
-  sinon.stub(this.player, 'requestFullscreen').returns(Promise.resolve());
+  this.sandbox.stub(this.player, 'isFullscreen').returns(false);
+  this.sandbox.stub(this.player, 'requestFullscreen').returns(Promise.resolve());
 
   const touchStart = createTouchEvent(this.player.el(), 'touchstart', {
     bubbles: true,
@@ -239,14 +217,13 @@ QUnit[skipWithoutTouch]('exits fullscreen on swipe down', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
 
-  sinon.stub(this.player, 'isFullscreen').returns(true);
-  sinon.stub(this.player, 'exitFullscreen');
+  this.sandbox.stub(this.player, 'isFullscreen').returns(true);
+  this.sandbox.stub(this.player, 'exitFullscreen');
 
   const touchStart = createTouchEvent(this.player.el(), 'touchstart', {
     bubbles: true,
@@ -274,14 +251,13 @@ QUnit[skipWithoutTouch]('respects swipe threshold', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 100
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
 
-  sinon.stub(this.player, 'isFullscreen').returns(false);
-  sinon.stub(this.player, 'requestFullscreen').returns(Promise.resolve());
+  this.sandbox.stub(this.player, 'isFullscreen').returns(false);
+  this.sandbox.stub(this.player, 'requestFullscreen').returns(Promise.resolve());
 
   const touchStart = createTouchEvent(this.player.el(), 'touchstart', {
     bubbles: true,
@@ -310,14 +286,13 @@ QUnit[skipWithoutTouch]('handles touchcancel event', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
 
-  sinon.stub(this.player, 'isFullscreen').returns(false);
-  sinon.stub(this.player, 'requestFullscreen').returns(Promise.resolve());
+  this.sandbox.stub(this.player, 'isFullscreen').returns(false);
+  this.sandbox.stub(this.player, 'requestFullscreen').returns(Promise.resolve());
 
   const touchStart = createTouchEvent(this.player.el(), 'touchstart', {
     bubbles: true,
@@ -346,13 +321,12 @@ QUnit.test('cleans up event listeners on dispose', function(assert) {
       swipeToFullscreen: true,
       swipeFromFullscreen: true,
       swipeThreshold: 50
-    },
-    forceForTesting: true
+    }
   });
 
   this.clock.tick(1);
 
-  const rELSpy = sinon.spy(this.player.el(), 'removeEventListener');
+  const rELSpy = this.sandbox.spy(this.player.el(), 'removeEventListener');
 
   this.player.dispose();
 
