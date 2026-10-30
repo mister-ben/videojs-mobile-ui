@@ -235,9 +235,10 @@ You can import the options type with
 `import type {MobileUiOptions} from 'videojs-mobile-ui'`.
 
 The declarations augment `video.js/dist/types/player`, as Video.js 8 does not
-export an augmentable `Player` from its top-level module. Older Video.js 8
-releases have unrelated declaration errors; update Video.js or use
-`skipLibCheck` if those errors affect your project.
+export an augmentable `Player` from its top-level module. The declarations have
+been tested with Video.js 8.23.4 and 8.24.2 without skipLibCheck. Earlier
+Video.js 8 releases may have unrelated declaration errors; if affected, update
+Video.js or enable skipLibCheck.
 
 ## License
 
