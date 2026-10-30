@@ -43,6 +43,7 @@ const tasks = {
     await runner.script('../test/coverage.js');
     await runner.tool('typescript', 'tsc', ['-p', 'test/types/tsconfig.json']);
     await runner.tool('typescript', 'tsc', ['-p', 'test/types/tsconfig.bundler.json']);
+    await runner.tool('typescript', 'tsc', ['-p', 'test/types/tsconfig.verbatim.json']);
     await runner.tool('typescript', 'tsc', ['-p', 'test/types/tsconfig.no-augmentation.json']);
     await runner.tool('typescript', 'tsc', ['-p', 'test/types/tsconfig.local-augmentation.json']);
     await build({TEST_BUNDLE_ONLY: '1'});

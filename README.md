@@ -221,6 +221,14 @@ player.mobileUi({
 });
 ```
 
+This example assumes a browser application configured for ES module imports.
+With `verbatimModuleSyntax: true`, TypeScript rejects these imports if it
+considers your source file CommonJS (TS1295). Use your bundler or framework's
+recommended TypeScript configuration. If you intend TypeScript to translate
+these imports into CommonJS `require()` calls, disable `verbatimModuleSyntax`.
+This is a consumer module configuration issue, independent of the plugin's
+opt-in player types.
+
 The type-only import is erased from the emitted JavaScript; `player` is a
 declaration-only entry point, not a runtime module. This syntax requires
 TypeScript 4.5 or newer. Enabling it augments the Video.js player type throughout
