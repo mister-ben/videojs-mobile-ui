@@ -13,7 +13,7 @@ const pkg = {
   main: 'dist/videojs-mobile-ui.cjs.js',
   module: 'dist/videojs-mobile-ui.es.js',
   browser: 'dist/videojs-mobile-ui.js',
-  files: ['dist/']
+  files: ['plugin.d.ts', 'player.d.ts', 'dist/']
 };
 const manifest = path.join(directory, 'package.json');
 const pack = () => JSON.parse(execFileSync(process.execPath, [process.env.npm_execpath,
@@ -22,10 +22,16 @@ const pack = () => JSON.parse(execFileSync(process.execPath, [process.env.npm_ex
 try {
   fs.mkdirSync(path.join(directory, 'dist/lang'), {recursive: true});
   fs.writeFileSync(manifest, JSON.stringify(pkg));
-  ['README.md', 'LICENSE', pkg.main, pkg.module, pkg.browser,
+  ['README.md', 'LICENSE', 'plugin.d.ts', 'player.d.ts', pkg.main, pkg.module, pkg.browser,
     'dist/videojs-mobile-ui.min.js', 'dist/videojs-mobile-ui.css', 'dist/lang/en.js']
     .forEach(file => fs.writeFileSync(path.join(directory, file), 'release asset\n'));
   checkContents(pkg, pack(), ['en']);
+
+  const types = path.join(directory, 'plugin.d.ts');
+
+  fs.unlinkSync(types);
+  assert.throws(() => checkContents(pkg, pack(), ['en']), /packed file: plugin\.d\.ts/);
+  fs.writeFileSync(types, 'release asset\n');
 
   const css = path.join(directory, 'dist/videojs-mobile-ui.css');
 
@@ -34,7 +40,7 @@ try {
   fs.writeFileSync(css, 'release asset\n');
 
   // A file can exist in the checkout but be omitted by npm's publication list.
-  fs.writeFileSync(manifest, JSON.stringify({...pkg, files: ['dist/*.js', 'dist/lang/']}));
+  fs.writeFileSync(manifest, JSON.stringify({...pkg, files: ['plugin.d.ts', 'player.d.ts', 'dist/*.js', 'dist/lang/']}));
   assert.throws(() => checkContents(pkg, pack(), ['en']), /packed file: dist\/videojs-mobile-ui.css/);
   fs.writeFileSync(manifest, JSON.stringify(pkg));
 
@@ -48,7 +54,7 @@ try {
 
   fs.mkdirSync(path.join(directory, 'test/dist'), {recursive: true});
   fs.writeFileSync(path.join(directory, 'test/dist/bundle.js'), 'test-only asset\n');
-  fs.writeFileSync(manifest, JSON.stringify({...pkg, files: ['dist/', 'test/']}));
+  fs.writeFileSync(manifest, JSON.stringify({...pkg, files: ['plugin.d.ts', 'player.d.ts', 'dist/', 'test/']}));
   assert.throws(() => checkContents(pkg, pack(), ['en']), /Generated test or API documentation/);
   console.log('Packed-file checks passed: release assets, omitted/empty files, translations and test-only files.');
 } finally {

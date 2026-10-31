@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "verbatimModuleSyntax": true
+  },
+  "files": [
+    "esm.mts",
+    "commonjs-verbatim.cts"
+  ]
+}
