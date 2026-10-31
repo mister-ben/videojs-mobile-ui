@@ -114,6 +114,5 @@
     "nomnom": {
       "underscore": "^1.13.0"
     }
-  },
-  "types": "./plugin.d.ts"
+  }
 }

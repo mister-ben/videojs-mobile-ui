@@ -1,8 +1,11 @@
 import type {} from '../../player';
 import videojs from 'video.js';
-import mobileUi from '../..';
-import type {MobileUiOptions} from '../..';
+import '../..';
+import type MobileUiPlugin from '../../plugin';
+import type {MobileUiOptions} from '../../plugin';
 import type Player from 'video.js/dist/types/player';
+
+declare const mobileUi: typeof MobileUiPlugin;
 
 const player = videojs('my-video');
 const options: MobileUiOptions = {

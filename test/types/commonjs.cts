@@ -1,6 +1,9 @@
 import type {} from '../../player';
 import videojs from 'video.js';
-import mobileUi = require('../..');
+import '../..';
+import type MobileUiPlugin = require('../../plugin');
+
+declare const mobileUi: typeof MobileUiPlugin;
 
 const player = videojs('my-video');
 player.mobileUi();
