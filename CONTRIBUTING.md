@@ -117,3 +117,10 @@ The plugin export and opt-in player augmentation remain handwritten.
 run this check before generating build artifacts, so stale files fail CI.
 Run `npm run test:options` for generator regression tests and `npm run test:types`
 for consumer compatibility checks.
+
+The package root deliberately has no `types` field. Keep bundled declarations
+behind the explicit, type-only `plugin` and `player` paths so a runtime upgrade
+cannot load Video.js declarations through the plugin or replace existing
+community types. Do not add runtime imports from these declaration-only paths.
+Release-package verification also compiles consumers against the installed
+tarball, including a consumer that bypasses broken Video.js declarations.

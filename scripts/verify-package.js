@@ -7,6 +7,7 @@ const {execFile} = require('child_process');
 const {promisify} = require('util');
 const {rollup} = require('rollup');
 const {remove} = require('./files');
+const {checkInstalledTypes} = require('./check-installed-types');
 
 const execute = promisify(execFile);
 
@@ -16,6 +17,7 @@ const checkContents = (pkg, packed, languages) => {
   assert.strictEqual(packed.version, pkg.version, 'Packed package version');
   const files = new Map(packed.files.map(file => [file.path, file.size]));
   const required = ['package.json', 'README.md', 'LICENSE',
+    'plugin.d.ts', 'player.d.ts',
     `dist/${pkg.name}.min.js`, `dist/${pkg.name}.css`,
     ...languages.map(language => `dist/lang/${language}.js`)];
 
@@ -65,6 +67,8 @@ const verifyPackage = async root => {
     await npm(['install', '--omit=dev', '--ignore-scripts', '--no-audit', '--no-fund',
       '--package-lock=false', '--prefer-offline'], consumer);
     const installed = path.join(consumer, 'node_modules', pkg.name);
+
+    checkInstalledTypes(consumer);
     const bundle = await rollup({
       input: path.join(installed, pkg.module),
       external: id => id === 'video.js' || id === 'global' || id.startsWith('global/')
