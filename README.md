@@ -203,10 +203,12 @@ import 'videojs-mobile-ui';
 
 ## TypeScript
 
-Type definitions for Video.js 8 are included and fully opt-in. The runtime
-package root intentionally has no bundled declaration, so existing local
-declarations, community types and Video.js type workarounds remain in control
-until you opt in.
+Type definitions for Video.js 8 are included but fully opt-in so as not to
+conflict with any existing workarounds in place. The runtime package root
+intentionally has no bundled declaration, so existing local declarations,
+community types and Video.js type workarounds remain in control until you
+opt in.
+
 To use the bundled player declaration, import it explicitly:
 
 ```ts
@@ -269,7 +271,7 @@ export an augmentable `Player` from its top-level module. The declarations have
 been tested with Video.js 8.23.4 and 8.24.2 without skipLibCheck. Earlier
 Video.js 8 releases may have unrelated declaration errors when opting in; if
 affected, retain your existing workaround, update Video.js or enable
-skipLibCheck. The runtime peer dependency remains Video.js 8.
+skipLibCheck. The runtime peer dependency remains Video.js ^8.
 
 ## License
 
