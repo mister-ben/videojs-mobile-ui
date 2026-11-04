@@ -96,7 +96,7 @@
     "karma-static-server": "^2.0.0",
     "karma-teamcity-reporter": "^1.1.0",
     "not-prerelease": "^1.0.1",
-    "qunit": "~2.16.0",
+    "qunit": "~3.0.0",
     "rollup": "^2.46.0",
     "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-istanbul": "^5.0.0",
