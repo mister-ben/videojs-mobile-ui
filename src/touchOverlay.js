@@ -34,6 +34,10 @@ class TouchOverlay extends Component {
     this.tapTimeout = options.tapTimeout;
     this.taps = 0;
 
+    if (options.iconShadow) {
+      this.addClass('vjs-touch-overlay-shadow');
+    }
+
     // Add play toggle overlay
     this.addChild('playToggle', {});
 

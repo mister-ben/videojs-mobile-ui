@@ -88,6 +88,18 @@
   pointer-events: auto;
 }
 
+.video-js.vjs-mobile-ui .vjs-touch-overlay.vjs-touch-overlay-shadow.skip {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.75));
+}
+
+.video-js.vjs-mobile-ui .vjs-touch-overlay.vjs-touch-overlay-shadow.skip:after {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.video-js.vjs-mobile-ui .vjs-touch-overlay.vjs-touch-overlay-shadow .vjs-play-control .vjs-icon-placeholder::before {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.75));
+}
+
 .video-js.vjs-mobile-ui.vjs-mobile-ui-disable-end.vjs-ended .vjs-touch-overlay {
   display: none;
 }

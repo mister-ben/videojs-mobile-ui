@@ -69,6 +69,7 @@ The [demo] page lets you try out the configuration options.
     seekSeconds: 10,
     tapTimeout: 300,
     disableOnEnd: false,
+    iconShadow: false,
     disabled: false
   }
 };
@@ -111,6 +112,9 @@ The [demo] page lets you try out the configuration options.
 - **`touchControls.disableOnEnd`** {boolean}  
   Disable the touch overlay when the video ends.  
   Useful if an end screen overlay is used to avoid conflict.  
+  Default `false`.
+- **`touchControls.iconShadow`** {boolean}  
+  Add a drop shadow to tap icons and text for visibility on light backgrounds.  
   Default `false`.
 - **`touchControls.disabled`** {boolean}  
   All tap overlay functionality provided by this plugin disabled.  
