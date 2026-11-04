@@ -89,6 +89,28 @@ QUnit.test('Adds disable-end class if endscreen plugin is present', function(ass
   assert.ok(this.player.hasClass('vjs-mobile-ui-disable-end'), 'Class added via endscreen detection');
 });
 
+QUnit.test('Adds shadow class to touch overlay if iconShadow option is true', function(assert) {
+  this.player.mobileUi({
+    touchControls: { iconShadow: true }
+  });
+
+  this.clock.tick(1);
+
+  const touchOverlay = this.player.getChild('TouchOverlay');
+
+  assert.ok(touchOverlay.hasClass('vjs-touch-overlay-shadow'), 'Shadow class added via option');
+});
+
+QUnit.test('Does not add shadow class to touch overlay by default', function(assert) {
+  this.player.mobileUi();
+
+  this.clock.tick(1);
+
+  const touchOverlay = this.player.getChild('TouchOverlay');
+
+  assert.notOk(touchOverlay.hasClass('vjs-touch-overlay-shadow'), 'Shadow class omitted by default');
+});
+
 QUnit.module('TouchOverlay', {
   beforeEach,
   afterEach

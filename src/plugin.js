@@ -42,6 +42,9 @@ import window from 'global/window';
  *  Disable the touch overlay when the video ends.
  *  Useful if an end screen overlay is used to avoid conflict.
  *  Default `false`.
+ * @property {boolean} [touchControls.iconShadow]
+ *  Add a drop shadow to tap icons and text for visibility on light backgrounds.
+ *  Default `false`.
  * @property {boolean} [touchControls.disabled]
  *  All tap overlay functionality provided by this plugin disabled.
  *  Default `false`.
@@ -67,6 +70,7 @@ const defaults = {
     seekSeconds: 10,
     tapTimeout: 300,
     disableOnEnd: false,
+    iconShadow: false,
     disabled: false
   }
 };
