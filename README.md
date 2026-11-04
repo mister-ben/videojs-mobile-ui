@@ -201,39 +201,65 @@ import 'videojs-mobile-ui/dist/videojs-mobile-ui.css';
 import 'videojs-mobile-ui';
 ```
 
-## Typescript
+## TypeScript
 
-You can add a .d.ts to your project if needed.
+Type definitions for Video.js 8 are included as **opt-in** so they do not conflict with existing type workarounds or community types. The package root deliberately omits a top-level `types` field, ensuring zero impact on your build until you opt in.
+
+### Enabling Player Types
+
+To augment Video.js's `Player` type with `.mobileUi()`, add a type-only import to your project:
 
 ```ts
-// videojs-mobile-ui.d.ts
-import type Player from 'video.js/dist/types/player';
+import videojs from 'video.js';
+import 'videojs-mobile-ui';
+import 'videojs-mobile-ui/dist/videojs-mobile-ui.css';
 
-declare module 'video.js/dist/types/player' {
-  export default interface Player {
-    mobileUi: {
-      (options?: {
-        fullscreen?: {
-          enterOnRotate?: boolean;
-          exitOnRotate?: boolean;
-          lockOnRotate?: boolean;
-          lockToLandscapeOnEnter?: boolean;
-          swipeToFullscreen?: boolean;
-          swipeFromFullscreen?: boolean;
-          disabled?: boolean;
-        };
-        touchControls?: {
-          seekSeconds?: number;
-          tapTimeout?: number;
-          disableOnEnd?: boolean;
-          disabled?: boolean;
-        };
-      }): void;
-      VERSION: string;
-    }
-  }
-}
+// Opt in to player types (requires TypeScript 4.5+):
+import type {} from 'videojs-mobile-ui/player';
+
+const player = videojs('my-video');
+
+player.mobileUi({
+  fullscreen: {swipeToFullscreen: true},
+  touchControls: {seekSeconds: 15}
+});
 ```
+
+> **Note:** Always use `import type` for the `player` path. It is a declaration-only entry point erased at compile time; importing it as a runtime module (`import 'videojs-mobile-ui/player'`) will fail to resolve in bundlers.
+
+Once imported in any file in your project, the augmentation applies program-wide.
+
+### Migrating from Existing Workarounds
+
+If you are upgrading:
+1. **Remove Local Declarations:** Delete any local `Player.mobileUi` declaration (such as the workaround previously shown in this README) to avoid duplicate identifier conflicts.
+2. **Remove Community Types:** If installed, uninstall `@types/videojs-mobile-ui` (those definitions target Video.js 7 and an older version of this plugin).
+3. **Plugin Version Access:** If your code accessed `player.mobileUi.VERSION`, note that Video.js does not mirror static properties onto the player instance method at runtime. Import `MobileUiPlugin` from `videojs-mobile-ui/plugin` or use `videojs.getPlugin('mobileUi').VERSION` instead.
+
+*(If you prefer to keep your existing declarations or workarounds, simply do not import `videojs-mobile-ui/player`—upgrading the runtime package will not affect your build.)*
+
+### Standalone Options & Plugin Types
+
+If you need options typing (e.g. for component props or configurations) without augmenting the global `Player` type:
+
+```ts
+import type {MobileUiOptions} from 'videojs-mobile-ui/plugin';
+import type MobileUiPlugin from 'videojs-mobile-ui/plugin';
+
+const options: MobileUiOptions = {
+  touchControls: {seekSeconds: 15}
+};
+```
+
+### Module Resolution & Compiler Notes
+
+* **Node16 / NodeNext ESM:** If your `tsconfig.json` uses `moduleResolution: "Node16"` or `"NodeNext"`, append the `.js` extension to type-only paths:
+  ```ts
+  import type {} from 'videojs-mobile-ui/player.js';
+  import type {MobileUiOptions} from 'videojs-mobile-ui/plugin.js';
+  ```
+* **`verbatimModuleSyntax`:** Ensure your project is configured as an ES module if using `verbatimModuleSyntax: true`. If TypeScript treats the file as CommonJS, it may emit TS1295.
+* **Tested Versions:** Declarations augment `video.js/dist/types/player` and are tested against Video.js 8.23.4+ with `skipLibCheck: false`.
 
 ## License
 

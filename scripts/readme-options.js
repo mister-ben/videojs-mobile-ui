@@ -4,7 +4,8 @@ const fs = require('fs');
 
 const PATHS = {
   plugin: './src/plugin.js',
-  readme: './README.md'
+  readme: './README.md',
+  types: './plugin.d.ts'
 };
 
 const COLOURS = {
@@ -14,9 +15,11 @@ const COLOURS = {
 };
 
 /**
- * Main execution entry point. Reads files, validates data, and updates README.
+ * Main execution entry point. Reads files, validates data, and updates generated outputs.
+ *
+ * @param {boolean} check Check freshness without writing files.
  */
-function main() {
+function main(check = process.argv.includes('--check')) {
   try {
     const pluginContent = fs.readFileSync(PATHS.plugin, 'utf8');
     const readmeContent = fs.readFileSync(PATHS.readme, 'utf8');
@@ -26,8 +29,7 @@ function main() {
     const properties = parseJSDoc(pluginContent);
 
     if (!properties || properties.length === 0) {
-      console.error('Could not find "MobileUiOptions" JSDoc in plugin.js');
-      return;
+      throw new Error('Could not find "MobileUiOptions" JSDoc in plugin.js');
     }
 
     const defaultsObj = extractAndParseDefaults(pluginContent);
@@ -42,19 +44,30 @@ function main() {
         process.exit(1);
       }
     } else {
-      console.warn('Could not parse "defaults" object from code. Skipping validation.');
+      throw new Error('Could not parse "defaults" object from code.');
     }
 
     const publicProperties = properties.filter(p => !p.isInternal);
     const newDocsMarkdown = generateMarkdown(publicProperties);
 
     console.log(`Generated documentation for ${publicProperties.length} public properties.`);
-    console.log(`Updating ${PATHS.readme}...`);
+    console.log(check ? 'Checking generated files...' : 'Updating generated files...');
 
     const updatedReadme = updateReadmeContent(readmeContent, newDocsMarkdown, defaultsCodeBlock);
 
-    fs.writeFileSync(PATHS.readme, updatedReadme);
-    console.log('README.md updated successfully!');
+    const typesContent = fs.readFileSync(PATHS.types, 'utf8');
+    const updatedTypes = updateTypesContent(typesContent, publicProperties);
+    const outputs = [[PATHS.readme, readmeContent, updatedReadme],
+      [PATHS.types, typesContent, updatedTypes]];
+    const stale = outputs.filter(([, current, generated]) => current !== generated);
+
+    if (check && stale.length) {
+      throw new Error(`Generated options are stale: ${stale.map(([file]) => file).join(', ')}. Run npm run docs:options.`);
+    }
+    if (!check) {
+      stale.forEach(([file, , generated]) => fs.writeFileSync(file, generated));
+    }
+    console.log(check ? 'Generated options are up to date.' : 'README and options types updated.');
 
   } catch (err) {
     console.error('Error:', err.message);
@@ -75,14 +88,13 @@ function main() {
  * @return {Array} List of property objects.
  */
 function parseJSDoc(content) {
-  const blockRegex = /\/\*\*[\s\S]*?@typedef \{Object\} MobileUiOptions[\s\S]*?\*\//;
-  const match = content.match(blockRegex);
+  const blocks = content.match(/\/\*\*[\s\S]*?\*\//g) || [];
+  const matches = blocks.filter(block => /@typedef \{Object\} MobileUiOptions\b/.test(block));
 
-  if (!match) {
-    return [];
+  if (matches.length !== 1) {
+    throw new Error('Expected exactly one MobileUiOptions JSDoc block');
   }
-
-  const lines = match[0].split('\n');
+  const lines = matches[0].split('\n');
   const properties = [];
   let currentProp = null;
   let nextIsInternal = false;
@@ -99,6 +111,10 @@ function parseJSDoc(content) {
 
     const propMatch = cleanLine.match(propertyRegex);
 
+    if (cleanLine.startsWith('@property') && !propMatch) {
+      throw new Error(`Unsupported property syntax: ${cleanLine}`);
+    }
+
     if (propMatch) {
       if (currentProp) {
         properties.push(currentProp);
@@ -107,6 +123,7 @@ function parseJSDoc(content) {
       currentProp = {
         name: propMatch[2] || propMatch[3],
         type: propMatch[1],
+        optional: Boolean(propMatch[2]),
         description: [],
         isInternal: nextIsInternal
       };
@@ -124,6 +141,21 @@ function parseJSDoc(content) {
     properties.push(currentProp);
   }
 
+  const names = new Set();
+
+  properties.forEach(prop => {
+    if (!/^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(prop.name) ||
+        !['Object', 'boolean', 'number'].includes(prop.type) || names.has(prop.name)) {
+      throw new Error(`Unsupported or duplicate option: ${prop.name} {${prop.type}}`);
+    }
+    names.add(prop.name);
+    const parent = prop.name.split('.').slice(0, -1).join('.');
+
+    if (parent && !properties.some(p => p.name === parent && p.type === 'Object' &&
+        (prop.isInternal || !p.isInternal))) {
+      throw new Error(`Missing public object parent for ${prop.name}`);
+    }
+  });
   return properties;
 }
 
@@ -226,6 +258,13 @@ function validateValues(properties, defaults) {
   const errors = [];
 
   properties.forEach(prop => {
+    const value = getNestedValue(defaults, prop.name);
+
+    if (value !== undefined && (prop.type === 'Object' ?
+      typeof value !== 'object' || value === null || Array.isArray(value) : typeof value !== prop.type)) {
+      errors.push(`TYPE MISMATCH for ${prop.name}: expected ${prop.type}`);
+      isValid = false;
+    }
     const defaultLine = prop.description.find(line => line.startsWith('Default '));
 
     if (defaultLine) {
@@ -351,6 +390,9 @@ function updateReadmeContent(readmeContent, newDocs, defaultsCodeBlock) {
   if (defaultsCodeBlock) {
     const defaultsRegex = /(### Default options)([\s\S]*?)(### Options)/;
 
+    if (!defaultsRegex.test(content)) {
+      throw new Error('Could not find README default options section');
+    }
     if (defaultsRegex.test(content)) {
       const codeBlock = `\`\`\`js\n${defaultsCodeBlock}\n\`\`\``;
 
@@ -367,4 +409,37 @@ function updateReadmeContent(readmeContent, newDocs, defaultsCodeBlock) {
   return content.replace(optionsRegex, `$1\n\n${newDocs}\n\n$3`);
 }
 
-main();
+/**
+ * Update only the marked interface; module exports and augmentation stay handwritten.
+ *
+ * @param {string} content Existing declaration.
+ * @param {Array} properties Public JSDoc properties.
+ * @return {string} Updated declaration.
+ */
+function updateTypesContent(content, properties) {
+  const render = (parent, indent) => properties.filter(prop =>
+    prop.name.split('.').slice(0, -1).join('.') === parent).map(prop => {
+    const name = prop.name.split('.').pop();
+    const comments = prop.description.length ?
+      `${indent}/**\n${prop.description.map(line => `${indent} * ${line}`).join('\n')}\n${indent} */\n` : '';
+    const type = prop.type === 'Object' ?
+      `{\n${render(prop.name, indent + '  ')}\n${indent}}` : prop.type;
+
+    return `${comments}${indent}${name}${prop.optional ? '?' : ''}: ${type};`;
+  }).join('\n');
+  const start = '  // BEGIN GENERATED OPTIONS';
+  const end = '  // END GENERATED OPTIONS';
+  const section = `${start}\n  // Generated from src/plugin.js by npm run docs:options.\n` +
+    `  interface MobileUiOptions {\n${render('', '    ')}\n  }\n${end}`;
+  const parts = content.split(start);
+
+  if (parts.length !== 2 || parts[1].split(end).length !== 2) {
+    throw new Error('Missing or duplicate generated options markers in plugin.d.ts');
+  }
+  return parts[0] + section + parts[1].split(end)[1];
+}
+
+module.exports = {main, parseJSDoc, updateTypesContent};
+if (require.main === module) {
+  main();
+}

@@ -103,3 +103,24 @@ artifacts are checked without deleting the coverage report before its upload.
 The unused JSDoc API build and Husky hook have been removed. `docs:options`, README
 option validation/generation, changelog generation and the version hooks remain
 available and unchanged.
+
+## Options documentation and types
+
+Edit `MobileUiOptions` JSDoc in `src/plugin.js`, then run `npm run docs:options`
+to update the README options section and the marked interface in `plugin.d.ts`.
+Commit both generated outputs. Descriptions and optionality come from JSDoc;
+`@internal` properties are excluded. The generator currently supports nested
+`Object` properties, `boolean` and `number`, and rejects unsupported syntax.
+The plugin export and opt-in player augmentation remain handwritten.
+
+`npm run check:options` checks freshness without modifying files. Tests and builds
+run this check before generating build artifacts, so stale files fail CI.
+Run `npm run test:options` for generator regression tests and `npm run test:types`
+for consumer compatibility checks.
+
+The package root deliberately has no `types` field. Keep bundled declarations
+behind the explicit, type-only `plugin` and `player` paths so a runtime upgrade
+cannot load Video.js declarations through the plugin or replace existing
+community types. Do not add runtime imports from these declaration-only paths.
+Release-package verification also compiles consumers against the installed
+tarball, including a consumer that bypasses broken Video.js declarations.
