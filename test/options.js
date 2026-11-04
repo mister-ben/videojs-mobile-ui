@@ -4,7 +4,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const {spawnSync} = require('child_process');
-const {parseJSDoc, updateTypesContent} = require('../scripts/readme-options');
+const {parseJSDoc, updateTypesContent, updateDemoContent} = require('../scripts/readme-options');
 const {remove} = require('../scripts/files');
 
 const root = path.resolve(__dirname, '..');
@@ -32,6 +32,7 @@ for (const invalid of [
   assert.throws(() => parseJSDoc(invalid));
 }
 assert.throws(() => updateTypesContent('no markers', properties), /markers/);
+assert.throws(() => updateDemoContent('no markers', properties, {}), /markers/);
 
 const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'mobile-ui-options-'));
 const run = (...args) => spawnSync(
@@ -43,17 +44,24 @@ const writeSource = text => fs.writeFileSync(path.join(fixture, 'src/plugin.js')
 try {
   fs.mkdirSync(path.join(fixture, 'src'));
   writeSource(source);
-  for (const file of ['README.md', 'plugin.d.ts']) {
+  for (const file of ['README.md', 'plugin.d.ts', 'index.html']) {
     fs.copyFileSync(path.join(root, file), path.join(fixture, file));
   }
   assert.strictEqual(run('--check').status, 0);
-  for (const file of ['README.md', 'plugin.d.ts']) {
+  const getStaleContent = (file, text) => {
+    if (file === 'README.md') {
+      return text.replace('Increment to seek in seconds.', 'Stale description.');
+    }
+    if (file === 'plugin.d.ts') {
+      return text.replace('seekSeconds?: number;', 'seekSeconds?: boolean;');
+    }
+    return text.replace('data-prop="seekSeconds"', 'data-prop="staleSeconds"');
+  };
+
+  for (const file of ['README.md', 'plugin.d.ts', 'index.html']) {
     const target = path.join(fixture, file);
     const original = fs.readFileSync(target, 'utf8');
-    const stale = original.replace(
-      file === 'README.md' ? 'Increment to seek in seconds.' : 'seekSeconds?: number;',
-      file === 'README.md' ? 'Stale description.' : 'seekSeconds?: boolean;'
-    );
+    const stale = getStaleContent(file, original);
 
     assert.notStrictEqual(stale, original);
     fs.writeFileSync(target, stale);
@@ -62,7 +70,7 @@ try {
     assert.strictEqual(run().status, 0);
     assert.strictEqual(fs.readFileSync(target, 'utf8'), original);
   }
-  // A new public property must appear in both outputs, including its optionality and description.
+  // A new public property must appear in all outputs, including its optionality and description.
   writeSource(source.replace(
     ' * @internal',
     ' * @property {boolean} [fullscreen.newOption]\n *  A new option.\n * @internal'
@@ -72,6 +80,7 @@ try {
   assert.strictEqual(run().status, 0);
   assert.ok(fs.readFileSync(path.join(fixture, 'plugin.d.ts'), 'utf8').includes('newOption?: boolean;'));
   assert.ok(fs.readFileSync(path.join(fixture, 'README.md'), 'utf8').includes('fullscreen.newOption'));
+  assert.ok(fs.readFileSync(path.join(fixture, 'index.html'), 'utf8').includes('data-prop="newOption"'));
   assert.strictEqual(run('--check').status, 0);
   for (const invalid of [
     source.replace('const defaults =', 'const missingDefaults ='),

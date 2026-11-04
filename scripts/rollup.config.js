@@ -64,7 +64,12 @@ const builds = {
   },
   test: {
     input: 'test/**/*.test.js',
-    watch: {clearScreen: false},
+    watch: {
+      clearScreen: false,
+      chokidar: {
+        ignored: ['**/test/dist/**']
+      }
+    },
     external: id => Object.keys(testGlobals).some(external => id.startsWith(external)),
     plugins: [
       multiEntry({exports: false}),

@@ -67,6 +67,11 @@ declare namespace mobileUi {
        */
       disableOnEnd?: boolean;
       /**
+       * Add a drop shadow to tap icons and text for visibility on light backgrounds.
+       * Default `false`.
+       */
+      iconShadow?: boolean;
+      /**
        * All tap overlay functionality provided by this plugin disabled.
        * Default `false`.
        */
