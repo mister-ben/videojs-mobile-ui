@@ -1,3 +1,22 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.10...v1.3.0) (2026-11-04)
+
+### Features
+
+* **touchControls:** add opt-in iconShadow for tap controls ([#349](https://github.com/mister-ben/videojs-mobile-ui/issues/349)) ([0b3a436](https://github.com/mister-ben/videojs-mobile-ui/commit/0b3a436))
+* **types:** add opt-in TypeScript support for Video.js 8 ([#343](https://github.com/mister-ben/videojs-mobile-ui/issues/343)) ([a9648d1](https://github.com/mister-ben/videojs-mobile-ui/commit/a9648d1))
+
+### Bug Fixes
+
+* **deps:** bump follow-redirects from 1.16.1 to 1.16.2 ([#344](https://github.com/mister-ben/videojs-mobile-ui/issues/344)) ([1c4e8a7](https://github.com/mister-ben/videojs-mobile-ui/commit/1c4e8a7))
+
+### Chores
+
+* **deps-dev:** bump [@rollup](https://github.com/rollup)/plugin-babel from 5.3.1 to 7.1.0 ([#347](https://github.com/mister-ben/videojs-mobile-ui/issues/347)) ([740c75d](https://github.com/mister-ben/videojs-mobile-ui/commit/740c75d))
+* **deps-dev:** bump [@rollup](https://github.com/rollup)/plugin-commonjs from 21.1.0 to 29.0.3 ([#346](https://github.com/mister-ben/videojs-mobile-ui/issues/346)) ([f85b4f7](https://github.com/mister-ben/videojs-mobile-ui/commit/f85b4f7))
+* **deps-dev:** bump qunit from 2.16.0 to 3.0.0 ([#345](https://github.com/mister-ben/videojs-mobile-ui/issues/345)) ([f8eea90](https://github.com/mister-ben/videojs-mobile-ui/commit/f8eea90))
+* generate test page options from plugin jsdoc ([#350](https://github.com/mister-ben/videojs-mobile-ui/issues/350)) ([1936112](https://github.com/mister-ben/videojs-mobile-ui/commit/1936112))
+
 <a name="1.2.10"></a>
 ## [1.2.10](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.9...v1.2.10) (2026-10-29)
 
