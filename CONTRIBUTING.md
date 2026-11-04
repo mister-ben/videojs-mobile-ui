@@ -107,11 +107,13 @@ available and unchanged.
 ## Options documentation and types
 
 Edit `MobileUiOptions` JSDoc in `src/plugin.js`, then run `npm run docs:options`
-to update the README options section and the marked interface in `plugin.d.ts`.
-Commit both generated outputs. Descriptions and optionality come from JSDoc;
-`@internal` properties are excluded. The generator currently supports nested
-`Object` properties, `boolean` and `number`, and rejects unsupported syntax.
-The plugin export and opt-in player augmentation remain handwritten.
+to update the README options section, the marked interface in `plugin.d.ts` and
+the interactive controls in `index.html`. Commit all generated outputs.
+Descriptions and optionality come from JSDoc; `@internal` properties are
+excluded from public types and documentation, but included in the demo page.
+The generator currently supports nested `Object` properties, `boolean` and
+`number`, and rejects unsupported syntax. The plugin export and opt-in player
+augmentation remain handwritten.
 
 `npm run check:options` checks freshness without modifying files. Tests and builds
 run this check before generating build artifacts, so stale files fail CI.

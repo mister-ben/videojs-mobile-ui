@@ -5,7 +5,8 @@ const fs = require('fs');
 const PATHS = {
   plugin: './src/plugin.js',
   readme: './README.md',
-  types: './plugin.d.ts'
+  types: './plugin.d.ts',
+  demo: './index.html'
 };
 
 const COLOURS = {
@@ -57,8 +58,11 @@ function main(check = process.argv.includes('--check')) {
 
     const typesContent = fs.readFileSync(PATHS.types, 'utf8');
     const updatedTypes = updateTypesContent(typesContent, publicProperties);
+    const demoContent = fs.readFileSync(PATHS.demo, 'utf8');
+    const updatedDemo = updateDemoContent(demoContent, properties, defaultsObj);
     const outputs = [[PATHS.readme, readmeContent, updatedReadme],
-      [PATHS.types, typesContent, updatedTypes]];
+      [PATHS.types, typesContent, updatedTypes],
+      [PATHS.demo, demoContent, updatedDemo]];
     const stale = outputs.filter(([, current, generated]) => current !== generated);
 
     if (check && stale.length) {
@@ -67,7 +71,7 @@ function main(check = process.argv.includes('--check')) {
     if (!check) {
       stale.forEach(([file, , generated]) => fs.writeFileSync(file, generated));
     }
-    console.log(check ? 'Generated options are up to date.' : 'README and options types updated.');
+    console.log(check ? 'Generated options are up to date.' : 'README, options types and demo page updated.');
 
   } catch (err) {
     console.error('Error:', err.message);
@@ -439,7 +443,92 @@ function updateTypesContent(content, properties) {
   return parts[0] + section + parts[1].split(end)[1];
 }
 
-module.exports = {main, parseJSDoc, updateTypesContent};
+/**
+ * Update generated demo options and defaults in index.html.
+ *
+ * @param {string} content Existing demo content.
+ * @param {Array} properties Parsed JSDoc properties (including @internal).
+ * @param {Object} defaults Parsed defaults object.
+ * @return {string} Updated demo content.
+ */
+function updateDemoContent(content, properties, defaults) {
+  const sections = {};
+  const topLevel = [];
+
+  properties.forEach(prop => {
+    if (prop.name.includes('.')) {
+      const parts = prop.name.split('.');
+      const section = parts[0];
+      const name = parts.slice(1).join('.');
+
+      sections[section] = sections[section] || [];
+      sections[section].push({name, type: prop.type, isInternal: prop.isInternal});
+    } else if (prop.type !== 'Object') {
+      topLevel.push(prop);
+    }
+  });
+
+  const renderSection = (title, items, sectionName) => {
+    const list = items.map(item => {
+      const inputType = item.type === 'number' ? 'number' : 'checkbox';
+      const id = item.name === 'disabled' && sectionName ? `${sectionName}Disabled` : item.name;
+      const dataSection = sectionName ? ` data-section="${sectionName}"` : ' data-section=""';
+
+      return `        <li>\n          <input type="${inputType}"${dataSection} data-prop="${item.name}" id="${id}" />\n` +
+        `          <label for="${id}">${item.name}</label>\n        </li>`;
+    }).join('\n');
+
+    return `      <li>\n        <h3>${title}:</h3>\n      </li>\n      <ul>\n${list}\n      </ul>`;
+  };
+
+  const sectionsHtml = Object.keys(sections)
+    .map(sec => renderSection(sec, sections[sec], sec))
+    .join('\n');
+  const topLevelHtml = topLevel.length ? '\n' + renderSection('internal', topLevel, '') : '';
+  const startOptions = '      <!-- BEGIN GENERATED DEMO OPTIONS -->';
+  const endOptions = '      <!-- END GENERATED DEMO OPTIONS -->';
+  const demoOptionsHtml = `${startOptions}\n      <!-- Generated from src/plugin.js by npm run docs:options. -->\n` +
+    `${sectionsHtml}${topLevelHtml}\n${endOptions}`;
+
+  const formatDefaults = (obj, indent) => {
+    return Object.entries(obj).map(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        return `${indent}  ${key}: {\n${formatDefaults(value, indent + '  ')}\n${indent}  }`;
+      }
+      return `${indent}  ${key}: ${JSON.stringify(value)}`;
+    }).join(',\n');
+  };
+
+  const startDefaults = '      // BEGIN GENERATED DEMO DEFAULTS';
+  const endDefaults = '      // END GENERATED DEMO DEFAULTS';
+  const demoDefaults = {...defaults};
+
+  topLevel.forEach(prop => {
+    if (demoDefaults[prop.name] === undefined && prop.type === 'boolean') {
+      demoDefaults[prop.name] = false;
+    }
+  });
+
+  const demoDefaultsJs = `${startDefaults}\n      // Generated from src/plugin.js by npm run docs:options.\n` +
+    `      var options = {\n${formatDefaults(demoDefaults, '      ')}\n      };\n${endDefaults}`;
+
+  const partsOptions = content.split(startOptions);
+
+  if (partsOptions.length !== 2 || partsOptions[1].split(endOptions).length !== 2) {
+    throw new Error('Missing or duplicate generated demo options markers in index.html');
+  }
+
+  const intermediate = partsOptions[0] + demoOptionsHtml + partsOptions[1].split(endOptions)[1];
+  const partsDefaults = intermediate.split(startDefaults);
+
+  if (partsDefaults.length !== 2 || partsDefaults[1].split(endDefaults).length !== 2) {
+    throw new Error('Missing or duplicate generated demo defaults markers in index.html');
+  }
+
+  return partsDefaults[0] + demoDefaultsJs + partsDefaults[1].split(endDefaults)[1];
+}
+
+module.exports = {main, parseJSDoc, updateTypesContent, updateDemoContent};
 if (require.main === module) {
   main();
 }

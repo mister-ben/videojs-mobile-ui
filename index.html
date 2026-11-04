@@ -113,36 +113,39 @@
     <p>Reload to apply changed options.</p>
     <button id="reload">Reload with options</button>
     <ul id="options">
+      <!-- BEGIN GENERATED DEMO OPTIONS -->
+      <!-- Generated from src/plugin.js by npm run docs:options. -->
       <li>
         <h3>fullscreen:</h3>
       </li>
       <ul>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="enterOnRotate" /> <label for="enterOnRotate">enterOnRotate</label>
+          <input type="checkbox" data-section="fullscreen" data-prop="enterOnRotate" id="enterOnRotate" />
+          <label for="enterOnRotate">enterOnRotate</label>
         </li>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="exitOnRotate" />
+          <input type="checkbox" data-section="fullscreen" data-prop="exitOnRotate" id="exitOnRotate" />
           <label for="exitOnRotate">exitOnRotate</label>
         </li>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="lockOnRotate" />
+          <input type="checkbox" data-section="fullscreen" data-prop="lockOnRotate" id="lockOnRotate" />
           <label for="lockOnRotate">lockOnRotate</label>
         </li>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="alwaysLockToLandscape" />
-          <label for="alwaysLockToLandscape">alwaysLockToLandscape</label>
+          <input type="checkbox" data-section="fullscreen" data-prop="lockToLandscapeOnEnter" id="lockToLandscapeOnEnter" />
+          <label for="lockToLandscapeOnEnter">lockToLandscapeOnEnter</label>
         </li>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="swipeToFullscreen" />
+          <input type="checkbox" data-section="fullscreen" data-prop="swipeToFullscreen" id="swipeToFullscreen" />
           <label for="swipeToFullscreen">swipeToFullscreen</label>
         </li>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="swipeFromFullscreen" />
+          <input type="checkbox" data-section="fullscreen" data-prop="swipeFromFullscreen" id="swipeFromFullscreen" />
           <label for="swipeFromFullscreen">swipeFromFullscreen</label>
         </li>
         <li>
-          <input type="checkbox" data-section="fullscreen" id="fullscreenDisabled" />
-          <label for="disabled">disabled</label>
+          <input type="checkbox" data-section="fullscreen" data-prop="disabled" id="fullscreenDisabled" />
+          <label for="fullscreenDisabled">disabled</label>
         </li>
       </ul>
       <li>
@@ -150,22 +153,36 @@
       </li>
       <ul>
         <li>
-          <input type="number" data-section="touchControls" id="seekSeconds" />
+          <input type="number" data-section="touchControls" data-prop="seekSeconds" id="seekSeconds" />
           <label for="seekSeconds">seekSeconds</label>
         </li>
         <li>
-          <input type="number" data-section="touchControls" id="tapTimeout" />
+          <input type="number" data-section="touchControls" data-prop="tapTimeout" id="tapTimeout" />
           <label for="tapTimeout">tapTimeout</label>
         </li>
         <li>
-          <input type="checkbox" data-section="touchControls" id="disableOnEnd" />
+          <input type="checkbox" data-section="touchControls" data-prop="disableOnEnd" id="disableOnEnd" />
           <label for="disableOnEnd">disableOnEnd</label>
         </li>
         <li>
-          <input type="checkbox" data-section="touchControls" id="touchControlsDisabled" />
-          <label for="disabled">disabled</label>
+          <input type="checkbox" data-section="touchControls" data-prop="iconShadow" id="iconShadow" />
+          <label for="iconShadow">iconShadow</label>
+        </li>
+        <li>
+          <input type="checkbox" data-section="touchControls" data-prop="disabled" id="touchControlsDisabled" />
+          <label for="touchControlsDisabled">disabled</label>
         </li>
       </ul>
+      <li>
+        <h3>internal:</h3>
+      </li>
+      <ul>
+        <li>
+          <input type="checkbox" data-section="" data-prop="forceForTesting" id="forceForTesting" />
+          <label for="forceForTesting">forceForTesting</label>
+        </li>
+      </ul>
+      <!-- END GENERATED DEMO OPTIONS -->
     </ul>
   </div>
   <ul id="log"></ul>
@@ -173,23 +190,28 @@
   <script src="dist/videojs-mobile-ui.js"></script>
   <script>
     (function (window, videojs) {
+      // BEGIN GENERATED DEMO DEFAULTS
+      // Generated from src/plugin.js by npm run docs:options.
       var options = {
         fullscreen: {
           enterOnRotate: true,
           exitOnRotate: true,
           lockOnRotate: true,
-          alwaysLockToLandscape: false,
+          lockToLandscapeOnEnter: false,
           swipeToFullscreen: false,
           swipeFromFullscreen: false,
-          disabled: false,
+          disabled: false
         },
         touchControls: {
           seekSeconds: 10,
           tapTimeout: 300,
           disableOnEnd: false,
-          disabled: false,
+          iconShadow: false,
+          disabled: false
         },
+        forceForTesting: false
       };
+      // END GENERATED DEMO DEFAULTS
 
       var url = new URL(window.location);
       if (url.searchParams.has('options')) {
@@ -198,38 +220,35 @@
 
       console.log(JSON.stringify(options, null, 2));
 
-      Object.keys(options).forEach(function (section) {
-        Object.keys(options[section]).forEach(function (prop) {
-          const val = options[section][prop];
-
-          if (prop === 'disabled') {
-            prop = `${section}Disabled`;
-          }
+      document
+        .getElementById('options')
+        .querySelectorAll('input')
+        .forEach(function (opt) {
+          var section = opt.getAttribute('data-section');
+          var prop = opt.getAttribute('data-prop') || opt.id;
+          var val = section ? options[section][prop] : options[prop];
 
           if (typeof val === 'boolean') {
-            document.getElementById(prop).checked = val;
+            opt.checked = val;
           }
           if (typeof val === 'number') {
-            document.getElementById(prop).value = val;
+            opt.value = val;
           }
         });
-      });
 
       document
         .getElementById('options')
         .querySelectorAll('input')
         .forEach(function (opt) {
           opt.addEventListener('change', function () {
-            if (this.type === 'checkbox') {
-              const param = this.id.endsWith('Disabled')
-                ? 'disabled'
-                : this.id;
+            var section = this.getAttribute('data-section');
+            var prop = this.getAttribute('data-prop') || this.id;
+            var val = this.type === 'checkbox' ? this.checked : parseFloat(this.value);
 
-              options[this.getAttribute('data-section')][param] =
-                this.checked;
+            if (section) {
+              options[section][prop] = val;
             } else {
-              options[this.getAttribute('data-section')][this.id] =
-                parseFloat(this.value);
+              options[prop] = val;
             }
             console.log(options);
           });
