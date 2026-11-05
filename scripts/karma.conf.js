@@ -21,19 +21,11 @@ const browserstackLaunchers = {
     'browserstack.local': 'false',
     'browserstack.video': 'false'
   },
-  bsSafari15: {
+  bsSafari: {
     'base': 'BrowserStack',
     'browser': 'safari',
     'os': 'OS X',
-    'os_version': 'Monterey',
-    'browserstack.local': 'false',
-    'browserstack.video': 'false'
-  },
-  bsSafari17: {
-    'base': 'BrowserStack',
-    'browser': 'safari',
-    'os': 'OS X',
-    'os_version': 'Sonoma',
+    'os_version': 'Golden Gate',
     'browserstack.local': 'false',
     'browserstack.video': 'false'
   }
@@ -101,7 +93,6 @@ module.exports = function(config) {
       {'reporter:coverage-results': ['type', require('./coverage').CoverageResults]},
       require('karma-detect-browsers'),
       require('karma-firefox-launcher'),
-      require('karma-ie-launcher'),
       require('karma-qunit'),
       require('karma-safari-applescript-launcher'),
       require('karma-static-server'),
