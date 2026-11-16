@@ -2,6 +2,10 @@ name: ci
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   should-skip:
     continue-on-error: true
