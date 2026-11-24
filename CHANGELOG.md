@@ -1,3 +1,17 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.3.0...v1.3.1) (2026-11-24)
+
+### Bug Fixes
+
+* workflow permissions ([#354](https://github.com/mister-ben/videojs-mobile-ui/issues/354)) ([f505f3f](https://github.com/mister-ben/videojs-mobile-ui/commit/f505f3f))
+
+### Chores
+
+* **deps-dev:** bump rollup-plugin-istanbul from 5.0.0 to 6.0.0 ([#358](https://github.com/mister-ben/videojs-mobile-ui/issues/358)) ([aa4444a](https://github.com/mister-ben/videojs-mobile-ui/commit/aa4444a))
+* **deps-dev:** bump the dev-safe-updates group with 2 updates ([#356](https://github.com/mister-ben/videojs-mobile-ui/issues/356)) ([3f48bf0](https://github.com/mister-ben/videojs-mobile-ui/commit/3f48bf0))
+* **deps-dev:** bump typescript ([#359](https://github.com/mister-ben/videojs-mobile-ui/issues/359)) ([f15aa38](https://github.com/mister-ben/videojs-mobile-ui/commit/f15aa38))
+* update karma browsers ([#351](https://github.com/mister-ben/videojs-mobile-ui/issues/351)) ([12eb87e](https://github.com/mister-ben/videojs-mobile-ui/commit/12eb87e))
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/mister-ben/videojs-mobile-ui/compare/v1.2.10...v1.3.0) (2026-11-04)
 
